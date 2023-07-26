@@ -18,14 +18,16 @@ namespace Training {
       /// <summary>This Method gets a random number and the user has to guess it</summary>
       /// <param name="args">arguements</param>
       static void Main (string[] args) {
-         int n = new Random ().Next (1, 101), guess;
-         Console.Write ("Enter your guess between 1 to 100:");
+         int n = new Random ().Next (1, 101), guess = 0;
+         Again:
+         Console.Write ("Enter your guess between 1 to 100: ");
          for (; ; ) {
-            guess = int.Parse (Console.ReadLine ());
-            if (guess == n) { Console.WriteLine ("You guessed correctly"); break; }
-            if (guess < n) { Console.WriteLine ("Your guess is too low"); }
-            if (guess > n) { Console.WriteLine ("Your guess is too high"); }
-
+            if (int.TryParse (Console.ReadLine (), out guess)) {
+               if (guess == n) { Console.WriteLine ("You guessed correctly"); break; }
+               if (guess < n) { Console.WriteLine ("Your guess is too low"); }
+               if (guess > n) { Console.WriteLine ("Your guess is too high"); }
+            } else { goto Again; }
+            
          }
       }
       #endregion
