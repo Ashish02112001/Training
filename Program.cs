@@ -50,7 +50,7 @@ namespace Training {
       }
 
       /// <summary>GetMax gets sets the Maximum rang for the difficulty level selected by user </summary>
-      /// <param name="mode"></param>
+      /// <param name="mode">mode is the enumeration type parameter which gets the value for Easy, Medium and Hard</param>
       /// <returns>10 for Easy, 100 for Medium mode(Default), 1000 for Hard</returns>
       static int GetMax (Mode mode) {
          switch (mode) {
@@ -65,23 +65,3 @@ namespace Training {
    }
    #endregion
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
