@@ -8,24 +8,24 @@
 // The user can enter an number, and the computer will respond with one of these:
 // - Your guess is too high - Your guess is too low - You guessed correctly
 // --------------------------------------------------------------------------------------------
+//
 
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>simple guessing game</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>This Method gets a random number and the user has to guess it</summary>
-      /// <param name="args">arguements</param>
+      /// <summary>Main Method creates a random number and compares it with the guess of the user</summary>
+      /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         /// Main Method creates a random number and compares it with the guess of the user
          var mode = GetMode ();
          Console.WriteLine (mode);
          int max = GetMax (mode);
-         int n = new Random ().Next (1, max + 1), guess = 0;
+         int n = new Random ().Next (1, max + 1);
          Console.WriteLine ($"Enter your guess between 1 to {max}: ");
          for (; ; ) {
             Console.Write ("> ");
-            if (int.TryParse (Console.ReadLine (), out guess)) {
+            if (int.TryParse (Console.ReadLine (), out int guess)) {
                if (guess == n) { Console.WriteLine ("You guessed Correctly"); break; }
                if (guess < n) { Console.WriteLine ("Your guess is too low"); }
                if (guess > n) { Console.WriteLine ("Your guess is too high"); } 
@@ -33,8 +33,10 @@ namespace Training {
          }
       }
 
-     static Mode GetMode () {
-         /// GetMode gets the difficulty level from the user 
+      /// <summary>GetMode gets the difficulty level from the user </summary>
+      /// <returns>Difficulty modes (Easy,Medium or Hard)</returns>
+      static Mode GetMode () {
+         // 
          Console.Write ("Select a mode (E)asy, (M)edium, (H)ard:");
          for (; ; ) {
             var key = Console.ReadKey (true).Key;
@@ -46,8 +48,11 @@ namespace Training {
             }
          }
       }
-     static int GetMax (Mode mode) {
-         /// GetMax gets sets the Maximum rang for the difficulty level selected by user
+
+      /// <summary>GetMax gets sets the Maximum rang for the difficulty level selected by user </summary>
+      /// <param name="mode"></param>
+      /// <returns>10 for Easy, 100 for Medium mode(Default), 1000 for Hard</returns>
+      static int GetMax (Mode mode) {
          switch (mode) {
             case Mode.Easy: return 10;
             case Mode.Hard: return 1000;
