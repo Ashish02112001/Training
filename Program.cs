@@ -20,6 +20,8 @@
 //any word that uses all 7 seed letters (called pangrams) gets an additional 7 bonus points
 // --------------------------------------------------------------------------------------------
 
+using System.Linq.Expressions;
+
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>Spelling Bee Program</summary>
@@ -28,56 +30,44 @@ namespace Training {
       /// <summary>This Method goes through text file to search the words which contains given characters</summary>
       /// <param name="args">arguements</param>
       static void Main (string[] args) {
-         var solWord = new List<string> { };
-         var Char = new List<char> { };
-         //Reading text file containing Dictionary words
-         string[] words = File.ReadAllLines ("W:\\Training\\words.txt"); 
-         var newWord = new List<string> { };
-         int points = 0;
-         char[] letters = { 'U', 'X', 'A', 'L', 'T', 'N', 'E' }; 
-         int point;
-         var modWord = new List<(int, string)> { };
-         //Filtering out words with letter 'U' in text file
-         foreach (var word in words) {
-            if (word.Contains (letters[0])) {
-               if (word.Length >= 4) {
-                  newWord.Add (word);
-               }
-            }
-         }
-         // Getting words from the list:
-         foreach (string word in newWord) {
-            int count = 0;
+         // Reading text file containing Dictionary words
+         var solWords = new List<string> ();
+         string[] words = File.ReadAllLines ("W:\\Training\\words.txt");
+         char[] letters = { 'U', 'X', 'A', 'L', 'T', 'N', 'E' };
+         var modWords = new List<(int, string)> { };
+         // Filtering out words with letter 'U' in text file
+         var baseKey = letters[0];
+         foreach (var word in words.Where (x => x.Contains (baseKey) && x.Length >= 4)) {
             // Getting letters from the word:
-            foreach (char letter in word) {
-               if (letters.Contains (letter)) count++;
-               if (count == word.Length)
-                  solWord.Add (word);
-            }
+            bool iFound = true;
+            foreach (char letter in word)
+               if (!letters.Contains (letter))
+                  iFound = false;
+
+            if (iFound) solWords.Add (word);
          }
+
          // Allocating points for the words selected:
-         foreach (string word in solWord) {
-            if (word.Length == 4) {
-               point = 1;
-               modWord.Add ((point, word));
-            }
+         int totalPoints = 0, point;
+         foreach (string word in solWords) {
+            if (word.Length == 4) point = 1;
             else {
                //Checks wheather the word contains all 7 letters:
-               if (letters.All (letter => word.Contains (letter))) {
-                  point = word.Length + 7;
-                  modWord.Add ((point, word));
-               } else {
-                  point = word.Length;
-                  modWord.Add ((point, word));
-               }
+               if (letters.All (x => word.Contains (x))) point = word.Length + 7;
+               else point = word.Length;
             }
-            points += point;
+            modWords.Add ((point, word));
+            totalPoints += point;
          }
+
          // Ordering the words in decreasing order of points
-         foreach (var word in modWord.OrderByDescending (a => a.Item1)){
-            Console.WriteLine ($"{word.Item1}. {word.Item2}");
+         foreach (var word in modWords.OrderByDescending (a => a.Item1)) {
+            if (word.Item1 == 15) Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine ($"{word.Item1,3}. {word.Item2}");
+            Console.ResetColor ();
          }
-         Console.WriteLine ($"Total : {points}");
+
+         Console.WriteLine ($"Total: {totalPoints}");
          #endregion
       }
       #endregion
