@@ -7,8 +7,6 @@
 // --------------------------------------------------------------------------------------------
 
 
-using System.Diagnostics.Tracing;
-
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>Sample program</summary>
@@ -17,20 +15,19 @@ namespace Training {
       /// <summary>This Method prints "Hello, World!"</summary>
       /// <param name="args">arguements</param>
       static void Main (string[] args) {
-         int Count = 0;
          string[] words = File.ReadAllLines ("W:/Training/words.txt");
          Dictionary<char, int> lettersCount = new Dictionary<char, int> ();
          foreach (string word in words) {
             foreach (char ch in word) {
-               if (lettersCount.ContainsKey (ch)) {
-                  Count = lettersCount[ch];
-               }
+               if (lettersCount.ContainsKey (ch)) lettersCount[ch]++;
+               else lettersCount.Add (ch, 1);
             }
-               
          }
-         foreach (KeyValuePair<char, int> pair in lettersCount) {
-            Console.WriteLine (pair.Key + " = " + pair.Value);
-         }
+         int count = 0;
+         foreach (KeyValuePair<char, int> pair in lettersCount.OrderByDescending(a => a.Value)) {
+            if (pair.Key >= 'A' && pair.Key <= 'Z') Console.WriteLine ($"{pair.Key} = {pair.Value}"); count++;
+            if (count == 7) Console.WriteLine ("----------These 7 letters can be used for spell bee game----------");
+         } 
       }
       #endregion
    }
