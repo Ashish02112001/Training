@@ -13,7 +13,7 @@ namespace Training {
    #region TestProgram---------------------------------------------------------------------------
    /// <summary>Class Program</summary>
    internal class Program {
-      #region Methods
+      #region Methods----------------------------------------------
       /// <summary>Asks user for a number and is given a choice to conver it to Words or Roman number</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
@@ -47,8 +47,8 @@ namespace Training {
             else if (input[0] != '0' && input[1] != '0' && input[2] != '0') { Console.WriteLine ($"\n{input} - {nTWO[num / 100]} hundred and {nTWTens[(num % 100) / 10]} {nTWO[(num % 100) % 10]}"); }
          } else { Console.WriteLine ($"\nEnter a valid number between 1 & 1000"); }
       }
-      /// <summary>The function uses array to convert the number to Roman numverals</summary>
-      /// <param name="input"></param>
+      /// <summary>The function uses array to convert the number to Roman numerals</summary>
+      /// <param name="input">Input is a number which is to be converted to Roman numeral</param>
       static void convertToRoman (string input) {
          //nTR stands for number to Roman.
          string[] nTRO = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
