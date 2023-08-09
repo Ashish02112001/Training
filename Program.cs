@@ -3,19 +3,23 @@
 // Copyright (c) Metamation India.                                              
 // ------------------------------------------------------------------------
 // Program.cs
-// Simple Program to Print the text 'Hello, World!' in Console
+// program takes a number as input and displays whether it is a prime number or not.
 // --------------------------------------------------------------------------------------------
 
 
 namespace Training {
    #region Program ------------------------------------------------------------------------------
-   /// <summary>Sample program</summary>
+   /// <summary>Prime number checker</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>This Method prints "Hello, World!"</summary>
+      /// <summary>Gets an number from a user and checks it's a prime number</summary>
       /// <param name="args">arguements</param>
       static void Main (string[] args) {
-         Console.WriteLine ("Hello, World!");
+         Console.Write ("Enter a number: ");
+         int num = int.Parse (Console.ReadLine ()), count = 0;
+         for (int i = 1; i <= num; i++) if (num % i == 0) count++;
+         if (count == 2) Console.WriteLine ($"{num} is a Prime number");
+         else Console.WriteLine ($"{num} is a not a Prime number");
       }
       #endregion
    }
