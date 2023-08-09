@@ -15,7 +15,11 @@ namespace Training {
       /// <summary>This Method prints "Hello, World!"</summary>
       /// <param name="args">arguements</param>
       static void Main (string[] args) {
-         Console.WriteLine ("Hello, World!");
+         Console.WriteLine ("Enter a string to check wheather it is a palindrome: ");
+         string input = Console.ReadLine ();
+         string reversed = string.Join ("", input.Reverse ());
+         if (input == reversed) { Console.WriteLine ($"{input} is a palindrome"); }
+         else { Console.WriteLine ($"{input} is not a palindrome"); }
       }
       #endregion
    }
