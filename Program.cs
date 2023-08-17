@@ -3,21 +3,37 @@
 // Copyright (c) Metamation India.                                              
 // ------------------------------------------------------------------------
 // Program.cs
-// Simple Program to Print the text 'Hello, World!' in Console
+// Reverse a given number and check for palindrome
 // --------------------------------------------------------------------------------------------
 
 
 namespace Training {
    #region Program ------------------------------------------------------------------------------
-   /// <summary>Sample program</summary>
+   /// <summary>Palindrome check for integers</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>This Method prints "Hello, World!"</summary>
+      /// <summary>This Method gets integer and checks it's a palindrome or not</summary>
       /// <param name="args">arguements</param>
       static void Main (string[] args) {
-         Console.WriteLine ("Hello, World!");
+         Console.Write ("Enter a Number: ");
+         int num = int.Parse (Console.ReadLine());
+         Console.WriteLine ($"Reversed number is {reverseNum(num)}");
+         if (num == reverseNum(num)) { Console.WriteLine ("It is palindrome"); }
+         else { Console.WriteLine ("It is not a palindrome"); }
       }
       #endregion
+      /// <summary></summary>
+      /// <param name="num">Number from the user</param>
+      /// <returns>Reversed number from the user</returns>
+      static int reverseNum(int num) {
+         int digit = 0, rev = 0;
+         while (num > 0) {
+            digit = num % 10;
+            rev = (rev * 10) + digit;
+            num /= 10;
+         }
+         return rev;
+      }
    }
    #endregion
 }
