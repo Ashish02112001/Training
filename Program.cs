@@ -3,7 +3,7 @@
 // Copyright (c) Metamation India.                                              
 // ------------------------------------------------------------------------
 // Program.cs
-// Reverse a given number and check for palindrome
+//  program to find the digital root of a given number
 // --------------------------------------------------------------------------------------------
 
 
@@ -20,9 +20,9 @@ namespace Training {
          Console.WriteLine ($"Digital root of {num} is {digitalRoot(num)}");
       }
       #endregion
-      /// <summary></summary>
+      /// <summary>This function gets the integer and calculte it's digital root</summary>
       /// <param name="num">Number from the user</param>
-      /// <returns>Reversed number from the user</returns>
+      /// <returns>Gives digital root of the number</returns>
       static int digitalRoot(int num) {
          int digit = 0, sum = 0;
          while (num > 0) {
