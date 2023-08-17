@@ -17,22 +17,21 @@ namespace Training {
       static void Main (string[] args) {
          Console.Write ("Enter a Number: ");
          int num = int.Parse (Console.ReadLine());
-         Console.WriteLine ($"Reversed number is {reverseNum(num)}");
-         if (num == reverseNum(num)) { Console.WriteLine ("It is palindrome"); }
-         else { Console.WriteLine ("It is not a palindrome"); }
+         Console.WriteLine ($"Digital root of {num} is {digitalRoot(num)}");
       }
       #endregion
       /// <summary></summary>
       /// <param name="num">Number from the user</param>
       /// <returns>Reversed number from the user</returns>
-      static int reverseNum(int num) {
-         int digit = 0, rev = 0;
+      static int digitalRoot(int num) {
+         int digit = 0, sum = 0;
          while (num > 0) {
             digit = num % 10;
-            rev = (rev * 10) + digit;
             num /= 10;
+            sum += digit;
          }
-         return rev;
+         if (sum >= 10) return digitalRoot(sum);
+         return sum;
       }
    }
    #endregion
