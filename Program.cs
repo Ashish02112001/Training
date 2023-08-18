@@ -3,19 +3,21 @@
 // Copyright (c) Metamation India.                                              
 // ------------------------------------------------------------------------
 // Program.cs
-// Simple Program to Print the text 'Hello, World!' in Console
+// Program to build a frequency table with occurrence of all the letters in the dictionary text file.
+// The output should be a list of a letters with its occurrence count in descending order.
+// Display the first 7 letters to be used as the seed for the Spelling Bee program.
 // --------------------------------------------------------------------------------------------
 
 
 namespace Training {
    #region Program ------------------------------------------------------------------------------
-   /// <summary>Sample program</summary>
+   /// <summary>Extension of spell bee</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>This Method prints "Hello, World!"</summary>
+      /// <summary>This Method prints the frequency of letters in a dictionary text file</summary>
       /// <param name="args">arguements</param>
       static void Main (string[] args) {
-         string[] words = File.ReadAllLines ("W:/Training/words.txt");
+         string[] words = File.ReadAllLines ("C:/Training/words.txt");
          Dictionary<char, int> lettersCount = new Dictionary<char, int> ();
          foreach (string word in words) {
             foreach (char ch in word) {
