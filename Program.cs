@@ -28,52 +28,76 @@ namespace Training {
       /// <summary>This Method prints "Hello, World!"</summary>
       /// <param name="args">arguements</param>
       static void Main (string[] args) {
-
          Console.OutputEncoding = System.Text.Encoding.UTF8;
          for (int i = 0; i < 17; i++){
             Lines (i);
          }
-         Console.Write ('\u265A');
+         Console.Write ('\u2666');
          #endregion
       }
-      static void Lines (int n) {
-         if (n is 0) Top();
-         else if (n is 16) Bottom ();
+      static void Lines (int row) {
+         if (row == 0) Top();
+         else if (row == 16) Bottom ();
          //Print vertical lines with a space
-         else if (n % 2 is 1) {
+         else if (row % 2 == 1) {
             Console.Write ('\u2502');
-            for (int j = 1; j < 32; j++) 
-               if (j % 4 == 0) Console.Write ('\u2502');
-               else Console.Write (" ");
+            for (int col = 1; col < 32; col++)
+               if (col % 4 == 0) Console.Write ('\u2502');
+               else if (row is 1 or 3 or 13 or 15  && Place (col)) PrintPiece (row, col);
+               //else if (row == 3 && Place (col)) PrintPiece (row, col);
+               else if (row is not 3 or 13) Console.Write (" ");
             Console.Write ('\u2502');
             Console.WriteLine ();
          }
          //Print howizontal lines with branch to complete a row
-         else if (n % 2 is 0) {
+         else if (row % 2 is 0) {
             Console.Write ('\u251C');
-            for (int j = 1; j < 32; j++) 
-               if (j % 4 == 0) Console.Write ('\u253C');
+            for (int col = 1; col < 32; col++) 
+               if (col % 4 == 0) Console.Write ('\u253C');
                else Console.Write ('\u2500');
             Console.Write ('\u2524');
             Console.WriteLine ();
          }
       }
+      static bool Place (int n) {
+         for (int i = 1; i <= 8; i++) {
+            int num = (4 * i) - 2;
+            if (n == num) return true;
+         }
+         return false;
+      }
+      static void PrintPiece (int area,int pos) {
+         char[] BlackPiece = new char[] { '\u2656', '\u2658', '\u2657', '\u2655', '\u2654', '\u2657', '\u2658', '\u2656' };
+         char BlackSol = '\u2659';
+         char[] WhitePiece = new char[] { '\u265C', '\u265E', '\u265D', '\u265B', '\u265A', '\u265D', '\u265E', '\u265C' };
+         char WhiteSol = '\u265F';
+         if (area == 1) Console.Write ($"{WhitePiece[(pos + 2) / 4 - 1]}");
+         else if (area == 3) Console.Write ($" {WhiteSol}");
+         else if (area == 13) Console.Write ($"{BlackSol}");
+         else if (area == 15) Console.Write ($"{BlackPiece[(pos + 2) / 4 - 1]}");
+      }  
       static void Bottom () {
          Console.Write ('\u2514');
-         for (int j = 1; j < 32; j++) 
-            if (j % 4 == 0) Console.Write ('\u2534');
+         for (int col = 1; col < 32; col++) 
+            if (col % 4 == 0) Console.Write ('\u2534');
             else { Console.Write ('\u2500'); }
          Console.Write ('\u2518');
          Console.WriteLine ();
       }
-      #endregion
       static void Top () {
          Console.Write ('\u250C');
-         for (int j = 1; j < 32; j++) 
-            if (j % 4 == 0) Console.Write ('\u252C');
+         for (int col = 1; col < 32; col++)
+            if (col % 4 == 0) Console.Write ('\u252C');
             else { Console.Write ('\u2500'); }
          Console.Write ('\u2510');
          Console.WriteLine ();
       }
+      //static void PrintPawn (bool cl) {
+      //   char BlackSol = '\u2659';
+      //   char WhiteSol = '\u265F';
+      //   if(cl) Console.Write ($"{WhiteSol} |");
+      //   else Console.Write ($"{BlackSol} |);
+      //}
+      #endregion
    }
 }
