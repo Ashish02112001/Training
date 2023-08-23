@@ -17,47 +17,48 @@ namespace Training {
       /// <summary>Asks user for a number and is given a choice to conver it to Words or Roman number</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         Console.WriteLine ("Enter a number between 0 and 1000:");
-         string input = Console.ReadLine ();
-         Console.Write ("Enter type of conversion (R)oman or to (W)ords: ");
-         switch (Console.ReadKey ().Key) {
-            case ConsoleKey.R: convertToRoman (input); break;
-            case ConsoleKey.W: convertToWord (input); break;
-            default: Console.WriteLine ("\nEnter a valid choice"); break;
+         Console.Write ("Enter a number between 0 and 1000: ");
+         for(; ; ) {
+            if (int.TryParse (Console.ReadLine (), out int input) && input < 1000) {
+               Console.Write ("Enter type of conversion (R)oman or to (W)ords: ");
+               switch (Console.ReadKey ().Key) {
+                  case ConsoleKey.R: Console.WriteLine ($"\n{input} - {ConvertToRoman (input)}"); break;
+                  case ConsoleKey.W: Console.WriteLine($"\n{input} - {ConvertToWord (input)}"); break;
+                  default: Console.WriteLine ($"\n{input} - {ConvertToWord (input)}"); break; 
+               }
+               break;
+            } else { Console.Write ("Enter a valid number: "); }
          }
       }
       /// <summary>The function uses array to convert the number to Words</summary>
-      /// <param name="input">Input is a number which is to be converted to Words</param>
-      static void convertToWord (string input) {
+      /// <param name="num">Input is a number which is to be converted to Words</param>
+      static string ConvertToWord (int num) {
          //nTW stands for number to Words
          string[] nTWO = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-         string[] nTWTeen = { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "Nineteen" };
-         string[] nTWTens = { "", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "Ninety" };
-         int num = int.Parse (input);
-         if (input.Length == 1) { Console.WriteLine ($"\n{input} - {nTWO[num]}"); } 
-         else if (input.Length == 2) {
-            if (input[0] == '1') { Console.WriteLine ($"\n{input} - {nTWTeen[num % 10]}"); } 
-            else if (input[1] != '0' && input[0] != '1') { Console.WriteLine ($"\n{input} - {nTWTens[num / 10]} {nTWO[num % 10]}"); } 
-            else if (input[1] == '0') Console.WriteLine ($"\n{nTWTens[num / 10]}");
-         } else if (input.Length == 3) {
-            if (input[0] != '0' && input[1] == '0' && input[2] == '0') { Console.WriteLine ($"\n{nTWO[num / 100]} hundred"); } 
-            else if (input[0] != '0' && input[1] == '0' && input[2] != '0') { Console.WriteLine ($"\n{input} - {nTWO[num / 100]} hundred and {nTWO[num % 100]}"); } 
-            else if (input[0] != '0' && input[1] == '1' && input[2] != '0') { Console.WriteLine ($"\n{input} - {nTWO[num / 100]} hundred and {nTWTeen[(num % 100) % 10]}"); } 
-            else if (input[0] != '0' && input[1] != '0' && input[2] == '0') { Console.WriteLine ($"\n{input} - {nTWO[num / 100]} hundred and {nTWTens[(num % 100) / 10]}"); } 
-            else if (input[0] != '0' && input[1] != '0' && input[2] != '0') { Console.WriteLine ($"\n{input} - {nTWO[num / 100]} hundred and {nTWTens[(num % 100) / 10]} {nTWO[(num % 100) % 10]}"); }
-         } else { Console.WriteLine ($"\nEnter a valid number between 1 & 1000"); }
+         string[] nTWTeen = { "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
+         string[] nTWTens = { "", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+         string input = num.ToString ();
+         //For single digit number
+         if (input.Length == 1) return nTWO[num];
+         //For two digit number
+         else if (input.Length == 2) return (input[1] != '0') ? ((input[0] == '1') ? nTWTeen[num % 10] : nTWTens[num / 10] + " " + nTWO[num % 10]) : nTWTens[num / 10]; 
+         //For three digit number
+         else return (input[1] == '0' && input[2] == '0') ? ConvertToWord (num / 100) + " hundred" : ConvertToWord (num / 100) + " hundred and " + ConvertToWord (num % 100); 
       }
       /// <summary>The function uses array to convert the number to Roman numerals</summary>
-      /// <param name="input">Input is a number which is to be converted to Roman numeral</param>
-      static void convertToRoman (string input) {
+      /// <param name="num">Input is a number which is to be converted to Roman numeral</param>
+      static string ConvertToRoman (int num) {
          //nTR stands for number to Roman.
          string[] nTRO = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
          string[] nTRTens = { "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
          string[] nTRHund = { "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM", "M" };
-         int num = int.Parse (input);
-         if (input.Length == 1) { Console.WriteLine ($"\n{input} - {nTRO[num]}"); } else if (input.Length == 2) Console.WriteLine ($"\n{input} - {nTRTens[num / 10]}{nTRO[num % 10]}");
-         else if (input.Length == 3) Console.WriteLine ($"\n{input} - {nTRHund[num / 100]}{nTRTens[(num % 100) / 10]}{nTRO[(num % 100) % 10]}");
-         else { Console.WriteLine ($"\nEnter a valid number between 1 & 1000"); }
+         string input = num.ToString ();
+         //For single digit number
+         if (input.Length == 1) return nTRO[num];
+         //For two digit number
+         else if (input.Length == 2) return nTRTens[num / 10] + ConvertToRoman(num % 10);
+         //For three digit number
+         else return nTRHund[num / 100] + ConvertToRoman(num % 100);
       }
    }
    #endregion
