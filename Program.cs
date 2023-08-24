@@ -10,7 +10,7 @@
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>Fibonaccci Series</summary>
-   internal class Program {
+   class Program {
       #region Methods ---------------------------------------------
       /// <summary>User gives the length of the series as input for Fibonacci series to be printed</summary>
       /// <param name="args">arguements</param>
