@@ -18,6 +18,7 @@ namespace Training {
          Console.WriteLine ("Enter a number: ");
          int a = int.Parse(Console.ReadLine ()); 
          int b = int.Parse(Console.ReadLine ());
+         if (b > a) (a, b) = (b, a);
          Console.WriteLine ($"LCM: {LCM (a, b)}");
          Console.WriteLine ($"HCF: {HCF (a, b)}");
       }
@@ -25,21 +26,13 @@ namespace Training {
       /// <param name="a">1st number</param>
       /// <param name="b">2nd number</param>
       /// <returns>Least Common Multiple of two numbers</returns>
-      static int LCM (int a, int b) {
-         int max = a > b ? a : b;
-         int min = a < b ? a : b;
-         for (int i = max; ; i += max) if (i % min == 0) return i;
-      }
+      static int LCM (int a, int b) { for (int i = a; ; i += a) if (i % b == 0) return i; }
+      
       /// <summary>This method gives the HCF of the two numbers</summary>
       /// <param name="a">1st number</param>
       /// <param name="b">2nd number</param>
-      /// <returns>Highest common Factor</returns>
-      static int HCF (int a, int b) {
-         int HCF = 1;
-         int min = a < b ? a : b;
-         for (int j = 1; j <= min; j++) if (a % j == 0 && b % j == 0) { HCF = j;}
-         return HCF;
-      }
+      /// <returns>Highest common Factor of two numbers</returns>
+      static int HCF (int a, int b) { for (int j = b; ; j--) if (a % j == 0 && b % j == 0)  return j; }
       #endregion
    }
    #endregion
