@@ -18,8 +18,8 @@ namespace Training {
          for(; ; ) {
             Console.Write ("Enter the length of Fibonacci series: ");
             if (int.TryParse (Console.ReadLine (), out int end)) {
-               Console.WriteLine ("\n------Fibonacci Series------");
-               for (int i = 0; i < end; i++) Console.Write ($" {Fibonacci (i)} "); break;
+               Console.WriteLine ($"\n------Fibonacci Series until f({end})------");
+               for (int i = 0; i <= end; i++) Console.Write ($" {Fibonacci (i)} "); break;
             } else continue;
          }
       }
