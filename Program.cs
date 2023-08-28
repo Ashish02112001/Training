@@ -3,25 +3,27 @@
 // Copyright (c) Metamation India.                                              
 // ------------------------------------------------------------------------
 // Program.cs
-// Reduce a string of lowercase characters by deleting a pair of adjacent letters that match. 
-// Input: aaabccddd, Output: abd
+// Checks the entered word is an isogram
 // --------------------------------------------------------------------------------------------
 namespace Training {
    #region Program ------------------------------------------------------------------------------
-   /// <summary>Reduced string</summary>
+   /// <summary>Isogram checker</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>This Method prints the reduced string for a given string</summary>
+      /// <summary>This Method checks and prints wheather the given string is isogram or not</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         int i = 0;
          for(; ; ) {
+            bool isogram = true;
             Console.WriteLine ("Enter a word: ");
             string input = Console.ReadLine ();
-            if (input.All (char.IsAsciiLetterLower)) {
-               while (i < input.Length - 1) if (input[i] == input[i + 1]) { input = input.Remove (i, 2); } else i++;
-               Console.WriteLine ($"Reduced String: {input}"); break;
-            } else Console.WriteLine ("Try again with lower case alphabets");continue;
+            if (input.All (char.IsAsciiLetter)) {
+               foreach (var letter in input) {
+                  if (input.Count (x => x == letter) > 1) { Console.WriteLine ($"{input} is an not an isogram"); isogram = false; break; }
+               }
+               if (isogram) { Console.WriteLine ($"{input} is an isogram"); }
+               break;
+            } else continue;
          }
       }
       #endregion
