@@ -3,24 +3,24 @@
 // Copyright (c) Metamation India.                                              
 // ------------------------------------------------------------------------
 // Program.cs
-// Given an input number, the program calculates the LCM and GCD and display the result in the console window. 
+// Given two input number, the program calculates the LCM and GCD and display the result in the console window. 
 // --------------------------------------------------------------------------------------------
-
-
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>LCM and HCF Generator</summary>
    internal class Program {
       #region Methods ---------------------------------------------
       /// <summary>This method gets the inputs from the user and gives the HCF and LCM</summary>
-      /// <param name="args">arguements</param>
+      /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         Console.WriteLine ("Enter a number: ");
-         int a = int.Parse(Console.ReadLine ()); 
-         int b = int.Parse(Console.ReadLine ());
-         if (b > a) (a, b) = (b, a);
-         Console.WriteLine ($"LCM: {LCM (a, b)}");
-         Console.WriteLine ($"HCF: {HCF (a, b)}");
+         for(; ;){
+            Console.WriteLine ("Enter two numbers: ");
+            if (int.TryParse (Console.ReadLine (), out int a) && int.TryParse (Console.ReadLine (), out int b) && a != 0 && b != 0) {
+               if (b > a) (a, b) = (b, a);
+               Console.WriteLine ($"LCM: {LCM (a, b)}");
+               Console.WriteLine ($"HCF: {HCF (a, b)}");break;
+            } else Console.WriteLine ("Enter valid numbers.");
+         }
       }
       /// <summary>This method gives the LCM of the two numbers</summary>
       /// <param name="a">1st number</param>
