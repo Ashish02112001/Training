@@ -3,23 +3,21 @@
 // Copyright (c) Metamation India.                                              
 // ------------------------------------------------------------------------
 // Program.cs
-// Simple Program to Print the text 'Hello, World!' in Console
+// Palindrome Checker
 // --------------------------------------------------------------------------------------------
-
-
 namespace Training {
    #region Program ------------------------------------------------------------------------------
-   /// <summary>Sample program</summary>
+   /// <summary>Palindrome Checker</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>This Method prints "Hello, World!"</summary>
-      /// <param name="args">arguements</param>
+      /// <summary>This Method Checks the user input is palindrome or not</summary>
+      /// <param name="args">arguments</param>
       static void Main (string[] args) {
          Console.WriteLine ("Enter a string to check wheather it is a palindrome: ");
-         string input = Console.ReadLine ();
+         string uInput = Console.ReadLine (), input = uInput.Trim ().ToLower ().Replace (" ", "");
          string reversed = string.Join ("", input.Reverse ());
-         if (input == reversed) { Console.WriteLine ($"{input} is a palindrome"); }
-         else { Console.WriteLine ($"{input} is not a palindrome"); }
+         if (input == reversed) { Console.WriteLine ($"{uInput} is a palindrome"); }
+         else { Console.WriteLine ($"{uInput} is not a palindrome"); }
       }
       #endregion
    }
