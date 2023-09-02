@@ -17,8 +17,9 @@ namespace Training {
       static void Main (string[] args) {
          Console.Write ("Enter a Number: ");
          int num = int.Parse (Console.ReadLine());
-         Console.WriteLine ($"Reversed number is {reverseNum(num)}");
-         if (num == reverseNum(num)) { Console.WriteLine ("It is palindrome"); }
+         int revNum = reverseNum (num);
+         Console.WriteLine ($"Reversed number is {revNum}");
+         if (num == revNum) { Console.WriteLine ("It is palindrome"); }
          else { Console.WriteLine ("It is not a palindrome"); }
       }
       #endregion
