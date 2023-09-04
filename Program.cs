@@ -21,27 +21,21 @@ namespace Training {
       /// <summary>Gets an integer and calculates factorial</summary>
       /// <param name="n">number for which factorial is to be calculated</param>
       /// <returns>Factorial of n</returns>
-      static int Factorial (int n) {
-         int result = 1;
-         while (n > 0) {
-            result *= n; 
-            n--;
-         }
-         return result;
-      }
+      static int Factorial (int n) => n == 1 ? 1 : n * Factorial (n - 1);
+
       /// <summary>Generates the permutation of the given word</summary>
       /// <param name="word">Word for which permutations has to be generated</param>
       /// <returns>A string array with the permutations of the word</returns>
       static string[] Permute1 (string word) {
          int count = Factorial (word.Length);
-         string[] result = new string [count];
+         string[] result = new string[count];
          if (word.Length == 1) { result[0] = word; return result; }
          for (int i = 0; i < word.Length; i++) {
             char start = word[i];
             string remainingStr = word.Remove (i, 1);
             var remWords = Permute1 (remainingStr);
             int tCount = Factorial (remainingStr.Length);
-            for (int k = 0;  k < tCount; k++) result[k + i * tCount] = start + remWords[k];
+            for (int k = 0; k < tCount; k++) result[k + i * tCount] = start + remWords[k];
          }
          return result;
       }
