@@ -18,9 +18,11 @@ namespace Training {
          for(; ; ) {
             Console.WriteLine ("Enter a word: ");
             string input = Console.ReadLine ();
-            if (input.All (char.IsAsciiLetterLower)) {
+            if (input.All (char.IsAsciiLetter)) {
+               input = input.ToLower();
                while (i < input.Length - 1) if (input[i] == input[i + 1]) { input = input.Remove (i, 2); } else i++;
-               Console.WriteLine ($"Reduced String: {input}"); break;
+               if (input.Length == 0) Console.WriteLine ("Reduced String: Empty String");
+               else Console.WriteLine ($"Reduced String: {input}"); break;
             } else Console.WriteLine ("Try again with lower case alphabets");continue;
          }
       }
