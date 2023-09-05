@@ -27,13 +27,13 @@ namespace Training {
       /// <summary>This method returns wheather the password is strong or not with reason</summary>
       /// <param name="pw">Password input from user</param>
       static void PWordCheck (string pw) {
-         char[] specialChar = "!@#$%^&*()-+".ToCharArray ();
+         char[] specialChar = {'!','@','#','$','%','^','&','*','(',')','-','+'};
          bool valid = true;
          if (pw.Length < 6) { Console.WriteLine ("Password must contain atleast 6 characters"); valid = false; }
-         if (!(pw.Any (char.IsDigit))) { Console.WriteLine ("Password must contain at least one digit"); valid = false; }
-         if (!(pw.Any (char.IsLower))) {Console.WriteLine ("Password must contain at least one lowercase English character"); valid = false; }
-         if (!(pw.Any (char.IsUpper))) { Console.WriteLine ("Password must contain at least one uppercase English character."); valid = false; }
-         if (!(specialChar.Any (x => pw.Contains (x)))) { Console.WriteLine ("Password must contain at least one special character"); valid = false; }
+         if (!pw.Any (char.IsDigit)) { Console.WriteLine ("Password must contain at least one digit"); valid = false; }
+         if (!pw.Any (char.IsLower)) {Console.WriteLine ("Password must contain at least one lowercase English character"); valid = false; }
+         if (!pw.Any (char.IsUpper)) { Console.WriteLine ("Password must contain at least one uppercase English character."); valid = false; }
+         if (!specialChar.Any (x => pw.Contains (x))) { Console.WriteLine ("Password must contain at least one special character"); valid = false; }
          if (valid) Console.WriteLine ("Your Password is strong enough");
       }
    }
