@@ -18,7 +18,7 @@ namespace Training {
          for (; ; ) {
             if (int.TryParse(Console.ReadLine(), out int rows) && rows <= 55) {
                int limit = (rows + 1) * 2;
-               int gap = rows;
+               int gap = rows+1;
                Diamond (limit, gap);break;
             }
             else { Console.Write ("\nEnter a valid number below 55: "); }
@@ -30,17 +30,17 @@ namespace Training {
       static void Diamond (int limit,int Space) {
          string gap = " ";
          for (int i = 1; i <= limit; i += 2) {
-            Console.Write(gap.PadRight(Space+1));
+            Console.Write(gap.PadRight(Space--));
             for (int j = 0; j < i; j++)
                Console.Write ("*");
-            Console.WriteLine (); Space--;
+            Console.WriteLine (); 
          }
-         Space = 1;
-         for (int i = limit - 3; i >= 1; i -= 2) {
-            Console.Write(gap.PadRight (Space+1));
+         Space = 2;
+         for (int i = limit - 3; i >= 1; i -= 2) { 
+            Console.Write(gap.PadRight (Space++));
             for (int j = 0; j < i; j++)
                Console.Write ("*");
-            Console.WriteLine (); Space++;
+            Console.WriteLine (); 
          }
       }
       #endregion
