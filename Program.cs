@@ -8,7 +8,7 @@
 // It contains at least one digit. 
 // It contains at least one lowercase English character. 
 // It contains at least one uppercase English character. 
-// It contains at least one special character. The special characters are: !@#$%^&*()-+ 
+// It contains at least one special character. The special characters are: !,@,#,$,%,^,&,*,(,),-,+ 
 // Input: Password string, Output: Returns whether the password is strong or not with reasons. 
 // --------------------------------------------------------------------------------------------
 namespace Training {
