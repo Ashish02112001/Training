@@ -15,14 +15,16 @@ namespace Training {
       static void Main (string[] args) {
          Console.Write ("Enter a Number: ");
          for(; ; ) {
-            if (int.TryParse (Console.ReadLine (), out var num)) {
-               Console.WriteLine ($"{num}! = {Factorial (num)}");
-               break;
-            } else Console.Write ("Enter a valid number: ");
+            if (int.TryParse (Console.ReadLine (), out var num) && num > 0 && num <= 20) {
+               Console.WriteLine ($"{num}! = {Factorial (num)}"); break;
+            } else Console.Write ("Enter a valid number below 20: ");
          }
       }
       #endregion
-      static int Factorial (int num) => (num > 1) ? num * Factorial (num - 1) : 1;
+      /// <summary>Gets the number and calculates the factorial of it</summary>
+      /// <param name="num">Number from the user</param>
+      /// <returns>Factorial of the number</returns>
+      static long Factorial (int num) => (num > 1) ? num * Factorial (num - 1) : 1;
    }
    #endregion
 }
