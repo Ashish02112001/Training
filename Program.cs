@@ -18,7 +18,7 @@ namespace Training {
          Console.Write ("Enter a number: ");
          for (; ; ) {
             if (int.TryParse (Console.ReadLine (), out int num)) {
-               if (ArmstrongNum(num)) { Console.WriteLine ($"{num} is an Armstrong number"); break; }
+               if (ArmstrongNum (num)) { Console.WriteLine ($"{num} is an Armstrong number"); break; } 
                else { Console.WriteLine ($"{num} is not an Armstrong number"); break; }
             } else { Console.Write ("\nEnter a valid number: "); }
          }
@@ -27,12 +27,12 @@ namespace Training {
       /// <summary>Checks wheather a given number is an Armstrong number</summary>
       /// <param name="num">Number from the user</param>
       /// <returns>True if the number is a armstrong number</returns>
-      static bool ArmstrongNum(int num) {
+      static bool ArmstrongNum (int num) {
          int numCpy = num;
          double sum = 0, pow = num.ToString ().Length;
          while (numCpy > 0) {
             int digit = numCpy % 10;
-            sum += Math.Pow(digit,pow);
+            sum += Math.Pow (digit, pow);
             numCpy /= 10;
          }
          return (num == sum);
