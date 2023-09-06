@@ -14,28 +14,22 @@ namespace Training {
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
          int count = 1;
-         string word = "RED";
+         Console.WriteLine ("Enter a word: ");
+         string word = Console.ReadLine();
          Console.WriteLine ($"Permutation of the word {word}");
-         foreach (string str in Permute1 (word)) { Console.WriteLine ($"{count,4}. {str}"); count++; }
+         foreach (string str in Permute1 (word).Distinct()) { Console.WriteLine ($"{count,4}. {str}"); count++; }
       }
-      /// <summary>Gets an integer and calculates factorial</summary>
-      /// <param name="n">number for which factorial is to be calculated</param>
-      /// <returns>Factorial of n</returns>
-      static int Factorial (int n) => n == 1 ? 1 : n * Factorial (n - 1);
-
       /// <summary>Generates the permutation of the given word</summary>
       /// <param name="word">Word for which permutations has to be generated</param>
       /// <returns>A string array with the permutations of the word</returns>
-      static string[] Permute1 (string word) {
-         int count = Factorial (word.Length);
-         string[] result = new string[count];
-         if (word.Length == 1) { result[0] = word; return result; }
+      static List<string> Permute1 (string word) {
+         List<string> result = new();
+         if (word.Length == 1) { result.Add (word); return result; }
          for (int i = 0; i < word.Length; i++) {
             char start = word[i];
             string remainingStr = word.Remove (i, 1);
             var remWords = Permute1 (remainingStr);
-            int tCount = Factorial (remainingStr.Length);
-            for (int k = 0; k < tCount; k++) result[k + i * tCount] = start + remWords[k];
+            foreach (string str in remWords) result.Add(start + str);
          }
          return result;
       }
