@@ -17,7 +17,7 @@ namespace Training {
          Console.WriteLine ("Enter a word: ");
          string word = Console.ReadLine();
          Console.WriteLine ($"Permutation of the word {word}");
-         foreach (string str in Permute1 (word).Distinct()) { Console.WriteLine ($"{count,4}. {str}"); count++; }
+         foreach (string str in Permute1 (word).Distinct()) { Console.WriteLine ($"{count, 4}. {str}"); count++; }
       }
       /// <summary>Generates the permutation of the given word</summary>
       /// <param name="word">Word for which permutations has to be generated</param>
