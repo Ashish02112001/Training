@@ -12,13 +12,13 @@ namespace Training {
    /// <summary>Nth Armstrong Number</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>This Method gets Nth term of Armstrong number as a command line argument</summary>
+      /// <summary>This Method gets Nth term of Armstrong number and prints it</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         for(; ; ) {
-            Console.WriteLine ("Enter Nth term of Armstrong number to be printed: ");
+         for (; ; ) {
+            Console.Write ("Enter Nth term of Armstrong number to be printed: ");
             if (int.TryParse (Console.ReadLine (), out var num) && num <= 25) {
-               Console.WriteLine ($"{num}th term of Armstrong number is {NthArmstrong (num)}");break;
+               Console.WriteLine ($"{num}th term of Armstrong number is {NthArmstrong (num)}"); break;
             } else {
                Console.WriteLine ("Invalid input. Please enter a positive integer below 25");
             }
@@ -28,7 +28,7 @@ namespace Training {
       /// <summary>This method prints the Nth Armstrong number</summary>
       /// <param name="nthNum">Nth term</param>
       /// <returns>Nth term of Armstrong number</returns>
-      static int NthArmstrong(int nthNum) {
+      static int NthArmstrong (int nthNum) {
          int count = 0, num = 1;
          while (count <= nthNum) {
             if (Armstrong (num)) { count++; if (count == nthNum) { break; } }
