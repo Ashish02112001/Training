@@ -14,19 +14,16 @@ namespace Training {
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
          Console.WriteLine ("Enter two numbers: ");
-         if (int.TryParse (Console.ReadLine(), out var a) && int.TryParse(Console.ReadLine(),out var b)) {
+         if (int.TryParse (Console.ReadLine (), out var a) && int.TryParse (Console.ReadLine (), out var b)) {
             Console.WriteLine ($"Before Swaping: \na = {a} \nb = {b}");
-            var swapedNum = Swap (a, b);
-            Console.WriteLine ($"After Swaping: \na = {swapedNum.Item1} \nb = {swapedNum.Item2}");
+            (a,b) = Swap (a, b);
+            Console.WriteLine ($"After Swaping: \na = {a} \nb = {b}");
          }
       }
       /// <summary>Gets two number and swaps it</summary>
       /// <param name="a">1st number</param>
       /// <param name="b">2nd number</param>
-      static Tuple<int,int> Swap (int a,int b) { 
-         var swapNum = new Tuple<int,int>(b,a);
-         return swapNum;
-      }
+      static (int, int) Swap (int a, int b) => (b, a);
       #endregion
    }
    #endregion
