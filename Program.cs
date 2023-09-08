@@ -16,14 +16,17 @@ namespace Training {
          Console.WriteLine ("Enter two numbers: ");
          if (int.TryParse (Console.ReadLine(), out var a) && int.TryParse(Console.ReadLine(),out var b)) {
             Console.WriteLine ($"Before Swaping: \na = {a} \nb = {b}");
-            Swap (ref a, ref b);
-            Console.WriteLine ($"After Swaping: \na = {a} \nb = {b}");
+            var swapedNum = Swap (a, b);
+            Console.WriteLine ($"After Swaping: \na = {swapedNum.Item1} \nb = {swapedNum.Item2}");
          }
       }
       /// <summary>Gets two number and swaps it</summary>
       /// <param name="a">1st number</param>
       /// <param name="b">2nd number</param>
-      static void Swap (ref int a,ref int b) { (a, b) = (b, a); }
+      static Tuple<int,int> Swap (int a,int b) { 
+         var swapNum = new Tuple<int,int>(b,a);
+         return swapNum;
+      }
       #endregion
    }
    #endregion
