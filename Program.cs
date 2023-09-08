@@ -15,10 +15,13 @@ namespace Training {
       /// <summary>This Method gets Nth term of Armstrong number as a command line argument</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         if (int.TryParse (args[0], out var num) && num <= 25) {
-            Console.WriteLine ($"{num}th term of Armstrong number is {NthArmstrong (num)}");
-         } else {
-            Console.WriteLine ("Invalid input. Please enter a positive integer below 25");
+         for(; ; ) {
+            Console.WriteLine ("Enter Nth term of Armstrong number to be printed: ");
+            if (int.TryParse (Console.ReadLine (), out var num) && num <= 25) {
+               Console.WriteLine ($"{num}th term of Armstrong number is {NthArmstrong (num)}");break;
+            } else {
+               Console.WriteLine ("Invalid input. Please enter a positive integer below 25");
+            }
          }
       }
       #endregion
