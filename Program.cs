@@ -5,7 +5,7 @@
 // Program.cs
 // DISPLAY THE INDIVIDUAL DIGITS OF A GIVEN NUMBER 
 // Displays the individual digits of a given number, which should also handle decimal digits.
-// For example, 355.56 is the input number, output = integral part: 3 5 5; factorial part: 5 6.
+// For example, 355.56 is the input number, output = integral part: 3 5 5; fractional part: 5 6.
 // --------------------------------------------------------------------------------------------
 namespace Training {
    #region Program ------------------------------------------------------------------------------
@@ -18,26 +18,17 @@ namespace Training {
          Console.Write ("Enter a number: ");
          for (; ; ) {
             if (decimal.TryParse (Console.ReadLine (), out var num)) {
-               int intPart = (int)num;
-               decimal fractPart = num - intPart;
-               int fractLen = fractPart.ToString ().Length;
-               fractLen = fractPart < 0 ? fractLen - 3 : fractLen - 2;
-               int fractPartx = (int) ((decimal)Math.Pow (10, fractLen) * fractPart);
+               string numStr = num.ToString ();
+               string intPart = numStr.Contains ('.') ? numStr.Substring (0, numStr.IndexOf ('.')) : numStr;
                Console.Write ("Integral Part: ");
-               PrintDigits (Math.Abs(intPart));
-               Console.Write ("\nFractional Part: ");
-               PrintDigits (Math.Abs(fractPartx));
+               foreach (char digit in intPart) Console.Write ($"{digit} ");
+               if (numStr.Contains ('.')) {
+                  string fractPart = numStr.Substring (numStr.IndexOf ('.') + 1);
+                  Console.Write ("\nFractional Part: ");
+                  foreach (char digit in fractPart) Console.Write ($"{digit} ");
+               }
                break;
             } else { Console.Write ("Enter a valid number: "); }
-         }
-      }
-      /// <summary>Prints the individual digits</summary>
-      /// <param name="num">Number from the user</param>
-      static void PrintDigits(int num) {
-         while (num > 0) {
-            int exp = (int)Math.Pow (10,num.ToString ().Length)/10;
-            Console.Write ($"{num / exp} ");
-            num %= exp;
          }
       }
       #endregion
