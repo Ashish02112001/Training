@@ -15,7 +15,7 @@ namespace Training {
       static void Main (string[] args) {
          int count = 1;
          Console.WriteLine ("Enter a word: ");
-         string word = Console.ReadLine();
+         string word = Console.ReadLine() ?? "";
          Console.WriteLine ($"Permutation of the word {word}");
          foreach (string str in Permute1 (word).Distinct()) { Console.WriteLine ($"{count, 4}. {str}"); count++; }
       }
