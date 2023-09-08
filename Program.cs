@@ -18,16 +18,25 @@ namespace Training {
          for (; ; ) {
             Console.Write ("Enter Nth term of Armstrong number to be printed: ");
             if (int.TryParse (Console.ReadLine (), out var num) && num <= 25) {
-               Console.WriteLine ($"{num}th term of Armstrong number is {NthArmstrong (num)}"); break;
+               Console.WriteLine ($"{num}th term of Armstrong number is {ReadFile (num)}"); break;
             } else {
                Console.WriteLine ("Invalid input. Please enter a positive integer below 25");
             }
          }
       }
-      #endregion
-      /// <summary>This method prints the Nth Armstrong number</summary>
-      /// <param name="nthNum">Nth term</param>
-      /// <returns>Nth term of Armstrong number</returns>
+      static int ReadFile (int nth) {
+         string path = "W:/Cache.txt";
+         if (File.Exists (path)) {
+            string str = File.ReadAllText (path);
+            if(nth <= str.Trim ().Length) foreach (int n in str) return (str[nth-1]-48);
+            else { NthArmstrong (nth); return 0; }
+         }
+         return 0;
+      }
+         #endregion
+         /// <summary>This method prints the Nth Armstrong number</summary>
+         /// <param name="nthNum">Nth term</param>
+         /// <returns>Nth term of Armstrong number</returns>
       static int NthArmstrong (int nthNum) {
          int count = 0, num = 1;
          while (count <= nthNum) {
@@ -36,19 +45,20 @@ namespace Training {
          }
          return num;
       }
-      /// <summary>Checks the number is Armstrong number or not</summary>
-      /// <param name="n">Number to be checked</param>
-      /// <returns>True if it is Armstrong number else false</returns>
-      static bool Armstrong (int n) {
-         double sum = 0, pow = n.ToString ().Length;
-         int nCpy = n;
-         while (nCpy > 0) {
-            int digit = nCpy % 10;
-            sum += Math.Pow (digit, pow);
-            nCpy /= 10;
+         /// <summary>Checks the number is Armstrong number or not</summary>
+         /// <param name="n">Number to be checked</param>
+         /// <returns>True if it is Armstrong number else false</returns>
+         static bool Armstrong (int n) {
+            double sum = 0, pow = n.ToString ().Length;
+            int nCpy = n;
+            while (nCpy > 0) {
+               int digit = nCpy % 10;
+               sum += Math.Pow (digit, pow);
+               nCpy /= 10;
+            }
+            return sum == n;
          }
-         return sum == n;
-      }
+      
+      #endregion
    }
-   #endregion
 }
