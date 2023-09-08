@@ -15,21 +15,21 @@ namespace Training {
       static void Main (string[] args) {
          int count = 1;
          Console.WriteLine ("Enter a word: ");
-         string word = Console.ReadLine() ?? "";
+         string word = Console.ReadLine () ?? "";
          Console.WriteLine ($"Permutation of the word {word}");
-         foreach (string str in Permute1 (word).Distinct()) { Console.WriteLine ($"{count, 4}. {str}"); count++; }
+         foreach (string str in Permute1 (word).Distinct ()) { Console.WriteLine ($"{count,4}. {str}"); count++; }
       }
       /// <summary>Generates the permutation of the given word</summary>
       /// <param name="word">Word for which permutations has to be generated</param>
       /// <returns>A string array with the permutations of the word</returns>
       static List<string> Permute1 (string word) {
-         List<string> result = new();
+         List<string> result = new ();
          if (word.Length == 1) { result.Add (word); return result; }
          for (int i = 0; i < word.Length; i++) {
             char start = word[i];
             string remainingStr = word.Remove (i, 1);
             var remWords = Permute1 (remainingStr);
-            foreach (string str in remWords) result.Add(start + str);
+            foreach (string str in remWords) result.Add (start + str);
          }
          return result;
       }
