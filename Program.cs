@@ -5,6 +5,7 @@
 // Program.cs
 // Function to print the factorial for the given number
 // --------------------------------------------------------------------------------------------
+using System.Numerics;
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>Factorial of a number</summary>
@@ -14,8 +15,8 @@ namespace Training {
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
          Console.Write ("Enter a Number: ");
-         for(; ; ) {
-            if (int.TryParse (Console.ReadLine (), out var num) && num > 0 && num <= 20) {
+         for (; ; ) {
+            if (int.TryParse (Console.ReadLine (), out var num) && num > 0) {
                Console.WriteLine ($"{num}! = {Factorial (num)}"); break;
             } else Console.Write ("Enter a valid number below 20: ");
          }
@@ -24,7 +25,7 @@ namespace Training {
       /// <summary>Gets the number and calculates the factorial of it</summary>
       /// <param name="num">Number from the user</param>
       /// <returns>Factorial of the number</returns>
-      static long Factorial (int num) => (num > 1) ? num * Factorial (num - 1) : 1;
+      static BigInteger Factorial (int num) => (num > 1) ? num * Factorial (num - 1) : 1;
    }
    #endregion
 }
