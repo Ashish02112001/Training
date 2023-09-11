@@ -14,11 +14,11 @@ namespace Training {
       /// <summary>This method asks the number from the user and gives factorial of it</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         Console.Write ("Enter a Number: ");
          for (; ; ) {
+            Console.Write ("Enter a Number: ");
             if (int.TryParse (Console.ReadLine (), out var num) && num > 0) {
                Console.WriteLine ($"{num}! = {Factorial (num)}"); break;
-            } else Console.Write ("Enter a valid number below 20: ");
+            } 
          }
       }
       #endregion
