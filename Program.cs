@@ -19,16 +19,14 @@ namespace Training {
          for (; ; ) {
             if (decimal.TryParse (Console.ReadLine (), out var num)) {
                string numStr = num.ToString ();
-               string intPart = numStr.Contains ('.') ? numStr.Substring (0, numStr.IndexOf ('.')) : numStr;
-               Console.Write ("Integral Part: ");
-               foreach (char digit in intPart) Console.Write ($"{digit} ");
-               if (numStr.Contains ('.')) {
-                  string fractPart = numStr.Substring (numStr.IndexOf ('.') + 1);
-                  Console.Write ("\nFractional Part: ");
-                  foreach (char digit in fractPart) Console.Write ($"{digit} ");
-               }
-               break;
-            } else { Console.Write ("Enter a valid number: "); }
+               string[] digits = numStr.Split ('.');
+               Console.Write ("Integral part: ");
+               foreach (char iP in digits[0]) Console.Write ($"{iP} ");
+               if (digits.Length == 2) {
+                  Console.Write ("\nFractional part: ");
+                  foreach (char fP in digits[1]) Console.Write ($"{fP} ");
+               }break;
+            } else { Console.Write ("Enter a valid number: "); } 
          }
       }
       #endregion
