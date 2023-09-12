@@ -17,7 +17,7 @@ namespace Training {
          for (; ; ) {
             Console.Write ("Enter a Number: ");
             if (int.TryParse (Console.ReadLine (), out var num) && num > 0) {
-               Console.WriteLine ($"{num}! = {Factorial (num)}"); break;
+               Console.WriteLine ($"{num}! = {Factorial (num)}"); 
             } 
          }
       }
@@ -25,7 +25,13 @@ namespace Training {
       /// <summary>Gets the number and calculates the factorial of it</summary>
       /// <param name="num">Number from the user</param>
       /// <returns>Factorial of the number</returns>
-      static BigInteger Factorial (int num) => (num > 1) ? num * Factorial (num - 1) : 1;
+      static BigInteger Factorial (int num) {
+         BigInteger fact = 1;
+         for (int i = 1; i <= num; i++) {
+            fact*= i;
+         }
+         return fact;
+      }
    }
    #endregion
 }
