@@ -25,8 +25,9 @@ namespace Training {
                if (digits.Length == 2) {
                   Console.Write ("\nFractional part: ");
                   foreach (char fP in digits[1]) Console.Write ($"{fP} ");
-               }break;
-            } else { Console.Write ("Enter a valid number: "); } 
+               }
+               break;
+            } else { Console.Write ("Enter a valid number: "); }
          }
       }
 
