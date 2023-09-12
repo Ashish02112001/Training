@@ -8,6 +8,7 @@
 // For example, Armstrong.exe 12 should print as 371. Maximum input can be restricted to 25. 
 // --------------------------------------------------------------------------------------------
 using System.IO;
+using System.Reflection;
 
 namespace Training {
    #region Program ------------------------------------------------------------------------------
@@ -19,44 +20,47 @@ namespace Training {
       static void Main (string[] args) {
          for (; ; ) {
             Console.Write ("Enter Nth term of Armstrong number to be printed: ");
-            if (int.TryParse (Console.ReadLine (), out var num) ) {
+            if (int.TryParse (Console.ReadLine (), out var num)) {
                Console.WriteLine ($"{num}th term of Armstrong number is {NthArmstrong (num)}"); break;
             } else {
                Console.WriteLine ("Invalid input. Please enter a positive integer");
             }
          }
       }
+      /// <summary>Cache.txt file placed in location of the Executable file</summary>
+      static string path = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location) + "\\Cache.txt";
+      /// <summary>Storing the contents of cache file in a list</summary>
+      static List<string> nums = File.ReadAllLines (path).ToList ();
+      /// <summary>Inserts the Armstron numbers the cache file</summary>
+      /// <param name="num">Armstrong number</param>
+      static void AppendNthArmsToCache (int num) {
+         string n = num.ToString ();
+         using StreamWriter sw = File.AppendText (path);
+         if (!nums.Contains (n)) sw.WriteLine (num);
+      }
+      /// <summary>Displays Nth Armstrong number if it's in cache file else calculates it</summary>
+      /// <param name="nth">User input</param>
+      /// <returns>Nth Armstrong number</returns>
       static string NthArmstrong (int nth) {
-         string path = "W:/Cache.txt";
          if (File.Exists (path)) {
-            List<string> nums = File.ReadAllLines (path).ToList();
             if (nth < nums.Count) return nums[nth - 1];
             else { return $"{CalculateNthArmstrong (nth)}"; }
-         } else { FileStream fs = File.Create ("C:/Cache.txt"); return $"{CalculateNthArmstrong (nth)}"; };
+         } else { FileStream fs = File.Create (path); return $"{CalculateNthArmstrong (nth)}"; };
       }
-      static void AppendNthArmsToCache(int num) {
-         string path = "W:/Cache.txt";
-         string n = num.ToString ();
-         List<string> nums = File.ReadAllLines (path).ToList();
-         using StreamWriter sw = File.AppendText(path);
-         if (!nums.Contains(n))sw.WriteLine (num);
-      }
-      /// <summary>This method prints the Nth Armstrong number</summary>
+      /// <summary>This method calculates and returns Nth Armstrong number</summary>
       /// <param name="nthNum">Nth term</param>
       /// <returns>Nth term of Armstrong number</returns>
       static int CalculateNthArmstrong (int nthNum) {
-         string path = "W:/Cache.txt";
-         List<string> nums = File.ReadAllLines (path).ToList ();
          int count, num;
          if (nums.Count > 0) {
             count = nums.Count;
-            num = int.Parse(nums.Last());
-         }else {count = 0;num = 1; }
+            num = int.Parse (nums.Last ());
+         } else { count = 0; num = 1; }
          while (count <= nthNum) {
-            if (Armstrong (num)) { 
+            if (Armstrong (num)) {
                count++;
-               AppendNthArmsToCache (num); 
-               if (count == nthNum) { break; } 
+               AppendNthArmsToCache (num);
+               if (count == nthNum) { break; }
             }
             num++;
          }
@@ -78,5 +82,4 @@ namespace Training {
       #endregion
    }
    #endregion
-
 }
