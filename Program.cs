@@ -21,7 +21,7 @@ namespace Training {
                string numStr = num.ToString ();
                string[] digits = numStr.Split ('.');
                Console.Write ("Integral part: ");
-               foreach (char iP in digits[0]) Console.Write ($"{iP} ");
+               foreach (char iP in digits[0]) { if (iP == '-') continue; Console.Write ($"{iP} "); }
                if (digits.Length == 2) {
                   Console.Write ("\nFractional part: ");
                   foreach (char fP in digits[1]) Console.Write ($"{fP} ");
@@ -30,7 +30,6 @@ namespace Training {
             } else { Console.Write ("Enter a valid number: "); }
          }
       }
-
       #endregion
    }
    #endregion
