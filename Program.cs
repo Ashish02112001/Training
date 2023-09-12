@@ -20,16 +20,16 @@ namespace Training {
          for (int i = 0; i < nums.Length; i++) {
             int n = new Random ().Next (1, 10);
             if (!nums.Contains (n)) nums[i] = n;
-            else { --i; }
+            else  --i; 
          }
          Console.Write ("Random number: ");
-         foreach (int digit in nums) { Console.Write ($"{digit} "); }
+         foreach (int digit in nums) Console.Write ($"{digit} ");
          for (; ; ) {
             Console.WriteLine ("\nEnter two indices to be swapped(0 - 5): ");
             if (int.TryParse (Console.ReadLine (), out int i1) && i1 < 6 && int.TryParse (Console.ReadLine (), out int i2) && i2 < 6) {
                (nums[i1], nums[i2]) = (nums[i2], nums[i1]);
                Console.Write ("Result after swapping: ");
-               foreach (int digit in nums) { Console.Write ($"{digit} "); }
+               foreach (int digit in nums) Console.Write ($"{digit} "); 
                break;
             }
          }
