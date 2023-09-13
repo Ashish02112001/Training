@@ -14,16 +14,13 @@ namespace Training {
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
          for(; ; ) {
-            bool isogram = true;
-            Console.WriteLine ("Enter a word: ");
+            Console.Write ("Enter a word: ");
             string input = Console.ReadLine ();
-            if (input.All (char.IsAsciiLetter)) {
-               foreach (var letter in input) {
-                  if (input.Count (x => x == letter) > 1) { Console.WriteLine ($"{input} is an not an isogram"); isogram = false; break; }
-               }
-               if (isogram) { Console.WriteLine ($"{input} is an isogram"); }
+            if (input.All (char.IsAsciiLetter) && input.Length > 0) {
+               if (input.Distinct ().Count () == input.Length) Console.WriteLine ($"{input} is an isogram");
+               else Console.WriteLine ($"{input} is an not an isogram");
                break;
-            } else continue;
+            } 
          }
       }
       #endregion
