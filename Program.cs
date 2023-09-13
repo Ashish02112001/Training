@@ -30,7 +30,7 @@ namespace Training {
       /// <summary>Cache.txt file placed in location of the Executable file</summary>
       static string path = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location) + "\\Cache.txt";
       /// <summary>Storing the contents of cache file in a list</summary>
-      static List<string> nums = File.ReadAllLines (path).ToList ();
+      static List<string> nums = new ();
       /// <summary>Inserts the Armstron numbers the cache file</summary>
       /// <param name="num">Armstrong number</param>
       static void AppendNthArmsToCache (int num) {
@@ -43,8 +43,9 @@ namespace Training {
       /// <returns>Nth Armstrong number</returns>
       static string NthArmstrong (int nth) {
          if (File.Exists (path)) {
+            nums = File.ReadAllLines (path).ToList ();
             if (nth < nums.Count) return nums[nth - 1];
-            else { return $"{CalculateNthArmstrong (nth)}"; }
+            else  return $"{CalculateNthArmstrong (nth)}"; 
          } else { FileStream fs = File.Create (path); return $"{CalculateNthArmstrong (nth)}"; };
       }
       /// <summary>This method calculates and returns Nth Armstrong number</summary>
@@ -56,14 +57,17 @@ namespace Training {
             count = nums.Count;
             num = int.Parse (nums.Last ());
          } else { count = 0; num = 1; }
+         // List to add new numbers to the Cache file
+         List<int> newNums = new ();
          while (count <= nthNum) {
             if (Armstrong (num)) {
                count++;
-               AppendNthArmsToCache (num);
-               if (count == nthNum) { break; }
+               newNums.Add (num);
+               if (count == nthNum) break;
             }
             num++;
          }
+         foreach (int n in newNums) AppendNthArmsToCache (n);
          return num;
       }
       /// <summary>Checks the number is Armstrong number or not</summary>
