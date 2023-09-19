@@ -33,10 +33,10 @@ namespace Training {
       static List<string> nums = new ();
       /// <summary>Inserts the Armstron numbers the cache file</summary>
       /// <param name="num">Armstrong number</param>
-      static void AppendNthArmsToCache (int num) {
+      static void AppendNthArmsToCache (string num) {
          string n = num.ToString ();
          using StreamWriter sw = File.AppendText (path);
-         if (!nums.Contains (n)) sw.WriteLine (num);
+         sw.WriteLine (num);
       }
       /// <summary>Displays Nth Armstrong number if it's in cache file else calculates it</summary>
       /// <param name="nth">User input</param>
@@ -45,7 +45,7 @@ namespace Training {
          if (File.Exists (path)) {
             nums = File.ReadAllLines (path).ToList ();
             if (nth < nums.Count) return nums[nth - 1];
-            else  return $"{CalculateNthArmstrong (nth)}"; 
+            else return $"{CalculateNthArmstrong (nth)}";
          } else { FileStream fs = File.Create (path); return $"{CalculateNthArmstrong (nth)}"; };
       }
       /// <summary>This method calculates and returns Nth Armstrong number</summary>
@@ -55,19 +55,18 @@ namespace Training {
          int count, num;
          if (nums.Count > 0) {
             count = nums.Count;
-            num = int.Parse (nums.Last ());
+            num = int.Parse (nums.Last ()) + 1;
          } else { count = 0; num = 1; }
-         // List to add new numbers to the Cache file
-         List<int> newNums = new ();
+         nums = new List<string> ();
          while (count <= nthNum) {
             if (Armstrong (num)) {
                count++;
-               newNums.Add (num);
+               nums.Add (num.ToString ());
                if (count == nthNum) break;
             }
             num++;
          }
-         foreach (int n in newNums) AppendNthArmsToCache (n);
+         foreach (string n in nums) AppendNthArmsToCache (n);
          return num;
       }
       /// <summary>Checks the number is Armstrong number or not</summary>
