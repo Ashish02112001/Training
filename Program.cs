@@ -44,9 +44,8 @@ namespace Training {
       static string NthArmstrong (int nth) {
          if (File.Exists (path)) {
             nums = File.ReadAllLines (path).ToList ();
-            if (nth < nums.Count) return nums[nth - 1];
-            else return $"{CalculateNthArmstrong (nth)}";
-         } else { FileStream fs = File.Create (path); return $"{CalculateNthArmstrong (nth)}"; };
+            return (nth < nums.Count) ? nums[nth - 1]  : $"{CalculateNthArmstrong (nth)}";
+         } else return $"{CalculateNthArmstrong (nth)}";
       }
       /// <summary>This method calculates and returns Nth Armstrong number</summary>
       /// <param name="nthNum">Nth term</param>
