@@ -57,7 +57,6 @@ namespace Training {
             count = nums.Count;
             num = int.Parse (nums.Last ()) + 1;
          } else { count = 0; num = 1; }
-         nums = new List<string> ();
          while (count <= nthNum) {
             if (Armstrong (num)) {
                count++;
@@ -66,7 +65,7 @@ namespace Training {
             }
             num++;
          }
-         foreach (string n in nums) AppendNthArmsToCache (n);
+         File.WriteAllLines (path, nums);
          return num;
       }
       /// <summary>Checks the number is Armstrong number or not</summary>
