@@ -8,14 +8,12 @@
 // Input Criteria: Character representation is Case-Insensitive and Alphabet. S should not be empty. 
 // Use at least 1 keyword/technique: in, out, ref, optional parameters, multiple return values. 
 // --------------------------------------------------------------------------------------------
-using System.Reflection;
-
 namespace Training {
    #region Program ------------------------------------------------------------------------------
-   /// <summary>Sample program</summary>
+   /// <summary>Voting Vontest</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>This Method prints "Hello, World!"</summary>
+      /// <summary>Gets the votes and gives the winner</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
          string S;
@@ -29,6 +27,9 @@ namespace Training {
             }
          }
       }
+      /// <summary>Gets the user input and returns the winner and their vcount</summary>
+      /// <param name="votes">User input</param>
+      /// <returns>winner and vote count</returns>
       static (char ch, int n) VotesCounter (string votes) {
          votes = votes.ToLower ();
          Dictionary<char, int> votesCounter = new Dictionary<char, int> ();
