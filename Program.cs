@@ -20,7 +20,7 @@ namespace Training {
          for (; ; ) {
             Console.Write ("Enter your vote for contestants(A to Z): ");
             S = Console.ReadLine () ?? "";
-            if (S.All (char.IsAsciiLetter) && S.Length > 0) {
+            if (S.All (char.IsLetter) && S.Length > 0) {
                var majority = VotesCounter (S);
                Console.WriteLine ($"The winner is {majority.ch} with {majority.n} votes");
                break;
