@@ -16,10 +16,11 @@ namespace Training {
       static void Main (string[] args) {
          Console.Write ("Enter the elements of character array as a word: ");
          char[] A = (Console.ReadLine () ?? "").ToLower ().ToCharArray ();
-         Console.Write ("Enter the special character: ");
-         char S = Console.ReadLine ().First ();
-         Console.WriteLine ("Enter the sort order(Ascending or Descending): ");
-         string O = Console.ReadLine () ?? "".ToLower ();
+         Console.WriteLine ("Enter the special character: ");
+         char S = Console.ReadLine ()[0];
+         Console.WriteLine ("Enter the sort order(ascending(a) or Descending(d)): ");
+         char O = Console.ReadLine ()[0];
+         //string O = Console.ReadLine () ?? "".ToLower ();
          Console.WriteLine ($"Sorted and swapped special characrter: [{SortAndSwapSplChr (A, S, O)}]");
       }
       /// <summary>This method sorts the character array and adds the special character at the last</summary>
@@ -29,10 +30,10 @@ namespace Training {
       /// <param name="filterA">optional variable to store the letters excluding special characters</param>
       /// <param name="spChr">optional variable to store special characters from a given array</param>
       /// <returns>Sorted and swapped string seperated by ","</returns>
-      static string SortAndSwapSplChr (char[] A, char S, string O, string filterA = "", string spChr = "") {
+      static string SortAndSwapSplChr (char[] A, char S, char O, string filterA = "", string spChr = "") {
          foreach (char c in A) if (c == S) spChr += c; else filterA += c;
          char[] filterArr = filterA.ToCharArray ();
-         filterArr = ((O == "descanding") ? filterArr.OrderDescending () : filterArr.Order ()).ToArray ();
+         filterArr = ((O == 'd') ? filterArr.OrderDescending () : filterArr.Order ()).ToArray ();
          return ($"{string.Join (",", filterArr)},{string.Join (",", spChr.ToArray ())}");
       }
       #endregion
