@@ -14,12 +14,10 @@ namespace Training {
       /// <summary>This method gets the character array, Special Character and Order then prints sorted and swapped string</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         Console.Write ("Enter the elements of character array as a word: ");
-         char[] A = (Console.ReadLine () ?? "").ToLower ().ToCharArray ();
-         Console.WriteLine ("Enter the special character: ");
-         char S = Console.ReadLine ().FirstOrDefault ();
-         Console.WriteLine ("Enter the sort order, (a)scending or (d)escending: ");
-         char O = Console.ReadLine ().FirstOrDefault ();
+         string input = GetInput ("Enter the elements of character array as a word: ");
+         char[] A = (input ?? "").ToLower ().ToCharArray ();
+         char S = GetInput ("Enter the special character: ").FirstOrDefault ();
+         char O = GetInput ("Enter the sort order, (a)scending or (d)escending: ").FirstOrDefault ();
          Console.WriteLine ($"Sorted and swapped special character: [{SortAndSwapSplChr (A, S, O)}]");
       }
 
@@ -32,6 +30,19 @@ namespace Training {
          char[] filtered = A.Where (c => c != S).ToArray ();
          char[] special = A.Where (c => c == S).ToArray ();
          return string.Join (", ", (O == 'd' ? filtered.OrderDescending () : filtered.Order ()).Concat (special));
+      }
+
+      /// <summary>Prints the prompt and gets only the ASCII string</summary>
+      /// <param name="prompt">Sentence to ask the user for input</param>
+      /// <returns>ASCII user input</returns>
+      static string GetInput (string prompt) {
+         string input;
+         for (; ; ) {
+            Console.Write ($"{prompt}");
+            input = Console.ReadLine ();
+            if (input.All (char.IsAsciiLetter)) return input;
+            else Console.WriteLine ("Input should contain only letters. Please try again.");
+         }
       }
       #endregion
    }
