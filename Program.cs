@@ -14,17 +14,17 @@ namespace Training {
       /// <summary>This Method gets three integer inputs from user and gives the result </summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         Console.WriteLine ("Enter the money(X) you have to buy chocolates");
-         Console.WriteLine ("Enter the price of a chocolate(P)");
-         Console.WriteLine ("Enter the required wrappers(W) for a Chocolate in exchange in order");
+         Console.WriteLine ("Enter the money(X)(should be > 0) ()you have to buy chocolates");
+         Console.WriteLine ("Enter the price of a chocolate(P)(should be > 0)");
+         Console.WriteLine ("Enter the required wrappers(W) (should be > 1) for a Chocolate in exchange in order");
          for (; ; ) {
-            if (int.TryParse (Console.ReadLine (), out int money) && int.TryParse (Console.ReadLine (), out int price) && int.TryParse (Console.ReadLine (), out int wrapExchange)) {
+            if (int.TryParse (Console.ReadLine (), out int money) && money > 0 && int.TryParse (Console.ReadLine (), out int price) && price > 0 && int.TryParse (Console.ReadLine (), out int wrapExchange) && wrapExchange > 1) {
                Console.WriteLine ($"(X = {money}, P = {price}, W = {wrapExchange})");
                var result = ChocoWrappers (money, price, wrapExchange);
                Console.WriteLine ($"(C = {result.maxChoco}, X = {result.remRs}, W = {result.remWrap})");
                Console.WriteLine ("Maximum Chocolates bought(C), Remaining money(X) and wrappers(W)");
                break;
-            } else { Console.WriteLine ("Enter the integer values for X, P and W"); }
+            } else { Console.WriteLine ("Enter the integer values for X, P and W (X & P > 0, W > 1)"); }
          }
       }
       /// <summary>calculates the maximum number of chocolates, unused money and wrappers</summary>
