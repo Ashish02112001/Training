@@ -20,8 +20,11 @@ namespace Training {
          nums.Add (5);
          nums.Add (6);
          nums.Add (7);
-         nums.Clear ();
-         for (int i = 0; i < nums.Count;i++) { Console.WriteLine (nums[i]); }
+         nums.Insert(1, 2);
+         nums.Insert (7, 8);
+         nums.RemoveAt(4);
+         for (int i = 0; i < nums.Count; i++) { Console.WriteLine (nums[i]); }
+         //Console.WriteLine (nums.Count);
       }
       #endregion
    }
@@ -52,9 +55,7 @@ namespace Training {
       }
       public bool Remove (T a) {
          if (elements.Contains (a)) {
-            for (int i = Array.IndexOf (elements, a); i < size - 1; i++) {
-               elements[i] = elements[i + 1];
-            }
+            for (int i = Array.IndexOf (elements, a); i < size - 1; i++) elements[i] = elements[i + 1];
             elements[size-- - 1] = default;
             return true;
          } else return false;
@@ -63,9 +64,18 @@ namespace Training {
          Array.Clear (elements, 0, size);
          size = 0;
       }
-      public void Insert (int index, T a) { }
-      public void RemoveAt (int index) { }
-
+      public void Insert (int index, T a) {
+         size++;
+         for (int i = size-1; i >= index+1; i--) elements[i] = elements[i - 1];
+         elements[index] = a;   
+      }
+      public void RemoveAt (int index) {
+         if (index < size) {
+            for (int i = index; i < size - 1; i++) elements[i] = elements[i + 1];
+            elements[size-- - 1] = default;
+         } 
+      }
+         
    }
    #endregion
 }
