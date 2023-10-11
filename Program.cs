@@ -24,7 +24,7 @@ namespace Training {
                Console.WriteLine ($"(C = {result.maxChoco}, X = {result.remRs}, W = {result.remWrap})");
                Console.WriteLine ("Maximum Chocolates bought(C), Remaining money(X) and wrappers(W)");
                break;
-            } else { Console.WriteLine ("Enter the integer values for X, P and W (X & P > 0, W > 1)"); }
+            } else Console.WriteLine ("Enter the integer values for X, P and W (X & P > 0, W > 1)");
          }
       }
       /// <summary>calculates the maximum number of chocolates, unused money and wrappers</summary>
