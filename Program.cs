@@ -27,8 +27,12 @@ namespace Training {
       /// <param name="O">Order of sort</param>
       /// <returns>Sorted and swapped string seperated by ","</returns>
       static string SortAndSwapSplChr (char[] A, char S, char O = 'a') {
-         char[] filtered = A.Where (c => c != S).ToArray ();
-         char[] special = A.Where (c => c == S).ToArray ();
+         List<char> filtered = new List<char> ();
+         List<char> special = new List<char> ();
+         foreach (char c in A) {
+            if (c == S) special.Add (c);
+            else filtered.Add (c);
+         }
          return string.Join (", ", (O == 'd' ? filtered.OrderDescending () : filtered.Order ()).Concat (special));
       }
 
