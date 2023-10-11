@@ -22,18 +22,18 @@ namespace Training {
       }
 
       /// <summary>This method sorts the character array and adds the special character at the last</summary>
-      /// <param name="A">Given character array</param>
-      /// <param name="S">Special Character</param>
-      /// <param name="O">Order of sort</param>
+      /// <param name="charArr">Given character array</param>
+      /// <param name="spChr">Special Character</param>
+      /// <param name="order">Order of sort</param>
       /// <returns>Sorted and swapped string seperated by ","</returns>
-      static string SortAndSwapSplChr (char[] A, char S, char O = 'a') {
-         List<char> filtered = new List<char> ();
-         List<char> special = new List<char> ();
-         foreach (char c in A) {
-            if (c == S) special.Add (c);
+      static string SortAndSwapSplChr (char[] charArr, char spChr, char order = 'a') {
+         List<char> filtered = new ();
+         List<char> special = new ();
+         foreach (char c in charArr) {
+            if (c == spChr) special.Add (c);
             else filtered.Add (c);
          }
-         return string.Join (", ", (O == 'd' ? filtered.OrderDescending () : filtered.Order ()).Concat (special));
+         return string.Join (", ", (order == 'd' ? filtered.OrderDescending () : filtered.Order ()).Concat (special));
       }
 
       /// <summary>Prints the prompt and gets only the ASCII string</summary>
