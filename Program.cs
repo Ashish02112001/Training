@@ -87,9 +87,7 @@ namespace Training {
       /// <summary>Adds a specified element to the list</summary>
       /// <param name="a">Element to be added inside the list</param>
       public void Add (T a) {
-         if (mSize == mElements.Length) {
-            Array.Resize (ref mElements, mElements.Length * 2);
-         }
+         ExpandArraySize ();
          mElements[mSize++] = a;
       }
       /// <summary>Removes a specified element from the list</summary>
@@ -100,7 +98,7 @@ namespace Training {
             for (int i = Array.IndexOf (mElements, a); i < mSize - 1; i++) mElements[i] = mElements[i + 1];
             mElements[mSize-- - 1] = default;
             return true;
-         } else return false;
+         }return false;
       }
       /// <summary>Clears all the elements in the list</summary>
       public void Clear () {
@@ -112,9 +110,7 @@ namespace Training {
       /// <param name="index">Index at which the element has to be insereted</param>
       /// <param name="a">Element to be inserted in the list</param>
       public void Insert (int index, T a) {
-         if (mSize == mElements.Length) {
-            Array.Resize (ref mElements, mElements.Length * 2);
-         }
+         ExpandArraySize ();
          if (index > mSize) throw new IndexOutOfRangeException ();
          mSize++;
          for (int i = mSize - 1; i >= index + 1; i--) mElements[i] = mElements[i - 1];
@@ -124,8 +120,10 @@ namespace Training {
       /// <param name="index">Index at which the element has to be removed</param>
       public void RemoveAt (int index) {
          if (Remove (mElements[index])) return;
-         else throw new IndexOutOfRangeException();
+         throw new IndexOutOfRangeException();
       }
+      void ExpandArraySize () { if (mSize == mElements.Length) Array.Resize (ref mElements, mElements.Length * 2); }
+
       #endregion
       T[] mElements;
       int mSize;
