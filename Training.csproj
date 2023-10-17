@@ -7,6 +7,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 	<ItemGroup>
-		<None Remove=".gitignore" />
+    <None Remove=".gitignore" />
 	</ItemGroup>
 </Project>

@@ -37,6 +37,8 @@ namespace Training {
       }
       #endregion
    }
+   #endregion
+
    #region ClassTStack<T> ------------------------------------------------------------------------------
    /// <summary>Class Stack<T></summary>
    /// <typeparam name="T">Type of the Stack</typeparam>
@@ -68,6 +70,5 @@ namespace Training {
       int mSize = 0, mCapacity = 4;
       T[] elements = new T[4];
    }
-   #endregion
    #endregion
 }
