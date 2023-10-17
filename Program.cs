@@ -9,8 +9,6 @@
 // Use the template shown below for implementation. Throw exceptions when necessary. 
 // --------------------------------------------------------------------------------------------
 
-using System.Globalization;
-
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>Custom Stack<T> Program</summary>
@@ -39,15 +37,15 @@ namespace Training {
    }
    #endregion
 
-   #region ClassTStack<T> ------------------------------------------------------------------------------
+   #region ClassTStack<T> -------------------------------------------------------------------------
    /// <summary>Class Stack<T></summary>
    /// <typeparam name="T">Type of the Stack</typeparam>
    class TStack<T> {
-      #region Property-----------------------------------
+      #region Property ----------------------------------------------
       /// <summary>Returns true if the stack is empty otherwise false</summary>
       public bool IsEmpty => mSize == 0;
       #endregion
-      #region Stack<T>Methods ---------------------------------------------
+      #region Stack<T>Methods ---------------------------------------
       /// <summary>Pushes the element into the stack</summary>
       /// <param name="a">Element to push into the Stack</param>
       public void Push (T a) {
@@ -58,7 +56,7 @@ namespace Training {
       /// <returns>The top element of the stack</returns>
       public T Pop () {
          if (IsEmpty) throw new InvalidOperationException ();
-         return elements[--mSize];
+         return elements[--mSize];  
       }
       /// <summary>Returns the top element of the stack</summary>
       /// <returns>The top element of the stack</returns>
@@ -67,8 +65,10 @@ namespace Training {
          return elements[mSize - 1];
       }
       #endregion
+      #region PrivateFields -----------------------------------------
       int mSize = 0, mCapacity = 4;
       T[] elements = new T[4];
+      #endregion
    }
    #endregion
 }
