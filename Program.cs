@@ -51,6 +51,7 @@ namespace Training {
       }
       #endregion
    }
+   #endregion
 
    /// <summary>Custom List</summary>
    /// <typeparam name="T">List type</typeparam>
@@ -128,6 +129,5 @@ namespace Training {
       T[] mElements;
       int mSize;
    }
-   #endregion
    #endregion
 }
