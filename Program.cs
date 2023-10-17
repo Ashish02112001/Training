@@ -29,7 +29,7 @@ namespace Training {
          string lastThing = things.Peek ();
          Console.WriteLine (lastThing);
          Console.WriteLine ("\nPopping out the elements from the stack..\n");
-         string lastOne = things.Pop (), secondLast = things.Pop (), firstOne = things.Pop (); 
+         string lastOne = things.Pop (), secondLast = things.Pop (), firstOne = things.Pop ();
          Console.WriteLine (lastOne);
          Console.WriteLine (secondLast);
          Console.WriteLine (firstOne);
@@ -48,14 +48,14 @@ namespace Training {
       #region Stack<T>Methods ---------------------------------------------
       /// <summary>Pushes the element into the stack</summary>
       /// <param name="a">Element to push into the Stack</param>
-      public void Push (T a) { 
-         if (mSize == mCapacity) Array.Resize (ref elements, mCapacity*2);
+      public void Push (T a) {
+         if (mSize == mCapacity) Array.Resize (ref elements, mCapacity * 2);
          elements[mSize++] = a;
       }
       /// <summary>Returns and removes the element at the top of the stack</summary>
       /// <returns>The top element of the stack</returns>
       public T Pop () {
-         if(IsEmpty) throw new InvalidOperationException();
+         if (IsEmpty) throw new InvalidOperationException ();
          return elements[--mSize];
       }
       /// <summary>Returns the top element of the stack</summary>
