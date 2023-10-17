@@ -43,23 +43,29 @@ namespace Training {
    class TStack<T> {
       #region Property-----------------------------------
       /// <summary>Returns true if the stack is empty otherwise false</summary>
-      public bool IsEmpty => size == 0;
+      public bool IsEmpty => mSize == 0;
       #endregion
       #region Stack<T>Methods ---------------------------------------------
       /// <summary>Pushes the element into the stack</summary>
       /// <param name="a">Element to push into the Stack</param>
       public void Push (T a) { 
-         if (size == capacity) Array.Resize (ref elements, capacity*2);
-         elements[size++] = a;
+         if (mSize == mCapacity) Array.Resize (ref elements, mCapacity*2);
+         elements[mSize++] = a;
       }
       /// <summary>Returns and removes the element at the top of the stack</summary>
       /// <returns>The top element of the stack</returns>
-      public T Pop () => elements[--size];
+      public T Pop () {
+         if(IsEmpty) throw new InvalidOperationException();
+         return elements[--mSize];
+      }
       /// <summary>Returns the top element of the stack</summary>
       /// <returns>The top element of the stack</returns>
-      public T Peek () => elements[size - 1];
+      public T Peek () {
+         if (IsEmpty) throw new InvalidOperationException ();
+         return elements[mSize - 1];
+      }
       #endregion
-      int size = 0, capacity = 4;
+      int mSize = 0, mCapacity = 4;
       T[] elements = new T[4];
    }
    #endregion
