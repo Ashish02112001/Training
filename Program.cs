@@ -11,7 +11,7 @@
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>Voting Vontest</summary>
-   internal class Program {
+   public class Program {
       #region Methods ---------------------------------------------
       /// <summary>Gets the votes and gives the winner</summary>
       /// <param name="args">arguments</param>
@@ -21,8 +21,8 @@ namespace Training {
             Console.Write ("Enter your vote for contestants(A to Z): ");
             S = Console.ReadLine () ?? "";
             if (S.All (char.IsLetter) && S.Length > 0) {
-               var majority = VotesCounter (S);
-               Console.WriteLine ($"The winner is {majority.ch} with {majority.n} votes");
+               var (ch, n) = VotesCounter (S);
+               Console.WriteLine ($"The winner is {ch} with {n} votes");
                break;
             }
          }
@@ -30,9 +30,9 @@ namespace Training {
       /// <summary>Gets the user input and returns the winner and their vcount</summary>
       /// <param name="votes">User input</param>
       /// <returns>winner and vote count</returns>
-      static (char ch, int n) VotesCounter (string votes) {
+      public static (char ch, int n) VotesCounter (string votes) {
          votes = votes.ToLower ();
-         Dictionary<char, int> votesCounter = new Dictionary<char, int> ();
+         Dictionary<char, int> votesCounter = new ();
          foreach (char vote in votes) votesCounter[vote] = votesCounter.TryGetValue (vote, out int voteCount) ? ++voteCount : 1;
          var winner = votesCounter.OrderByDescending (x => x.Value).First ();
          return (winner.Key, winner.Value);
