@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\TestProject2\UnitTest1.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Training;
+namespace TestProject2 {
+    [TestClass]
+    public class UnitTest1 {
+
+        List&lt;int&gt; nums = new ();
+        MyList&lt;int&gt; myNums = new ();
+
+        [TestMethod]
+        public void TestAdd () {
+            nums.Add (1); myNums.Add (1);
+            nums.Add (2); myNums.Add (2);
+            nums.Add (3); myNums.Add (3);
+            Assert.AreEqual (nums[0], myNums[0]);
+        }
+        [TestMethod]
+        public void TestRemove () {
+            nums.Add (1); myNums.Add (1);
+            nums.Add (2); myNums.Add (2);
+            nums.Remove (2); myNums.Remove (2);
+            Assert.AreEqual (nums.Count, myNums.Count);
+
+        }
+        [TestMethod]
+        public void TestInsert () {
+            nums.Add (1); myNums.Add (1);
+            nums.Add (3); myNums.Add (3);
+            nums.Insert (1, 2); myNums.Insert (1, 2);
+            Assert.AreEqual (nums[1], myNums[1]);
+        }
+        [TestMethod]
+        public void TestClear () {
+            nums.Add (1); myNums.Add (1);
+            nums.Add (2); myNums.Add (2);
+            nums.Clear (); myNums.Clear ();
+            Assert.AreEqual (0, myNums.Count);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[6,9,6,33,1],[7,9,7,37,1],[10,32,10,33,1],[11,13,11,26,1],[11,27,11,42,1],[12,13,12,26,1],[12,27,12,42,1],[13,13,13,26,1],[13,27,13,42,1],[14,13,14,50,1],[15,9,15,10,1],[17,35,17,36,1],[18,13,18,26,1],[18,27,18,42,1],[19,13,19,26,1],[19,27,19,42,1],[20,13,20,29,1],[20,30,20,48,1],[21,13,21,56,1],[23,9,23,10,1],[25,35,25,36,1],[26,13,26,26,1],[26,27,26,42,1],[27,13,27,26,1],[27,27,27,42,1],[28,13,28,32,1],[28,33,28,54,1],[29,13,29,50,1],[30,9,30,10,1],[32,34,32,35,1],[33,13,33,26,1],[33,27,33,42,1],[34,13,34,26,1],[34,27,34,42,1],[35,13,35,27,1],[35,28,35,44,1],[36,13,36,47,1],[37,9,37,10,1]]);
+    </script>
+  </body>
+</html>

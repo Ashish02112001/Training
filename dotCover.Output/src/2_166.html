@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>W:\Program.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+// --------------------------------------------------------------------------------------------
+// Training ~ A training program for new joinees at Metamation, Batch - July 2023.
+// Copyright (c) Metamation India.                                              
+// ------------------------------------------------------------------------
+// Program.cs
+// Implement a custom MyList&lt;T&gt; class using arrays as the underlying data structure.
+// The MyList&lt;T&gt; should start with an initial capacity of 4 and double its capacity when needed.
+// Throw exceptions when necessary. 
+// --------------------------------------------------------------------------------------------
+using System.Collections.Generic;
+
+namespace Training {
+   #region Program ------------------------------------------------------------------------------
+   /// &lt;summary&gt;MyList&lt;T&gt;&lt;/summary&gt;
+   public class Program {
+      #region Methods ---------------------------------------------
+      /// &lt;summary&gt;Tests the custom MyList&lt;T&gt;&lt;/summary&gt;
+      /// &lt;param name=&quot;args&quot;&gt;Arguments&lt;/param&gt;
+      
+      static void Main (string[] args) {
+         List&lt;int&gt; nums = new ();
+         MyList&lt;int&gt; myNums = new ();
+         nums.Add (1);
+         nums.Add (2);
+         nums.Add (3);
+         myNums.Add (1);
+         myNums.Add (2);
+         myNums.Add (3);
+         nums.Remove (2);
+         myNums.Remove (2);
+         nums.Insert (1, 2);
+         myNums.Insert (1, 2);
+         myNums.PrintElementsAndCount ();  
+         //MyList&lt;string&gt; seaStory = new ();
+         //Console.WriteLine (&quot;Adding Elements to Mylist(seaStory)...&quot;);
+         //seaStory.Add (&quot;boat&quot;);
+         //seaStory.Add (&quot;star&quot;);
+         //seaStory.Add (&quot;sea&quot;);
+         //seaStory.Add (&quot;pirate&quot;);
+         //seaStory.Add (&quot;Yatch&quot;);
+         //seaStory.Add (&quot;Shell&quot;);
+         //seaStory.Add (&quot;Telescope&quot;);
+         //Console.WriteLine (&quot;Printing elements in the seaStory...&quot;);
+         //PrintElementsAndCount(seaStory);
+         //Console.WriteLine (&quot;Removing the element .\&quot;Sea\&quot; in the list&quot;);
+         //seaStory.Remove (&quot;sea&quot;);
+         //PrintElementsAndCount (seaStory);
+         //Console.WriteLine (&quot;Removing 1st index element from the list&quot;);
+         //seaStory.RemoveAt (1);
+         //PrintElementsAndCount (seaStory);
+         //Console.WriteLine(&quot;Inserting the element \&quot;sea\&quot; at the 2nd index&quot;);
+         //seaStory.Insert (2,&quot;sea&quot;);
+         //PrintElementsAndCount (seaStory);
+         //Console.WriteLine (&quot;Inserting additional 3 elements at the 1st, 2nd and 3rd index..&quot;);
+         //seaStory.Insert (1, &quot;Fight&quot;);
+         //seaStory.Insert (2, &quot;Sword&quot;);
+         //seaStory.Insert (3, &quot;log&quot;);
+         //PrintElementsAndCount(seaStory);
+         //Console.WriteLine (&quot;Clearing all elements&quot;);
+         //seaStory.Clear ();
+         //PrintElementsAndCount (seaStory);
+      }
+      
+      #endregion
+   }
+   #endregion
+
+   /// &lt;summary&gt;Custom List&lt;/summary&gt;
+   /// &lt;typeparam name=&quot;T&quot;&gt;List type&lt;/typeparam&gt;
+   #region MyList_Class ---------------------------------------------------------------------------
+   public class MyList&lt;T&gt; {
+      /// &lt;summary&gt;Constructor for the class MyList&lt;/summary&gt;
+      /// &lt;param name=&quot;initCap&quot;&gt;Initial capacity for the list&lt;/param&gt;
+      public MyList (int initCap = 4) {
+         mSize = 0;
+         mElements = new T[initCap];
+      }
+      #region Properties --------------------------------------------
+      /// &lt;summary&gt;Returns the number of elements in the list&lt;/summary&gt;
+      public int Count =&gt; mSize;
+      /// &lt;summary&gt;Returns the current limit of the list&lt;/summary&gt;
+      public int Capacity =&gt; mElements.Length;
+
+      /// &lt;summary&gt;This assigns the value to a specified index or to return the element of the specified index in a list&lt;/summary&gt;
+      /// &lt;param name=&quot;index&quot;&gt;Index of the list&lt;/param&gt;
+      /// &lt;returns&gt;Element of the specific index in a list&lt;/returns&gt;
+      /// &lt;exception cref=&quot;Exception&quot;&gt;Index out of the range exception&lt;/exception&gt;
+      public T this[int index] {
+         get {
+            if (index &gt;= mSize || index &lt; 0) throw new IndexOutOfRangeException();
+            else return mElements[index];
+         }
+         set {
+            if (index &gt; Capacity || index &lt; 0) throw new IndexOutOfRangeException ();
+            mElements[index] = value;
+         }
+      }
+      #endregion
+      #region Methods -----------------------------------------------
+      /// &lt;summary&gt;Adds a specified element to the list&lt;/summary&gt;
+      /// &lt;param name=&quot;a&quot;&gt;Element to be added inside the list&lt;/param&gt;
+      public void Add (T a) {
+         ExpandArraySize ();
+         mElements[mSize++] = a;
+      }
+      /// &lt;summary&gt;Removes a specified element from the list&lt;/summary&gt;
+      /// &lt;param name=&quot;a&quot;&gt;Element to be removed from the list&lt;/param&gt;
+      /// &lt;returns&gt;Returns true if the element is present in the list otherwise false&lt;/returns&gt;
+      public bool Remove (T a) {
+         if (mElements.Contains (a)) {
+            for (int i = Array.IndexOf (mElements, a); i &lt; mSize - 1; i++) mElements[i] = mElements[i + 1];
+            mElements[mSize-- - 1] = default;
+            return true;
+         }return false;
+      }
+      /// &lt;summary&gt;Clears all the elements in the list&lt;/summary&gt;
+      public void Clear () {
+         Array.Clear (mElements, 0, mSize);
+         mElements = new T[4];
+         mSize = 0;
+      }
+      /// &lt;summary&gt;Inserts a given element at a specified index&lt;/summary&gt;
+      /// &lt;param name=&quot;index&quot;&gt;Index at which the element has to be insereted&lt;/param&gt;
+      /// &lt;param name=&quot;a&quot;&gt;Element to be inserted in the list&lt;/param&gt;
+      public void Insert (int index, T a) {
+         if (index &gt; mSize) throw new IndexOutOfRangeException ();
+         ExpandArraySize ();
+         mSize++;
+         for (int i = mSize - 1; i &gt;= index + 1; i--) mElements[i] = mElements[i - 1];
+         mElements[index] = a;
+      }
+      /// &lt;summary&gt;Removes the element at the specified index&lt;/summary&gt;
+      /// &lt;param name=&quot;index&quot;&gt;Index at which the element has to be removed&lt;/param&gt;
+      public void RemoveAt (int index) {
+         if (Remove (mElements[index])) return;
+         throw new IndexOutOfRangeException();
+      }
+      void ExpandArraySize () { if (mSize == mElements.Length) Array.Resize (ref mElements, mElements.Length * 2); }
+      public void PrintElementsAndCount () {
+         for (int i = 0; i &lt; this.Count; i++) Console.WriteLine (&quot;\t&quot; + this[i]);
+         Console.WriteLine ($&quot;Count: {this.Count}&quot;);
+         Console.WriteLine ($&quot;Capacity: {this.Capacity}&quot;);
+      }
+      #endregion
+      #region Private fields ----------------------------------------
+      T[] mElements;
+      int mSize;
+      #endregion
+   }
+   #endregion
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[20,40,20,41,0],[21,10,21,34,0],[22,10,22,38,0],[23,10,23,23,0],[24,10,24,23,0],[25,10,25,23,0],[26,10,26,25,0],[27,10,27,25,0],[28,10,28,25,0],[29,10,29,26,0],[30,10,30,28,0],[31,10,31,29,0],[32,10,32,31,0],[33,10,33,42,0],[62,7,62,8,0],[74,7,74,38,1],[74,39,74,40,1],[75,10,75,20,1],[76,10,76,37,1],[77,7,77,8,1],[80,27,80,32,1],[82,30,82,46,0],[89,14,89,15,1],[90,13,90,45,1],[90,46,90,83,0],[91,18,91,42,1],[92,10,92,11,1],[93,14,93,15,0],[94,13,94,47,0],[94,48,94,86,0],[95,13,95,38,0],[96,10,96,11,0],[102,29,102,30,1],[103,10,103,29,1],[104,10,104,33,1],[105,7,105,8,1],[109,32,109,33,1],[110,10,110,37,1],[110,38,110,39,1],[111,18,111,54,1],[111,56,111,69,1],[111,71,111,74,0],[111,76,111,108,0],[112,13,112,46,1],[113,13,113,25,1],[114,11,114,24,0],[115,7,115,8,1],[117,28,117,29,1],[118,10,118,44,1],[119,10,119,31,1],[120,10,120,20,1],[121,7,121,8,1],[125,43,125,44,1],[126,10,126,28,1],[126,29,126,67,0],[127,10,127,29,1],[128,10,128,18,1],[129,15,129,32,1],[129,34,129,48,1],[129,50,129,53,1],[129,55,129,87,1],[130,10,130,31,1],[131,7,131,8,1],[134,40,134,41,0],[135,10,135,40,0],[135,41,135,48,0],[136,10,136,47,0],[137,7,137,8,0],[138,31,138,32,1],[138,33,138,63,1],[138,64,138,115,0],[138,116,138,117,1],[139,44,139,45,0],[140,15,140,24,0],[140,26,140,40,0],[140,42,140,45,0],[140,47,140,82,0],[141,10,141,53,0],[142,10,142,59,0],[143,7,143,8,0]]);
+    </script>
+  </body>
+</html>
