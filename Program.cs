@@ -7,13 +7,16 @@
 // The MyList<T> should start with an initial capacity of 4 and double its capacity when needed.
 // Throw exceptions when necessary. 
 // --------------------------------------------------------------------------------------------
+
+
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>MyList<T></summary>
-   class Program {
+   public class Program {
       #region Methods ---------------------------------------------
       /// <summary>Tests the custom MyList<T></summary>
       /// <param name="args">Arguments</param>
+
       static void Main (string[] args) {
          MyList<string> seaStory = new ();
          Console.WriteLine ("Adding Elements to Mylist(seaStory)...");
@@ -25,21 +28,21 @@ namespace Training {
          seaStory.Add ("Shell");
          seaStory.Add ("Telescope");
          Console.WriteLine ("Printing elements in the seaStory...");
-         PrintElementsAndCount(seaStory);
+         PrintElementsAndCount (seaStory);
          Console.WriteLine ("Removing the element .\"Sea\" in the list");
          seaStory.Remove ("sea");
          PrintElementsAndCount (seaStory);
          Console.WriteLine ("Removing 1st index element from the list");
          seaStory.RemoveAt (1);
          PrintElementsAndCount (seaStory);
-         Console.WriteLine("Inserting the element \"sea\" at the 2nd index");
-         seaStory.Insert (2,"sea");
+         Console.WriteLine ("Inserting the element \"sea\" at the 2nd index");
+         seaStory.Insert (2, "sea");
          PrintElementsAndCount (seaStory);
          Console.WriteLine ("Inserting additional 3 elements at the 1st, 2nd and 3rd index..");
          seaStory.Insert (1, "Fight");
          seaStory.Insert (2, "Sword");
          seaStory.Insert (3, "log");
-         PrintElementsAndCount(seaStory);
+         PrintElementsAndCount (seaStory);
          Console.WriteLine ("Clearing all elements");
          seaStory.Clear ();
          PrintElementsAndCount (seaStory);
@@ -55,15 +58,15 @@ namespace Training {
 
    /// <summary>Custom List</summary>
    /// <typeparam name="T">List type</typeparam>
-   #region MyList_Class ------------------------------------------------------------------------------
-   class MyList<T> {
+   #region MyList_Class ---------------------------------------------------------------------------
+   public class MyList<T> {
       /// <summary>Constructor for the class MyList</summary>
       /// <param name="initCap">Initial capacity for the list</param>
       public MyList (int initCap = 4) {
          mSize = 0;
          mElements = new T[initCap];
       }
-      #region Properties-----------------------------------------------
+      #region Properties --------------------------------------------
       /// <summary>Returns the number of elements in the list</summary>
       public int Count => mSize;
       /// <summary>Returns the current limit of the list</summary>
@@ -75,7 +78,7 @@ namespace Training {
       /// <exception cref="Exception">Index out of the range exception</exception>
       public T this[int index] {
          get {
-            if (index >= mSize || index < 0) throw new IndexOutOfRangeException();
+            if (index >= mSize || index < 0) throw new IndexOutOfRangeException ();
             else return mElements[index];
          }
          set {
@@ -84,12 +87,12 @@ namespace Training {
          }
       }
       #endregion
-      #region Methods---------------------------------------------
+      #region Methods -----------------------------------------------
       /// <summary>Adds a specified element to the list</summary>
       /// <param name="a">Element to be added inside the list</param>
       public void Add (T a) {
-         ExpandArraySize ();
          mElements[mSize++] = a;
+         ExpandArraySize ();
       }
       /// <summary>Removes a specified element from the list</summary>
       /// <param name="a">Element to be removed from the list</param>
@@ -99,7 +102,8 @@ namespace Training {
             for (int i = Array.IndexOf (mElements, a); i < mSize - 1; i++) mElements[i] = mElements[i + 1];
             mElements[mSize-- - 1] = default;
             return true;
-         }return false;
+         }
+         return false;
       }
       /// <summary>Clears all the elements in the list</summary>
       public void Clear () {
@@ -111,8 +115,8 @@ namespace Training {
       /// <param name="index">Index at which the element has to be insereted</param>
       /// <param name="a">Element to be inserted in the list</param>
       public void Insert (int index, T a) {
-         ExpandArraySize ();
          if (index > mSize) throw new IndexOutOfRangeException ();
+         ExpandArraySize ();
          mSize++;
          for (int i = mSize - 1; i >= index + 1; i--) mElements[i] = mElements[i - 1];
          mElements[index] = a;
@@ -121,13 +125,15 @@ namespace Training {
       /// <param name="index">Index at which the element has to be removed</param>
       public void RemoveAt (int index) {
          if (Remove (mElements[index])) return;
-         throw new IndexOutOfRangeException();
+         else throw new IndexOutOfRangeException ();
       }
       void ExpandArraySize () { if (mSize == mElements.Length) Array.Resize (ref mElements, mElements.Length * 2); }
 
       #endregion
+      #region Private fields ----------------------------------------
       T[] mElements;
       int mSize;
+      #endregion
    }
    #endregion
 }
