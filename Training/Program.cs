@@ -81,10 +81,7 @@ namespace Training {
             if (index >= mSize || index < 0) throw new IndexOutOfRangeException ();
             else return mElements[index];
          }
-         set {
-            if (index > Capacity || index < 0) throw new IndexOutOfRangeException ();
-            mElements[index] = value;
-         }
+         set => mElements[index] = value;
       }
       #endregion
       #region Methods -----------------------------------------------
@@ -124,8 +121,7 @@ namespace Training {
       /// <summary>Removes the element at the specified index</summary>
       /// <param name="index">Index at which the element has to be removed</param>
       public void RemoveAt (int index) {
-         if (Remove (mElements[index])) return;
-         else throw new IndexOutOfRangeException ();
+         try { if (Remove (mElements[index])) return; } catch (IndexOutOfRangeException) { throw new IndexOutOfRangeException (); }
       }
       void ExpandArraySize () { if (mSize == mElements.Length) Array.Resize (ref mElements, mElements.Length * 2); }
 

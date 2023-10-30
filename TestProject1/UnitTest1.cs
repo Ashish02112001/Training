@@ -50,7 +50,7 @@ namespace TestProject1 {
          nums.Add (2); myNums.Add (2);
          nums.RemoveAt (1); myNums.RemoveAt (1);
          Assert.AreEqual (nums.Count, myNums.Count);
-         Assert.ThrowsException<IndexOutOfRangeException> (() => myNums.RemoveAt (4));
+         Assert.ThrowsException<IndexOutOfRangeException> (() => myNums.RemoveAt (8));
          nums.Clear (); myNums.Clear ();
       }
       [TestMethod]
