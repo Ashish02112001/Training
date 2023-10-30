@@ -3,132 +3,71 @@
 // Copyright (c) Metamation India.                                              
 // ------------------------------------------------------------------------
 // Program.cs
-// Implement a custom MyList<T> class using arrays as the underlying data structure.
-// The MyList<T> should start with an initial capacity of 4 and double its capacity when needed.
-// Throw exceptions when necessary. 
+// STACK<T> 
+// Implement a Stack<T> class using arrays as the underlying data structure. 
+// The Stack<T> should start with an initial capacity of 4 and double its capacity when needed. 
+// Use the template shown below for implementation. Throw exceptions when necessary. 
 // --------------------------------------------------------------------------------------------
-
 
 namespace Training {
    #region Program ------------------------------------------------------------------------------
-   /// <summary>MyList<T></summary>
-   public class Program {
+   /// <summary>Custom Stack<T> Program</summary>
+   internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>Tests the custom MyList<T></summary>
-      /// <param name="args">Arguments</param>
-
+      /// <summary>Checks for the custom Stack<T>></summary>
+      /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         MyList<string> seaStory = new ();
-         Console.WriteLine ("Adding Elements to Mylist(seaStory)...");
-         seaStory.Add ("boat");
-         seaStory.Add ("star");
-         seaStory.Add ("sea");
-         seaStory.Add ("pirate");
-         seaStory.Add ("Yatch");
-         seaStory.Add ("Shell");
-         seaStory.Add ("Telescope");
-         Console.WriteLine ("Printing elements in the seaStory...");
-         PrintElementsAndCount (seaStory);
-         Console.WriteLine ("Removing the element .\"Sea\" in the list");
-         seaStory.Remove ("sea");
-         PrintElementsAndCount (seaStory);
-         Console.WriteLine ("Removing 1st index element from the list");
-         seaStory.RemoveAt (1);
-         PrintElementsAndCount (seaStory);
-         Console.WriteLine ("Inserting the element \"sea\" at the 2nd index");
-         seaStory.Insert (2, "sea");
-         PrintElementsAndCount (seaStory);
-         Console.WriteLine ("Inserting additional 3 elements at the 1st, 2nd and 3rd index..");
-         seaStory.Insert (1, "Fight");
-         seaStory.Insert (2, "Sword");
-         seaStory.Insert (3, "log");
-         PrintElementsAndCount (seaStory);
-         Console.WriteLine ("Clearing all elements");
-         seaStory.Clear ();
-         PrintElementsAndCount (seaStory);
-      }
-      static void PrintElementsAndCount (MyList<string> list) {
-         for (int i = 0; i < list.Count; i++) Console.WriteLine ("\t" + list[i]);
-         Console.WriteLine ($"Count: {list.Count}");
-         Console.WriteLine ($"Capacity: {list.Capacity}");
+         TStack<string> things = new ();
+         things.Push ("Joystick");
+         things.Push ("Mouse");
+         things.Push ("Smartphone");
+         Console.WriteLine ("Things pushed to the stack: \n\nJoystick \nMouse \nSmartphone\n");
+         Console.WriteLine ($"Checking the stack Isempty? : {things.IsEmpty}");
+         Console.WriteLine ("peeking last element in the stack..\n");
+         string lastThing = things.Peek ();
+         Console.WriteLine (lastThing);
+         Console.WriteLine ("\nPopping out the elements from the stack..\n");
+         string lastOne = things.Pop (), secondLast = things.Pop (), firstOne = things.Pop ();
+         Console.WriteLine (lastOne);
+         Console.WriteLine (secondLast);
+         Console.WriteLine (firstOne);
+         Console.WriteLine ($"\nChecking the stack Isempty? : {things.IsEmpty}");
       }
       #endregion
    }
    #endregion
 
-   /// <summary>Custom List</summary>
-   /// <typeparam name="T">List type</typeparam>
-   #region MyList_Class ---------------------------------------------------------------------------
-   public class MyList<T> {
-      /// <summary>Constructor for the class MyList</summary>
-      /// <param name="initCap">Initial capacity for the list</param>
-      public MyList (int initCap = 4) {
-         mSize = 0;
-         mElements = new T[initCap];
+   #region ClassTStack<T> -------------------------------------------------------------------------
+   /// <summary>Class Stack<T></summary>
+   /// <typeparam name="T">Type of the Stack</typeparam>
+   public class TStack<T> {
+      #region Property ----------------------------------------------
+      /// <summary>Returns true if the stack is empty otherwise false</summary>
+      public bool IsEmpty => mSize == 0;
+      #endregion
+      #region Stack<T>Methods ---------------------------------------
+      /// <summary>Pushes the element into the stack</summary>
+      /// <param name="a">Element to push into the Stack</param>
+      public void Push (T a) {
+         if (mSize == mCapacity) Array.Resize (ref elements, mCapacity * 2);
+         elements[mSize++] = a;
       }
-      #region Properties --------------------------------------------
-      /// <summary>Returns the number of elements in the list</summary>
-      public int Count => mSize;
-      /// <summary>Returns the current limit of the list</summary>
-      public int Capacity => mElements.Length;
-
-      /// <summary>This assigns the value to a specified index or to return the element of the specified index in a list</summary>
-      /// <param name="index">Index of the list</param>
-      /// <returns>Element of the specific index in a list</returns>
-      /// <exception cref="Exception">Index out of the range exception</exception>
-      public T this[int index] {
-         get {
-            if (index >= mSize || index < 0) throw new IndexOutOfRangeException ();
-            else return mElements[index];
-         }
-         set => mElements[index] = value;
+      /// <summary>Returns and removes the element at the top of the stack</summary>
+      /// <returns>The top element of the stack</returns>
+      public T Pop () {
+         if (IsEmpty) throw new InvalidOperationException ();
+         return elements[--mSize];
+      }
+      /// <summary>Returns the top element of the stack</summary>
+      /// <returns>The top element of the stack</returns>
+      public T Peek () {
+         if (IsEmpty) throw new InvalidOperationException ();
+         return elements[mSize - 1];
       }
       #endregion
-      #region Methods -----------------------------------------------
-      /// <summary>Adds a specified element to the list</summary>
-      /// <param name="a">Element to be added inside the list</param>
-      public void Add (T a) {
-         mElements[mSize++] = a;
-         ExpandArraySize ();
-      }
-      /// <summary>Removes a specified element from the list</summary>
-      /// <param name="a">Element to be removed from the list</param>
-      /// <returns>Returns true if the element is present in the list otherwise false</returns>
-      public bool Remove (T a) {
-         if (mElements.Contains (a)) {
-            for (int i = Array.IndexOf (mElements, a); i < mSize - 1; i++) mElements[i] = mElements[i + 1];
-            mElements[mSize-- - 1] = default;
-            return true;
-         }
-         return false;
-      }
-      /// <summary>Clears all the elements in the list</summary>
-      public void Clear () {
-         Array.Clear (mElements, 0, mSize);
-         mElements = new T[4];
-         mSize = 0;
-      }
-      /// <summary>Inserts a given element at a specified index</summary>
-      /// <param name="index">Index at which the element has to be insereted</param>
-      /// <param name="a">Element to be inserted in the list</param>
-      public void Insert (int index, T a) {
-         if (index > mSize) throw new IndexOutOfRangeException ();
-         ExpandArraySize ();
-         mSize++;
-         for (int i = mSize - 1; i >= index + 1; i--) mElements[i] = mElements[i - 1];
-         mElements[index] = a;
-      }
-      /// <summary>Removes the element at the specified index</summary>
-      /// <param name="index">Index at which the element has to be removed</param>
-      public void RemoveAt (int index) {
-         try { if (Remove (mElements[index])) return; } catch (IndexOutOfRangeException) { throw new IndexOutOfRangeException (); }
-      }
-      void ExpandArraySize () { if (mSize == mElements.Length) Array.Resize (ref mElements, mElements.Length * 2); }
-
-      #endregion
-      #region Private fields ----------------------------------------
-      T[] mElements;
-      int mSize;
+      #region PrivateFields -----------------------------------------
+      int mSize = 0, mCapacity = 4;
+      T[] elements = new T[4];
       #endregion
    }
    #endregion
