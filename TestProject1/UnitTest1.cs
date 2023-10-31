@@ -2,10 +2,8 @@ using Training;
 namespace TestProject1 {
    [TestClass]
    public class UnitTest1 {
-
       Stack<int> nums = new ();
       TStack<int> TNums = new ();
-
       [TestMethod]
       public void TestPush () {
          for (int i = 0; i < 5; i++) {

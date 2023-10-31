@@ -37,7 +37,7 @@ namespace Training {
    }
    #endregion
 
-   #region ClassTStack<T> -------------------------------------------------------------------------
+   #region ClassTStack <T> -------------------------------------------------------------------------
    /// <summary>Class Stack<T></summary>
    /// <typeparam name="T">Type of the Stack</typeparam>
    public class TStack<T> {
