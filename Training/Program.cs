@@ -37,7 +37,7 @@ namespace Training {
    }
    #endregion
 
-   #region ClassTStack<T> -------------------------------------------------------------------------
+   #region Class TStack<T> -------------------------------------------------------------------------
    /// <summary>Class Stack<T></summary>
    /// <typeparam name="T">Type of the Stack</typeparam>
    public class TStack<T> {
@@ -52,18 +52,21 @@ namespace Training {
          if (mSize == mCapacity) Array.Resize (ref elements, mCapacity * 2);
          elements[mSize++] = a;
       }
+
       /// <summary>Returns and removes the element at the top of the stack</summary>
       /// <returns>The top element of the stack</returns>
       public T Pop () {
          if (IsEmpty) throw new InvalidOperationException ();
          return elements[--mSize];
       }
+
       /// <summary>Returns the top element of the stack</summary>
       /// <returns>The top element of the stack</returns>
       public T Peek () {
          if (IsEmpty) throw new InvalidOperationException ();
          return elements[mSize - 1];
       }
+
       #endregion
       #region PrivateFields -----------------------------------------
       int mSize = 0, mCapacity = 4;
