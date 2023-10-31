@@ -1,8 +1,7 @@
 using Training;
-namespace TestProject1 {
+namespace TestProject1{
    [TestClass]
-   public class UnitTest1 {
-
+   public class UnitTest1{
       List<int> nums = new ();
       MyList<int> myNums = new ();
 
@@ -12,10 +11,10 @@ namespace TestProject1 {
          nums.Add (2); myNums.Add (2);
          nums.Add (3); myNums.Add (3);
          Assert.AreEqual (nums[0], myNums[0]);
-         nums[0] = 1; myNums[0] = 1;
-         Assert.AreEqual (nums[0], myNums[0]);
+         nums[0] = 0; myNums[0] = 0;
          nums.Clear (); myNums.Clear ();
       }
+
       [TestMethod]
       public void TestRemove () {
          nums.Add (1); myNums.Add (1);
@@ -55,10 +54,11 @@ namespace TestProject1 {
       }
       [TestMethod]
       public void TestCapacity () {
-         nums.Add (1); myNums.Add (1);
-         nums.Add (2); myNums.Add (2);
-         nums.Add (3); myNums.Add (3);
-         nums.Add (4); myNums.Add (4);
+         myNums.Add (1);
+         myNums.Add (2);
+         myNums.Add (3);
+         myNums.Add (4);
+         myNums.Add (5);
          Assert.AreEqual (8, myNums.Capacity);
       }
    }

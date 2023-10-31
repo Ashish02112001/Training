@@ -88,8 +88,8 @@ namespace Training {
       /// <summary>Adds a specified element to the list</summary>
       /// <param name="a">Element to be added inside the list</param>
       public void Add (T a) {
+         if (mSize >= Capacity) ExpandArraySize ();
          mElements[mSize++] = a;
-         ExpandArraySize ();
       }
       /// <summary>Removes a specified element from the list</summary>
       /// <param name="a">Element to be removed from the list</param>
@@ -109,7 +109,7 @@ namespace Training {
          mSize = 0;
       }
       /// <summary>Inserts a given element at a specified index</summary>
-      /// <param name="index">Index at which the element has to be insereted</param>
+      /// <param name="index">Index at which the element has to be inserted</param>
       /// <param name="a">Element to be inserted in the list</param>
       public void Insert (int index, T a) {
          if (index > mSize) throw new IndexOutOfRangeException ();
