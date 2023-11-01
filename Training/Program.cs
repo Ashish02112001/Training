@@ -88,7 +88,7 @@ namespace Training {
       /// <summary>Adds a specified element to the list</summary>
       /// <param name="a">Element to be added inside the list</param>
       public void Add (T a) {
-         if (mSize >= Capacity) ExpandArraySize ();
+         ExpandArraySize ();
          mElements[mSize++] = a;
       }
       /// <summary>Removes a specified element from the list</summary>
