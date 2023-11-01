@@ -2,40 +2,39 @@ using Training;
 namespace TestProject1 {
    [TestClass]
    public class UnitTest1 {
-
       Stack<int> nums = new ();
-      TStack<int> TNums = new ();
+      TStack<int> myNums = new ();
 
       [TestMethod]
       public void TestPush () {
          for (int i = 0; i < 5; i++) {
-            nums.Push (i + 1); TNums.Push (i + 1);
+            nums.Push (i + 1); myNums.Push (i + 1);
          }
-         Assert.AreEqual (nums.Pop (), TNums.Pop ());
+         Assert.AreEqual (nums.Pop (), myNums.Pop ());
       }
       [TestMethod]
       public void TestPop () {
-         TNums.Push (1);
-         TNums.Push (2);
-         Assert.AreEqual (2, TNums.Pop ());
-         Assert.AreEqual (1, TNums.Pop ());
-         Assert.ThrowsException<InvalidOperationException> (() => TNums.Pop ());
+         myNums.Push (1);
+         myNums.Push (2);
+         Assert.AreEqual (2, myNums.Pop ());
+         Assert.AreEqual (1, myNums.Pop ());
+         Assert.ThrowsException<InvalidOperationException> (() => myNums.Pop ());
       }
       [TestMethod]
       public void TestPeek () {
-         nums.Push (1); TNums.Push (1);
-         Assert.AreEqual (nums.Peek (), TNums.Peek ());
-         TNums.Pop ();
-         Assert.ThrowsException<InvalidOperationException> (() => TNums.Peek ());
+         nums.Push (1); myNums.Push (1);
+         Assert.AreEqual (nums.Peek (), myNums.Peek ());
+         myNums.Pop ();
+         Assert.ThrowsException<InvalidOperationException> (() => myNums.Peek ());
       }
       [TestMethod]
       public void TestIsEmpty () {
-         TNums.Push (1);
-         TNums.Push (2);
-         Assert.IsFalse (TNums.IsEmpty);
-         TNums.Pop ();
-         TNums.Pop ();
-         Assert.IsTrue (TNums.IsEmpty);
+         myNums.Push (1);
+         myNums.Push (2);
+         Assert.IsFalse (myNums.IsEmpty);
+         myNums.Pop ();
+         myNums.Pop ();
+         Assert.IsTrue (myNums.IsEmpty);
       }
    }
 }
