@@ -2,38 +2,38 @@ using Training;
 namespace TestProject1 {
    [TestClass]
    public class UnitTest1 {
-      Stack<int> nums = new ();
-      TStack<int> TNums = new ();
+      Queue<int> nums = new ();
+      TQueue<int> myNums = new ();
       [TestMethod]
       public void TestPush () {
          for (int i = 0; i < 5; i++) {
-            nums.Push (i + 1); TNums.Push (i + 1);
+            nums.Enqueue (i + 1); myNums.Enqueue (i + 1);
          }
-         Assert.AreEqual (nums.Pop (), TNums.Pop ());
+         Assert.AreEqual (nums.Dequeue (), myNums.Dequeue ());
       }
       [TestMethod]
       public void TestPop () {
-         TNums.Push (1);
-         TNums.Push (2);
-         Assert.AreEqual (2, TNums.Pop ());
-         Assert.AreEqual (1, TNums.Pop ());
-         Assert.ThrowsException<InvalidOperationException> (() => TNums.Pop ());
+         myNums.Enqueue (1);
+         myNums.Enqueue (2);
+         Assert.AreEqual (1, myNums.Dequeue ());
+         Assert.AreEqual (2, myNums.Dequeue ());
+         Assert.ThrowsException<InvalidOperationException> (() => myNums.Dequeue ());
       }
       [TestMethod]
       public void TestPeek () {
-         nums.Push (1); TNums.Push (1);
-         Assert.AreEqual (nums.Peek (), TNums.Peek ());
-         TNums.Pop ();
-         Assert.ThrowsException<InvalidOperationException> (() => TNums.Peek ());
+         nums.Enqueue (1); myNums.Enqueue (1);
+         Assert.AreEqual (nums.Peek (), myNums.Peek ());
+         myNums.Dequeue ();
+         Assert.ThrowsException<InvalidOperationException> (() => myNums.Peek ());
       }
       [TestMethod]
       public void TestIsEmpty () {
-         TNums.Push (1);
-         TNums.Push (2);
-         Assert.IsFalse (TNums.IsEmpty);
-         TNums.Pop ();
-         TNums.Pop ();
-         Assert.IsTrue (TNums.IsEmpty);
+         myNums.Enqueue (1);
+         myNums.Enqueue (2);
+         Assert.IsFalse (myNums.IsEmpty);
+         myNums.Dequeue ();
+         myNums.Dequeue ();
+         Assert.IsTrue (myNums.IsEmpty);
       }
    }
 }
