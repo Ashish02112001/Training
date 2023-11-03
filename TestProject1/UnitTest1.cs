@@ -2,39 +2,39 @@ using Training;
 namespace TestProject1 {
    [TestClass]
    public class UnitTest1 {
-      Stack<int> nums = new ();
-      TStack<int> myNums = new ();
+      Stack<int> mNums = new ();
+      TStack<int> mMyNums = new ();
 
       [TestMethod]
       public void TestPush () {
          for (int i = 0; i < 5; i++) {
-            nums.Push (i + 1); myNums.Push (i + 1);
+            mNums.Push (i + 1); mMyNums.Push (i + 1);
          }
-         Assert.AreEqual (nums.Pop (), myNums.Pop ());
+         Assert.AreEqual (mNums.Pop (), mMyNums.Pop ());
       }
       [TestMethod]
       public void TestPop () {
-         myNums.Push (1);
-         myNums.Push (2);
-         Assert.AreEqual (2, myNums.Pop ());
-         Assert.AreEqual (1, myNums.Pop ());
-         Assert.ThrowsException<InvalidOperationException> (() => myNums.Pop ());
+         mMyNums.Push (1);
+         mMyNums.Push (2);
+         Assert.AreEqual (2, mMyNums.Pop ());
+         Assert.AreEqual (1, mMyNums.Pop ());
+         Assert.ThrowsException<InvalidOperationException> (() => mMyNums.Pop ());
       }
       [TestMethod]
       public void TestPeek () {
-         nums.Push (1); myNums.Push (1);
-         Assert.AreEqual (nums.Peek (), myNums.Peek ());
-         myNums.Pop ();
-         Assert.ThrowsException<InvalidOperationException> (() => myNums.Peek ());
+         mNums.Push (1); mMyNums.Push (1);
+         Assert.AreEqual (mNums.Peek (), mMyNums.Peek ());
+         mMyNums.Pop ();
+         Assert.ThrowsException<InvalidOperationException> (() => mMyNums.Peek ());
       }
       [TestMethod]
       public void TestIsEmpty () {
-         myNums.Push (1);
-         myNums.Push (2);
-         Assert.IsFalse (myNums.IsEmpty);
-         myNums.Pop ();
-         myNums.Pop ();
-         Assert.IsTrue (myNums.IsEmpty);
+         mMyNums.Push (1);
+         mMyNums.Push (2);
+         Assert.IsFalse (mMyNums.IsEmpty);
+         mMyNums.Pop ();
+         mMyNums.Pop ();
+         Assert.IsTrue (mMyNums.IsEmpty);
       }
    }
 }
