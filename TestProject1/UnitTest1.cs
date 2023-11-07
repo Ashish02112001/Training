@@ -4,21 +4,24 @@ namespace TestProject1 {
    public class UnitTest1 {
       Queue<int> nums = new ();
       TQueue<int> myNums = new ();
+
       [TestMethod]
-      public void TestPush () {
+      public void TestEnqueue () {
          for (int i = 0; i < 5; i++) {
             nums.Enqueue (i + 1); myNums.Enqueue (i + 1);
          }
          Assert.AreEqual (nums.Dequeue (), myNums.Dequeue ());
       }
+
       [TestMethod]
-      public void TestPop () {
+      public void TestDequeue () {
          myNums.Enqueue (1);
          myNums.Enqueue (2);
          Assert.AreEqual (1, myNums.Dequeue ());
          Assert.AreEqual (2, myNums.Dequeue ());
          Assert.ThrowsException<InvalidOperationException> (() => myNums.Dequeue ());
       }
+
       [TestMethod]
       public void TestPeek () {
          nums.Enqueue (1); myNums.Enqueue (1);
@@ -26,6 +29,7 @@ namespace TestProject1 {
          myNums.Dequeue ();
          Assert.ThrowsException<InvalidOperationException> (() => myNums.Peek ());
       }
+
       [TestMethod]
       public void TestIsEmpty () {
          myNums.Enqueue (1);
