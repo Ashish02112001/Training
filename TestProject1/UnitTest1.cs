@@ -12,6 +12,7 @@ namespace TestProject1 {
          }
          Assert.AreEqual (mNums.Pop (), mMyNums.Pop ());
       }
+
       [TestMethod]
       public void TestPop () {
          mMyNums.Push (1);
@@ -20,6 +21,7 @@ namespace TestProject1 {
          Assert.AreEqual (1, mMyNums.Pop ());
          Assert.ThrowsException<InvalidOperationException> (() => mMyNums.Pop ());
       }
+
       [TestMethod]
       public void TestPeek () {
          mNums.Push (1); mMyNums.Push (1);
@@ -27,6 +29,7 @@ namespace TestProject1 {
          mMyNums.Pop ();
          Assert.ThrowsException<InvalidOperationException> (() => mMyNums.Peek ());
       }
+
       [TestMethod]
       public void TestIsEmpty () {
          mMyNums.Push (1);
