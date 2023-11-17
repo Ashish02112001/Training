@@ -14,6 +14,7 @@ namespace Training {
       #region Methods ---------------------------------------------
       static int[] queenCol = new int[8];
       static List<int[]> allSols = new ();
+      static char solChoice = ' ';
 
       /// <summary>This Method prints Eight Queens</summary>
       /// <param name="args">arguments</param>
@@ -22,7 +23,7 @@ namespace Training {
          EightQueens (0);
          for (; ; ) {
             Console.OutputEncoding = Encoding.UTF8;
-            if (soln > allSols.Count-1) break;
+            if (soln > allSols.Count - 1) break;
             Console.WriteLine ($"Solution:{soln + 1} of {allSols.Count}");
             for (int row = 0; row < 8; row++) {
                if (row == 0) Console.Write ("┌───┬───┬───┬───┬───┬───┬───┬───┐");
@@ -38,6 +39,7 @@ namespace Training {
             Console.WriteLine ();
             switch (Console.ReadKey ().Key) {
                case ConsoleKey.Enter: soln++; break;
+               default: Console.WriteLine ("Press ENTER to print next solution"); break;
             }
          }
       }
@@ -49,8 +51,7 @@ namespace Training {
             if (IsQueenSafe (row, col)) {
                queenCol[row] = col;
                if (row == 7) {
-                  if (!IsIdentical (queenCol)) 
-                  allSols.Add (queenCol.ToArray());
+                  if (!IsIdentical (queenCol)) allSols.Add (queenCol.ToArray ());
                } else EightQueens (row + 1);
             }
          }
@@ -98,7 +99,7 @@ namespace Training {
             if (soln.SequenceEqual (sol) || mirrSol.SequenceEqual (sol)) return true;
             foreach (int[] rotSol in rotatedArr) {
                mirrSol = Mirror (rotSol);
-               if (rotSol.SequenceEqual(sol) || mirrSol.SequenceEqual(sol)) return true;
+               if (rotSol.SequenceEqual (sol) || mirrSol.SequenceEqual (sol)) return true;
             }
          }
          return false;
@@ -110,15 +111,15 @@ namespace Training {
       /// <param name="soln"></param>
       /// <returns></returns>
       static List<int[]> Rotation (int[] soln) {
-            List<int[]> allRotSol = new ();
-            int[] rotSoln = new int[8];
-         allRotSol.Add (soln.ToArray());
+         List<int[]> allRotSol = new ();
+         int[] rotSoln = new int[8];
+         allRotSol.Add (soln.ToArray ());
          for (int rot = 0; rot < 3; rot++) {
             for (int row = 0; row < soln.Length; row++) {
                rotSoln[7 - soln[row]] = row;
             }
-            for(int ind = 0;ind < 8;ind++) soln[ind] = rotSoln[ind];
-            allRotSol.Add (rotSoln.ToArray());
+            for (int ind = 0; ind < 8; ind++) soln[ind] = rotSoln[ind];
+            allRotSol.Add (rotSoln.ToArray ());
          }
          return allRotSol;
       }
@@ -129,9 +130,9 @@ namespace Training {
       /// <param name="sols"></param>
       /// <returns></returns>
       static int[] Mirror (int[] sols) {
-            int[] mirSoln = new int[8];
-            for (int row = 7; row >= 0; row--) mirSoln[7 - row] = sols[row];
-            return mirSoln;
+         int[] mirSoln = new int[8];
+         for (int row = 7; row >= 0; row--) mirSoln[7 - row] = sols[row];
+         return mirSoln;
       }
       #endregion
    }
