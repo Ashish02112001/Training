@@ -12,29 +12,29 @@ using System.Text;
 
 namespace Training {
    #region Program ------------------------------------------------------------------------------
-   /// <summary>FourQueens</summary>
+   /// <summary>EightQueens</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      static int[] queenCol = new int[8];
-      static List<int[]> sols = new ();
-      static char solChoice;
+      static int[] sQueenCol = new int[8];
+      static List<int[]> sSols = new ();
+      static bool sIsUnique = false;
 
       /// <summary>This Method prints Eight Queens</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
          int soln = 0;
          Console.Write ("Enter your choice to display (A)ll solution or (U)nique solution: ");
-         solChoice = (char)Console.ReadKey ().Key;
+         if (Console.ReadKey ().Key == ConsoleKey.U) sIsUnique = true;
          EightQueens (0);
          for (; ; ) {
             Console.OutputEncoding = Encoding.UTF8;
-            if (soln > sols.Count - 1) break;
-            Console.WriteLine ($"\nSolution:{soln + 1} of {sols.Count}");
+            if (soln > sSols.Count - 1) break;
+            Console.WriteLine ($"\nSolution:{soln + 1} of {sSols.Count}");
             for (int row = 0; row < 8; row++) {
                if (row == 0) Console.Write ("┌───┬───┬───┬───┬───┬───┬───┬───┐");
                Console.WriteLine ();
                for (int col = 0; col < 8; col++) {
-                  string p = (sols[soln][row] == col) ? "♕" : " ";
+                  string p = (sSols[soln][row] == col) ? "♕" : " ";
                   Console.Write ($"│ {p} ");
                }
                Console.Write ("│");
@@ -52,36 +52,36 @@ namespace Training {
       /// <summary>This Method gives the position of four Queens to be placed</summary>
       /// <param name="row">Row Index</param>
       static void EightQueens (int row) {
-         for (int col = 0; col < queenCol.Length; col++) {
+         for (int col = 0; col < sQueenCol.Length; col++) {
             if (IsQueenSafe (row, col)) {
-               queenCol[row] = col;
+               sQueenCol[row] = col;
                if (row == 7) {
-                  if (solChoice is (char)ConsoleKey.U) { if (!IsIdentical (queenCol)) sols.Add (queenCol.ToArray ()); } else sols.Add (queenCol.ToArray ());
+                  if (!sIsUnique || !IsIdentical (sQueenCol)) sSols.Add (sQueenCol.ToArray ());
                } else EightQueens (row + 1);
             }
          }
       }
 
-      /// <summary>Checks wheather the position of the queen is safe or not</summary>
+      /// <summary>Checks whether the position of the queen is safe or not</summary>
       /// <param name="row">Row Index</param>
       /// <param name="col">Column Index</param>
       /// <returns>True if the position of the Queen is safe otherwise false</returns>
       static bool IsQueenSafe (int row, int col) {
          for (int prevRow = 0; prevRow < row; prevRow++) {
             int rowDiff = Math.Abs (row - prevRow);
-            int colDiff = Math.Abs (col - queenCol[prevRow]);
+            int colDiff = Math.Abs (col - sQueenCol[prevRow]);
             if (rowDiff == colDiff || colDiff == 0) return false;
          }
          return true;
       }
 
-      /// <summary>Checks wheather the solution is identical to the existing solutuions</summary>
+      /// <summary>Checks whether the solution is identical to the existing solutuions</summary>
       /// <param name="soln">solution array</param>
       /// <returns>returns true if the solution is identical otherwise false</returns>
       static bool IsIdentical (int[] soln) {
          int[] mirrSol = Mirror (soln);
          List<int[]> rotatedArr = Rotation (soln);
-         foreach (int[] sol in sols) {
+         foreach (int[] sol in sSols) {
             if (soln.SequenceEqual (sol) || mirrSol.SequenceEqual (sol)) return true;
             foreach (int[] rotSol in rotatedArr) {
                mirrSol = Mirror (rotSol);
@@ -100,7 +100,7 @@ namespace Training {
          allRotSol.Add (soln.ToArray ());
          for (int rot = 0; rot < 3; rot++) {
             for (int row = 0; row < soln.Length; row++) rotSoln[7 - soln[row]] = row;
-            for (int ind = 0; ind < 8; ind++) soln[ind] = rotSoln[ind];
+            soln = rotSoln.ToArray();
             allRotSol.Add (rotSoln.ToArray ());
          }
          return allRotSol;
@@ -109,11 +109,7 @@ namespace Training {
       /// <summary>Gives the mirrored solution of the given solution array</summary>
       /// <param name="sols">Solution array to be mirrored</param>
       /// <returns>Mirrored Solution</returns>
-      static int[] Mirror (int[] sols) {
-         int[] mirSoln = new int[8];
-         for (int row = 7; row >= 0; row--) mirSoln[7 - row] = sols[row];
-         return mirSoln;
-      }
+      static int[] Mirror (int[] sols) => sols.Reverse().ToArray ();
       #endregion
    }
    #endregion
