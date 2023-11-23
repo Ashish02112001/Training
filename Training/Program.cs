@@ -58,15 +58,14 @@ namespace Training {
       /// <summary>Pushes the element into the Queue</summary>
       /// <param name="a">Element to be added to the Queue</param>
       public void Enqueue (T a) {
-         if (mCount == elements.Length) {
-            T[] expElements = new T[mCount * 2];
+         if (mCount == mElements.Length) {
+            T[] expArray = new T[mCount * 2];
             mEnIndex = mCount;
-            for (int i = 0; i < elements.Length; i++) expElements[i] = Dequeue ();
-            elements = expElements;
-            mCount = mEnIndex;
+            for (int i = 0; i < mElements.Length; i++) expArray[i] = mElements[(mDeIndex + i) % mCount];
+            mElements = expArray;
          }
-         elements[mEnIndex++] = a;
-         if (mEnIndex == elements.Length) mEnIndex = 0;
+         mElements[mEnIndex] = a;
+         mEnIndex = (mEnIndex + 1) % mElements.Length;
          mCount++;
       }
 
@@ -74,24 +73,22 @@ namespace Training {
       /// <returns>The top element of the Queue</returns>
       public T Dequeue () {
          if (IsEmpty) throw new InvalidOperationException ();
-         T firstEl = default!;
-         firstEl = elements[mDeIndex];
+         T firstElem = mElements[mDeIndex];
+         mDeIndex = (mDeIndex + 1) % mElements.Length;
          mCount--;
-         elements[mDeIndex++] = default!;
-         if (mDeIndex == elements.Length) mDeIndex = 0;
-         return firstEl;
+         return firstElem;
       }
 
       /// <summary>Returns the top element of the Queue</summary>
       /// <returns>The top element of the Queue</returns>
       public T Peek () {
          if (IsEmpty) throw new InvalidOperationException ();
-         return elements[mDeIndex];
+         return mElements[mDeIndex];
       }
-      #endregion 
+      #endregion
 
       #region PrivateFields -----------------------------------------
-      T[] elements = new T[4];
+      T[] mElements = new T[4];
       int mEnIndex = 0, mDeIndex = 0, mCount = 0;
       #endregion
    }

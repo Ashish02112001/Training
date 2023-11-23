@@ -2,42 +2,49 @@ using Training;
 namespace TestProject1 {
    [TestClass]
    public class UnitTest1 {
-      Queue<int> nums = new ();
-      TQueue<int> myNums = new ();
+      Queue<int> mNums = new ();
+      TQueue<int> mMyNums = new ();
 
       [TestMethod]
       public void TestEnqueue () {
-         for (int i = 0; i < 5; i++) {
-            nums.Enqueue (i + 1); myNums.Enqueue (i + 1);
-         }
-         Assert.AreEqual (nums.Dequeue (), myNums.Dequeue ());
+         mNums.Enqueue (1); mMyNums.Enqueue (1);
+         Assert.AreEqual (mNums.Dequeue (), mMyNums.Dequeue ());
       }
 
       [TestMethod]
       public void TestDequeue () {
-         myNums.Enqueue (1);
-         myNums.Enqueue (2);
-         Assert.AreEqual (1, myNums.Dequeue ());
-         Assert.AreEqual (2, myNums.Dequeue ());
-         Assert.ThrowsException<InvalidOperationException> (() => myNums.Dequeue ());
+         mMyNums.Enqueue (1);
+         mMyNums.Enqueue (2);
+         mMyNums.Enqueue (3);
+         mMyNums.Enqueue (4);
+         Assert.AreEqual (1, mMyNums.Dequeue ());
+         mMyNums.Enqueue (5);
+         Assert.AreEqual (2, mMyNums.Dequeue ());
+         Assert.AreEqual (3, mMyNums.Dequeue ());
+         Assert.AreEqual (4, mMyNums.Dequeue ());
+         Assert.AreEqual (5, mMyNums.Dequeue ());
+         //To test the expansion of arrary size:
+         for (int i = 0;i<5;i++) mMyNums.Enqueue (i+1);
+         for (int i = 0; i < 5; i++) mMyNums.Dequeue ();
+         Assert.ThrowsException<InvalidOperationException> (() => mMyNums.Dequeue ());
       }
 
       [TestMethod]
       public void TestPeek () {
-         nums.Enqueue (1); myNums.Enqueue (1);
-         Assert.AreEqual (nums.Peek (), myNums.Peek ());
-         myNums.Dequeue ();
-         Assert.ThrowsException<InvalidOperationException> (() => myNums.Peek ());
+         mNums.Enqueue (1); mMyNums.Enqueue (1);
+         Assert.AreEqual (mNums.Peek (), mMyNums.Peek ());
+         mMyNums.Dequeue ();
+         Assert.ThrowsException<InvalidOperationException> (() => mMyNums.Peek ());
       }
 
       [TestMethod]
       public void TestIsEmpty () {
-         myNums.Enqueue (1);
-         myNums.Enqueue (2);
-         Assert.IsFalse (myNums.IsEmpty);
-         myNums.Dequeue ();
-         myNums.Dequeue ();
-         Assert.IsTrue (myNums.IsEmpty);
+         mMyNums.Enqueue (1);
+         mMyNums.Enqueue (2);
+         Assert.IsFalse (mMyNums.IsEmpty);
+         mMyNums.Dequeue ();
+         mMyNums.Dequeue ();
+         Assert.IsTrue (mMyNums.IsEmpty);
       }
    }
 }
