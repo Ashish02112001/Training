@@ -8,6 +8,7 @@
 **/dotCover.Output/
 *.dcvr
 *.html
+*.gitignore
 *.pdb
 *.obj
 **/bin/
