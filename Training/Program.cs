@@ -18,7 +18,7 @@ namespace Training {
          Console.WriteLine ("Press Ctrl+C to quit");
          for (; ; ) {
             Console.Write ("Enter a string to be parsed to double: ");
-            if (DoubleDotParse (Console.ReadLine ()!, out double num)) Console.WriteLine ($"Parsed to Double: {num}");
+            if (DoubleParse (Console.ReadLine ()!, out double num)) Console.WriteLine ($"Parsed to Double: {num}");
             else Console.WriteLine ("Enter a proper decimal number");
          }
       }
@@ -27,34 +27,27 @@ namespace Training {
       /// <param name="s">Given String</param>
       /// <param name="dNum">Parsed double value</param>
       /// <returns>Returns true if the parse is successful otherwise false</returns>
-      public static bool DoubleDotParse (string s, out double dNum) {
-         s = s.Trim ().ToLower () ?? "";
+      public static bool DoubleParse (string s, out double dNum) {
+         s = s.Trim ().ToLower ();
          int plVal = 0;
          string exp = "0";
          dNum = 0;
          bool validNum = false;
-         if (s != "") {
-            if (IsValidNumber (s)) {
-               validNum = true;
-               plVal = s.Length;
-            } else if (s[0] is '-' or '+' or '.' || char.IsNumber (s[0])) {
-               if (s.Contains ('.') || s.Contains ('e')) {
-                  if (s.IndexOf ('e') == s.IndexOf ('.') + 1 || '.' == s[^1] || 'e' == s[^1]) return validNum;
-                  if (s.Contains ('e')) {
-                     int eInd = s.IndexOf ("e");
-                     exp = s[(eInd + 1)..];
-                     s = s.Remove (eInd);
-                     if (!s.Contains ('.')) plVal = s.Length;
-                  }
-                  if (s.Contains ('.')) {
-                     plVal = s.IndexOf ('.');
-                     s = s.Remove (plVal, 1);
-                  }
-                  if (IsValidNumber (s) && IsValidNumber (exp)) validNum = true;
-               }
+         if (string.IsNullOrEmpty (s)) throw new Exception ("Null or empty string");
+         if (IsValidNumber (s)) {
+            validNum = true;
+            plVal = s.Length;
+         } else if (s[0] is '-' or '+' or '.' || char.IsNumber (s[0])) {
+            if (s.Contains ('.') || s.Contains ('e')) {
+               int eInd = s.IndexOf ("e"), ptInd = s.IndexOf (".");
+               if (Math.Abs (eInd - ptInd) == 1 || '.' == s[^1] || 'e' == s[^1]) return validNum;
+               if (eInd > 0) { exp = s[(eInd + 1)..]; s = s.Remove (eInd); }
+               plVal = ptInd == -1 ? s.Length : ptInd;
+               if (ptInd >= 0) s = s.Remove (plVal, 1);
+               if (IsValidNumber (s) && IsValidNumber (exp)) validNum = true;
             }
-            if (validNum) dNum = StringToDouble (s, plVal - 1, int.Parse (exp));
          }
+         if (validNum) dNum = StringToDouble (s, plVal - 1, int.Parse (exp));
          return validNum;
       }
 
@@ -76,7 +69,7 @@ namespace Training {
          int fracPart = 0, sign = (nums[0] is '-') ? -1 : 1;
          if (nums[0] is '-' or '+') { nums = nums.Remove (0, 1); plV--; };
          foreach (char digit in nums) { dParsedNum += Math.Pow (10, plV--) * (digit - '0'); if (plV < 0) fracPart++; }
-         return Math.Round (dParsedNum * sign * (Math.Pow (10, exp)),Math.Abs(exp)+fracPart);
+         return Math.Round (dParsedNum * sign * (Math.Pow (10, exp)), Math.Abs (exp) + fracPart);
       }
       #endregion
    }
