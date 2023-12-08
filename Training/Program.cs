@@ -10,10 +10,10 @@
 // --------------------------------------------------------------------------------------------
 
 namespace Training {
-   #region Program ------------------------------------------------------------------------------
+   #region Program --------------------------------------------------------------------------------
    /// <summary>Custom Queue<T> Program</summary>
    internal class Program {
-      #region Methods ---------------------------------------------
+      #region Methods -----------------------------------------------
       /// <summary>Checks for the custom Queue<T>></summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
@@ -45,7 +45,7 @@ namespace Training {
    }
    #endregion
 
-   #region ClassTQueue <T> -------------------------------------------------------------------------
+   #region Class TQueue ---------------------------------------------------------------------------
    /// <summary>Class Queue<T></summary>
    /// <typeparam name="T">Type of the Queue</typeparam>
    public class TQueue<T> {
@@ -54,7 +54,7 @@ namespace Training {
       public bool IsEmpty => mCount == 0;
       #endregion
 
-      #region Queue<T>Methods ---------------------------------------
+      #region Methods -----------------------------------------------
       /// <summary>Pushes the element into the Queue</summary>
       /// <param name="a">Element to be added to the Queue</param>
       public void Enqueue (T a) {
@@ -62,6 +62,7 @@ namespace Training {
             T[] expArray = new T[mCount * 2];
             mEnIndex = mCount;
             for (int i = 0; i < mElements.Length; i++) expArray[i] = mElements[(mDeIndex + i) % mCount];
+            mDeIndex = 0;
             mElements = expArray;
          }
          mElements[mEnIndex] = a;
@@ -87,7 +88,7 @@ namespace Training {
       }
       #endregion
 
-      #region PrivateFields -----------------------------------------
+      #region Private Fields ----------------------------------------
       T[] mElements = new T[4];
       int mEnIndex = 0, mDeIndex = 0, mCount = 0;
       #endregion
