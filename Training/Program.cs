@@ -28,7 +28,7 @@ namespace Training {
       /// <param name="dNum">Parsed double value</param>
       /// <returns>Returns true if the parse is successful otherwise false</returns>
       public static bool DoubleParse (string s, out double dNum) {
-         s = s.Trim ().ToLower ();
+         s ??= s.Trim ().ToLower ();
          int plVal = 0;
          string exp = "0";
          dNum = 0;
