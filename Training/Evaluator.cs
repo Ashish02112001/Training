@@ -1,0 +1,85 @@
+﻿namespace Training;
+class EvalException : Exception {
+   public EvalException (string message) : base (message) { }
+}
+class Evaluator {
+   public double Evaluate (string input) {
+      Reset ();
+      var tokenizer = new Tokenizer (this, input.Trim ().ToLower ());
+      List<Token> tokens = new ();
+      for (; ; ) {
+         var token = tokenizer.GetNext ();
+         if (token is TEnd) break;
+         tokens.Add (token);
+      }
+      TVariable var = null;
+      if (tokens.Count > 1 && tokens[0] is TVariable tv && tokens[1] is TOpBinary bin && bin.op == '=') {
+         var = tv;
+         tokens.RemoveRange (0, 2);
+      }
+      foreach(var token in tokens) Process (token);
+      while (mOperators.Count > 0) ApplyOpreator ();
+      if (mBasePriority != 0) Error ("Mismatched Parenthesis");
+      if (mOperators.Count > 0) Error ("Too many operators");
+      if (mOperands.Count > 1) Error ("Too many operands");
+      double f = mOperands.Pop ();
+      if (var != null) mVariables[var.Name] = f;
+      return f;
+   }
+   public double GetVariable (string name) {
+      if (mVariables.TryGetValue (name, out var fl)) return fl;
+      Error ("Unknown variable");
+      return 0;
+   }
+
+   void Error (string s) => throw new EvalException (s);
+   void Reset () {
+      mOperands.Clear ();
+      mOperators.Clear ();
+      mBasePriority = 0;
+   }
+
+   public void Process (Token token) {
+      switch (token) {
+         case TNumber num: mOperands.Push (num.Value); break;
+         case TOperator op:
+            op.FinalPriority = op.Priority + mBasePriority;
+            while (!OkToPush (op)) ApplyOpreator ();
+            mOperators.Push (op);
+            break;
+         case TPunctuation p:
+            if (p.Punct == '(') mBasePriority += 10;
+            else mBasePriority -= 10;
+            break;
+         default: throw new NotImplementedException ();
+      }
+   }
+   int mBasePriority = 0;
+   public bool OkToPush (TOperator op) {
+      if (mOperators.Count == 0) return true;
+      TOperator prev = mOperators.Peek ();
+      if (op is TOpUnary) return true;
+      return prev.FinalPriority < op.FinalPriority;
+
+   }
+   void ApplyOpreator () {
+      var op = mOperators.Pop ();
+      if (op is TOpBinary bin) {
+         if (mOperands.Count < 2) Error ("Too less Operands");
+         double f1 = mOperands.Pop (), f2 = mOperands.Pop ();
+         mOperands.Push (bin.Apply (f2, f1));
+      }
+      if (op is TOpFunction func) {
+         if (mOperands.Count < 1) Error ("Too less Operands");
+         double f = mOperands.Pop ();
+         mOperands.Push (func.Apply (f));
+      }
+      if (op is TOpUnary unary) {
+         double f = mOperands.Pop ();
+         mOperands.Push (unary.Apply (f));
+      }
+   }
+   Dictionary<string, double> mVariables = new ();
+   Stack<double> mOperands = new ();
+   Stack<TOperator> mOperators = new ();
+}
