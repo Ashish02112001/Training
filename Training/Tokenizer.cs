@@ -1,13 +1,17 @@
 ﻿namespace Training;
+
+#region Class tokenizer ---------------------------------------------------------------------------
+/// <summary>Splits the expression into individual tokens</summary>
 class Tokenizer {
    public Tokenizer (Evaluator eval, string input) {
       mText = input;
       mEval = eval;
       mN = 0;
    }
-   readonly string mText;
-   readonly Evaluator mEval;
-   int mN;
+
+   #region Methods --------------------------------------------------
+   /// <summary>Gets the token one by one from the expression</summary>
+   /// <returns>Individual token</returns>
    public Token GetNext () {
       while (mN < mText.Length) {
          char ch = mText[mN++];
@@ -24,6 +28,9 @@ class Tokenizer {
       }
       return new TEnd ();
    }
+
+   /// <summary>Gets literal and returns parsed value to literal token</summary>
+   /// <returns>New Literal token</returns>
    Token GetLiteral () {
       int start = mN - 1;
       while (mN < mText.Length) {
@@ -34,6 +41,9 @@ class Tokenizer {
       string num = mText.Substring (start, mN - start);
       return new TLiteral (double.Parse (num));
    }
+
+   /// <summary>Gets the variable or function name and returns the particular token</summary>
+   /// <returns>Function or Variable token</returns>
    Token GetIdentifier () {
       int start = mN - 1;
       while (mN < mText.Length) {
@@ -44,5 +54,12 @@ class Tokenizer {
       string identifier = mText[start..mN];
       return mFuncs.Contains (identifier) ? new TOpFunction (identifier) : new TVariable (mEval, identifier);
    }
+   #endregion
+   #region Private fields -------------------------------------------
    readonly string[] mFuncs = { "sin", "cos", "tan", "sqrt", "log", "exp", "asin", "acos", "atan" };
+   readonly string mText;
+   readonly Evaluator mEval;
+   int mN;
+   #endregion
 }
+#endregion

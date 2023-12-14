@@ -1,5 +1,6 @@
 ﻿namespace Training;
-class Token { }
+#region Class token -------------------------------------------------------------------------------
+public class Token { }
 class TNumber : Token {
    public virtual double Value { get; }
 }
@@ -7,7 +8,6 @@ class TLiteral : TNumber {
    public TLiteral (double num) => mLit = num;
    public override double Value => mLit;
    public override string ToString () => $"Literal: {Literal}";
-
    public double Literal => mLit;
    readonly double mLit;
 }
@@ -22,7 +22,7 @@ class TVariable : TNumber {
    readonly string mVar;
    readonly Evaluator mEval;
 }
-class TOperator : Token {
+public class TOperator : Token {
    public virtual int Priority { get; }
    public int FinalPriority { get; set; }
 }
@@ -60,6 +60,7 @@ class TOpFunction : TOperator {
          "tan" => Math.Tan (D2R (f)),
          "log" => Math.Log (f),
          "exp" => Math.Exp (f),
+         "sqrt" => Math.Sqrt (f),
          "asin" => R2D (Math.Asin (f)),
          "acos" => R2D (Math.Acos (f)),
          "atan" => R2D (Math.Atan (f)),
@@ -96,3 +97,4 @@ class TPunctuation : Token {
    public char Punct => mPunct;
    readonly char mPunct;
 }
+#endregion
