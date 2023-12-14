@@ -28,12 +28,12 @@ namespace Training {
       /// <param name="dNum">Parsed double value</param>
       /// <returns>Returns true if the parse is successful otherwise false</returns>
       public static bool DoubleParse (string s, out double dNum) {
-         s ??= s.Trim ().ToLower ();
+         dNum = 0;
+         if (string.IsNullOrEmpty (s)) return false;
+         s = s.Trim ().ToLower ();
          int plVal = 0;
          string exp = "0";
-         dNum = 0;
          bool validNum = false;
-         if (string.IsNullOrEmpty (s)) throw new Exception ("Null or empty string");
          if (IsValidNumber (s)) {
             validNum = true;
             plVal = s.Length;
