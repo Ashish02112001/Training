@@ -17,8 +17,8 @@ class Tokenizer {
          char ch = mText[mN++];
          if (ch == ' ') continue;
          if (ch is '+' or '-' or '*' or '/' or '^' or '=') {
-            if (ch is '-' or '+' && (mN - 1 == 0 || mText[mN - 2] is '+' or '-' or '*' or '/' or '^' or '(')) return new TOpUnary (ch);
-            if (mN > 4 && mFuncs.Contains (mText[(mN - 5)..(mN - 2)])) return new TOpUnary (ch);
+            if (ch is '-' or '+' && (mN - 1 == 0 || mText[mN - 2] is '+' or '-' or '*' or '/' or '^' or '(' || mFuncs.Contains(mText[0..(mN - 1)]))) return new TOpUnary (ch);
+            if (mN > 4 && mFuncs.Contains (mText[(mN - 5)..(mN - 1)])) return new TOpUnary (ch);
             return new TOpBinary (ch);
          }
          if (ch is >= '0' and <= '9') return GetLiteral ();
@@ -48,10 +48,11 @@ class Tokenizer {
       int start = mN - 1;
       while (mN < mText.Length) {
          char ch = mText[mN++];
+         if (mFuncs.Contains (mText[start..(mN - 1)])) break;
          if (ch is (>= '0' and <= '9') or (>= 'a' and <= 'z')) continue;
-         mN--; break;
+         break;
       }
-      string identifier = mText[start..mN];
+      string identifier = mText[start..--mN];
       return mFuncs.Contains (identifier) ? new TOpFunction (identifier) : new TVariable (mEval, identifier);
    }
    #endregion
