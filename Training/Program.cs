@@ -26,6 +26,7 @@ namespace Training {
          Console.WriteLine ($"File name: {filName}");
          Console.WriteLine ($"Extension: {ext}");
       }
+
       /// <summary>When given a string it parses it into parts and returns the components of file path</summary>
       /// <param name="fName">Given string</param>
       /// <returns>Tuple consisting of the drive, folder path, file name and extension of the file</returns>
