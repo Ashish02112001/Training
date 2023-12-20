@@ -15,7 +15,7 @@ namespace Training {
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
          Console.WriteLine (@"The file path must 
-         1. Only contain capital letters only alphabets folder names separated by '\'
+         1. Only contain alphabets and folder names separated by '\'
          2. End with filename.extension");
          Console.WriteLine ("Enter a file path:");
          string s = Console.ReadLine ()!;
@@ -36,7 +36,7 @@ namespace Training {
          Action none = () => { };
          Action todo;
          string folder = "", dLetter = "", flName = "", ext = ".";
-         foreach (var ch in fName.Trim () + '~') {
+         foreach (var ch in fName.Trim ().ToUpper() + '~') {
             (s, todo) = (s, ch) switch {
                (State.A, >= 'A' and <= 'Z') => (State.B, () => dLetter = ch.ToString ()),
                (State.B, ':') => (State.C, none),
