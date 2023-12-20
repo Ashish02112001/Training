@@ -18,7 +18,7 @@ namespace Training {
          1. Only contain capital letters only alphabets folder names separated by '\'
          2. End with filename.extension");
          Console.WriteLine ("Enter a file path:");
-         string s = Console.ReadLine ();
+         string s = Console.ReadLine ()!;
          (string dLetter, string folPath, string filName, string ext) = FileNameParse (s);
          if (string.IsNullOrEmpty (dLetter)) { Console.WriteLine ("Enter a valid file path name"); return; }
          Console.WriteLine ($"Drive letter: {dLetter}");
