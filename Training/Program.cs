@@ -49,7 +49,7 @@ namespace Training {
             };
             todo ();
          }
-         if (s == State.H) {
+         if (s == State.H && folder.Count (sep => sep == '\\') > 1) {
             folder = folder[1..].Remove (folder.LastIndexOf ('\\') - 1);
             return (dLetter, folder, flName + ext, ext);
          }
