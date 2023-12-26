@@ -6,6 +6,7 @@
 // A10.1:
 // Implement file name parser with state machine
 // --------------------------------------------------------------------------------------------
+using static Training.Program.State;
 namespace Training {
    #region Program ------------------------------------------------------------------------------
    /// <summary>File Name Parser</summary>
@@ -32,31 +33,34 @@ namespace Training {
       /// <returns>Tuple consisting of the drive, folder path, file name and extension of the file</returns>
       /// See file://FileNameParser.png
       public static (string driveLetter, string folderPath, string fileName, string extension) FileNameParse (string fName) {
-         State s = State.A;
+         State s = A;
          Action none = () => { };
          Action todo;
-         string folder = "", dLetter = "", flName = "", ext = ".";
-         foreach (var ch in fName.Trim ().ToUpper() + '~') {
+         string folder = "", drive = "", file = "", ext = "";
+         foreach (var ch in fName.Trim ().ToUpper () + '~') {
             (s, todo) = (s, ch) switch {
-               (State.A, >= 'A' and <= 'Z') => (State.B, () => dLetter = ch.ToString ()),
-               (State.B, ':') => (State.C, none),
-               (State.C or State.E, '\\') => (State.D, () => folder += ch),
-               (State.D or State.E, >= 'A' and <= 'Z') => (State.E, () => folder += ch),
-               (State.E, '.') => (State.F, () => flName += folder[(folder.LastIndexOf ('\\') + 1)..]),
-               (State.F or State.G, >= 'A' and <= 'Z') => (State.G, () => ext += ch),
-               (State.G, '~') => (State.H, none),
-               _ => (State.Z, none),
+               (A, >= 'A' and <= 'Z') => (B, () => drive = ch.ToString ()),
+               (B, ':') => (C, none),
+               (C, '\\') => (D, none),
+               (D or E, >= 'A' and <= 'Z') => (E, () => folder += ch),
+               (E, '\\') => (F, () => folder += ch),
+               (F or G, >= 'A' and <= 'Z') => (G, () => folder += ch),
+               (G, '\\') => (F, () => folder += ch),
+               (G, '.') => (H, () => file += folder[(folder.LastIndexOf('\\')+1)..]),
+               (H or I, >= 'A' and <= 'Z') => (I, () => ext += ch),
+               (I, '~') => (J, none),
+               _ => (Z, none),
             };
             todo ();
          }
-         if (s == State.H && folder.Count (sep => sep == '\\') > 1) {
-            folder = folder[1..].Remove (folder.LastIndexOf ('\\') - 1);
-            return (dLetter, folder, flName + ext, ext);
+         if (s == J) {
+            folder = folder.Remove (folder.LastIndexOf ('\\'));
+            return (drive, folder, file + '.' + ext, ext);
          }
          return ("", "", "", "");
       }
       #endregion
-      public enum State { A, B, C, D, E, F, G, H, Z };
+      public enum State { A, B, C, D, E, F, G, H, I, J, Z };
    }
    #endregion
 }
