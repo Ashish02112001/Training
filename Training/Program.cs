@@ -16,7 +16,7 @@ namespace Training {
       /// <summary>Checks for the custom Double ended Queue<T></summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         DEndTQueue<int> Nos = new ();
+         TDQueue<int> Nos = new ();
          Nos.RearEnqueue (1);
          Nos.RearEnqueue (2);
          Nos.RearEnqueue (5);
@@ -31,7 +31,7 @@ namespace Training {
    #region Class Double ended TQueue --------------------------------------------------------------
    /// <summary>Double Ended Queue<T></summary>
    /// <typeparam name="T">Type of the Queue</typeparam>
-   public class DEndTQueue<T> {
+   public class TDQueue<T> {
       #region Property ----------------------------------------------
       /// <summary>Returns true if the Queue is empty otherwise false</summary>
       public bool IsEmpty => mCount == 0;
@@ -41,7 +41,7 @@ namespace Training {
       /// <summary>Adds the element at the rear end of the Queue</summary>
       /// <param name="a">Element to be added to the Queue</param>
       public void RearEnqueue (T a) {
-         if (mCount == mElements.Length) ResizeArr ();
+         if (mCount == mElements.Length) ResizeArray ();
          rear = (rear + 1) % mElements.Length;
          mElements[rear] = a;
          mCount++;
@@ -53,15 +53,15 @@ namespace Training {
       public T RearDequeue () {
          if (IsEmpty) throw new InvalidOperationException ();
          if (rear == -1) rear = mElements.Length - 1;
-         T rearElem = mElements[rear--];
+         T a = mElements[rear--];
          mCount--;
-         return rearElem;
+         return a;
       }
 
       /// <summary>Adds the element at the front end of the Queue</summary>
       /// <param name="a">Element to be added to the Queue</param>
       public void FrontEnqueue (T a) {
-         if (mCount == mElements.Length) ResizeArr ();
+         if (mCount == mElements.Length) ResizeArray ();
          front = (front == -1) ? mElements.Length - 1 : front - 1;
          mElements[front] = a;
          mCount++;
@@ -73,14 +73,14 @@ namespace Training {
       public T FrontDequeue () {
          if (IsEmpty) throw new InvalidOperationException ();
          if (front == -1) front = 0;
-         T frontElem = mElements[front];
+         T a = mElements[front];
          front = (front + 1) % mElements.Length;
          mCount--;
-         return frontElem;
+         return a;
       }
 
       /// <summary>Expands the length of the array</summary>
-      void ResizeArr () {
+      void ResizeArray () {
          T[] expArray = new T[mCount];
          if (rear < front) expArray = (mElements[front..mElements.Length].Concat (mElements[0..(rear + 1)])).ToArray ();
          mElements = expArray;

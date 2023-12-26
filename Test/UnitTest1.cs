@@ -2,7 +2,7 @@ using Training;
 namespace Test {
    [TestClass]
    public class UnitTest1 {
-      DEndTQueue<int> mNums = new ();
+      TDQueue<int> mNums = new ();
       [TestMethod]
       public void TestRearEnqueue () {
          mNums.RearEnqueue (1);
