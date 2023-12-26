@@ -46,7 +46,7 @@ namespace Training {
                (E, '\\') => (F, () => folder += ch),
                (F or G, >= 'A' and <= 'Z') => (G, () => folder += ch),
                (G, '\\') => (F, () => folder += ch),
-               (G, '.') => (H, () => file += folder[(folder.LastIndexOf('\\')+1)..]),
+               (G, '.') => (H, () => file += folder[(folder.LastIndexOf ('\\') + 1)..]),
                (H or I, >= 'A' and <= 'Z') => (I, () => ext += ch),
                (I, '~') => (J, none),
                _ => (Z, none),
