@@ -5,44 +5,33 @@ namespace Test {
       TDQueue<int> mNums = new ();
       [TestMethod]
       public void TestRearEnqueue () {
-         mNums.RearEnqueue (1);
-         mNums.RearEnqueue (2);
-         Assert.AreEqual (1, mNums.FrontDequeue ());
-         Assert.AreEqual (2, mNums.FrontDequeue ());
+         for (int i = 0; i < 4; i++) mNums.RearEnqueue (i + 1);
+         for (int j = 0; j < 4; j++) Assert.AreEqual (j + 1, mNums.FrontDequeue ());
       }
+
       [TestMethod]
       public void TestFrontEnqueue () {
-         mNums.FrontEnqueue (1);
-         mNums.FrontEnqueue (2);
-         Assert.AreEqual (1, mNums.RearDequeue ());
-         Assert.AreEqual (2, mNums.RearDequeue ());
+         for (int i = 0; i < 4; i++) mNums.FrontEnqueue (i + 1);
+         for (int j = 0; j < 4; j++) Assert.AreEqual (j + 1, mNums.RearDequeue ());
       }
+
       [TestMethod]
       public void TestRearDequeue () {
-         mNums.RearEnqueue (2);
-         mNums.RearEnqueue (1);
-         mNums.FrontEnqueue (3);
-         mNums.FrontEnqueue (4);
-         mNums.FrontEnqueue (5);
-         Assert.AreEqual (1, mNums.RearDequeue ());
-         Assert.AreEqual (2, mNums.RearDequeue ());
-         Assert.AreEqual (3, mNums.RearDequeue ());
-         Assert.AreEqual (4, mNums.RearDequeue ());
-         Assert.AreEqual (5, mNums.RearDequeue ());
+         for (int i = 0; i < 5; i++) {
+            if ((i + 1) > 2) mNums.FrontEnqueue (i + 1);
+            else mNums.RearEnqueue (2 - i);
+         }
+         for (int j = 0; j < 5; j++) Assert.AreEqual (j + 1, mNums.RearDequeue ());
          Assert.ThrowsException<InvalidOperationException> (() => mNums.RearDequeue ());
       }
+
       [TestMethod]
       public void TestFrontDequeue () {
-         mNums.RearEnqueue (2);
-         mNums.RearEnqueue (1);
-         mNums.FrontEnqueue (3);
-         mNums.FrontEnqueue (4);
-         mNums.FrontEnqueue (5);
-         Assert.AreEqual (5, mNums.FrontDequeue ());
-         Assert.AreEqual (4, mNums.FrontDequeue ());
-         Assert.AreEqual (3, mNums.FrontDequeue ());
-         Assert.AreEqual (2, mNums.FrontDequeue ());
-         Assert.AreEqual (1, mNums.FrontDequeue ());
+         for (int i = 0; i < 5; i++) {
+            if ((i + 1) > 2) mNums.FrontEnqueue (i + 1);
+            else mNums.RearEnqueue (2 - i);
+         }
+         for (int j = 5; j > 0; j--) Assert.AreEqual (j, mNums.FrontDequeue ());
          Assert.ThrowsException<InvalidOperationException> (() => mNums.FrontDequeue ());
       }
    }

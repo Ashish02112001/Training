@@ -1,7 +1,7 @@
 ﻿// --------------------------------------------------------------------------------------------
 // Training ~ A training program for new joinees at Metamation, Batch - July 2023.
 // Copyright (c) Metamation India.
-// ------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
 // A10.2: DoubleEndedQueue<T>
 // This is like a queue but we can add or remove i.e. enqueue or dequeue at both the ends at the head and the tail.
 // This should allow to add at the head or remove at the head and add to the tail or remove at the tail.
@@ -15,7 +15,7 @@ namespace Training {
       #region Methods -----------------------------------------------
       /// <summary>Checks for the custom Double ended Queue<T></summary>
       /// <param name="args">arguments</param>
-      static void Main (string[] args) {
+      static void Main () {
          TDQueue<int> Nos = new ();
          Nos.RearEnqueue (1);
          Nos.RearEnqueue (2);
@@ -33,7 +33,7 @@ namespace Training {
    /// <typeparam name="T">Type of the Queue</typeparam>
    public class TDQueue<T> {
       #region Constructor -------------------------------------------
-      public TDQueue () => mElements = new T[mSize];
+      public TDQueue () => mElements = new T[4];
       #endregion
       #region Property ----------------------------------------------
       /// <summary>Returns true if the Queue is empty otherwise false</summary>
@@ -44,9 +44,9 @@ namespace Training {
       /// <summary>Adds the element at the rear end of the Queue</summary>
       /// <param name="a">Element to be added to the Queue</param>
       public void RearEnqueue (T a) {
-         if (mCount == mSize) ResizeArray ();
-         mElements[rear] = a;
-         rear = (rear + 1) % mSize;
+         if (mCount == mElements.Length) ResizeArray ();
+         mElements[mRear] = a;
+         mRear = (mRear + 1) % mElements.Length;
          mCount++;
       }
 
@@ -55,8 +55,8 @@ namespace Training {
       /// <exception cref="InvalidOperationException">Exception thrown if the queue is empty</exception>
       public T RearDequeue () {
          if (IsEmpty) throw new InvalidOperationException ();
-         rear = (rear - 1 + mSize) % mSize;
-         T a = mElements[rear];
+         mRear = (mRear - 1 + mElements.Length) % mElements.Length;
+         T a = mElements[mRear];
          mCount--;
          return a;
       }
@@ -64,9 +64,9 @@ namespace Training {
       /// <summary>Adds the element at the front end of the Queue</summary>
       /// <param name="a">Element to be added to the Queue</param>
       public void FrontEnqueue (T a) {
-         if (mCount == mSize) ResizeArray ();
-         front = (front -1 + mSize) % mSize;
-         mElements[front] = a;
+         if (mCount == mElements.Length) ResizeArray ();
+         mFront = (mFront - 1 + mElements.Length) % mElements.Length;
+         mElements[mFront] = a;
          mCount++;
       }
 
@@ -75,8 +75,8 @@ namespace Training {
       /// <exception cref="InvalidOperationException">Exception thrown if the queue is empty</exception>
       public T FrontDequeue () {
          if (IsEmpty) throw new InvalidOperationException ();
-         T a = mElements[front];
-         front = (front + 1) % mSize;
+         T a = mElements[mFront];
+         mFront = (mFront + 1) % mElements.Length;
          mCount--;
          return a;
       }
@@ -84,21 +84,13 @@ namespace Training {
       /// <summary>Expands the length of the array</summary>
       void ResizeArray () {
          T[] expArray = new T[mCount * 2];
-         rear--;
-         for (int i = front, j = 0; i >= rear; i++, j++) {
-            int ind = i % mSize;
-            expArray[j] = mElements[ind];
-            if (ind == rear) break;
-         }
-         mElements = expArray;
-         front = 0;
-         rear = mCount;
-         mSize *= 2;
+         for (int i = 0; i < mCount; i++) expArray[i] = mElements[(mFront + i) % mCount];
+         (mElements, mFront, mRear) = (expArray, 0, mCount);
       }
       #endregion
 
       #region Private Fields ----------------------------------------
-      int front = 0, rear = 0, mCount = 0, mSize = 4;
+      int mFront = 0, mRear = 0, mCount = 0;
       T[] mElements;
       #endregion
    }
