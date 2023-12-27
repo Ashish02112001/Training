@@ -11,11 +11,11 @@ namespace Test {
                @"C:\abc\def\r.txt.txt",@"C:\PROGRAM\DATA\MSOFFICE",@"C:\PROGRAM\DATA",@"C:\PROGRAM",@"\PROGRAM\DATA\MSOFFICE\EXCEL",
                @"C\PROGRAM\DATA\MSOFFICE\EXCEL",@"PROGRAM",@"C:PROGRAM\DATA\MSOFFICE\EXCEL",
          };
-         Assert.AreEqual (("C", @"PROGRAM\DATA\MSOFFICE", "EXCEL.EXE", "EXE"), FileNameParse (@"C:\PROGRAM\DATA\MSOFFICE\EXCEL.EXE"));
-            Assert.AreEqual (("D", @"PROGRAM\DATA", "EXCEL.TXT", "TXT"), FileNameParse (@"D:\PROGRAM\DATA\EXCEL.TXT"));
-            Assert.AreEqual (("C", @"PROGRAM", "EXCEL.EXE", "EXE"), FileNameParse (@"C:\PROGRAM\EXCEL.EXE"));
-            Assert.AreEqual (("C", @"ABC\DEF", "R.TXT", "TXT"), FileNameParse (@"C:\abc\def\r.txt"));
-            Assert.AreEqual (("C", @"WORK", "R.TXT", "TXT"), FileNameParse (@"C:\work\r.txt"));
+         Assert.AreEqual (("C", @"PROGRAM\DATA\MSOFFICE", "EXCEL", "EXE"), FileNameParse (@"C:\PROGRAM\DATA\MSOFFICE\EXCEL.EXE"));
+            Assert.AreEqual (("D", @"PROGRAM\DATA", "EXCEL", "TXT"), FileNameParse (@"D:\PROGRAM\DATA\EXCEL.TXT"));
+            Assert.AreEqual (("C", @"PROGRAM", "EXCEL", "EXE"), FileNameParse (@"C:\PROGRAM\EXCEL.EXE"));
+            Assert.AreEqual (("C", @"ABC\DEF", "R", "TXT"), FileNameParse (@"C:\abc\def\r.txt"));
+            Assert.AreEqual (("C", @"WORK", "R", "TXT"), FileNameParse (@"C:\work\r.txt"));
 
          
             foreach (var fName in sTests) Assert.AreEqual (("", "", "", ""), FileNameParse (fName));

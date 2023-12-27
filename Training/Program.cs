@@ -34,8 +34,7 @@ namespace Training {
       /// See file://FileNameParser.png
       public static (string driveLetter, string folderPath, string fileName, string extension) FileNameParse (string fName) {
          State s = A;
-         Action none = () => { };
-         Action todo;
+         Action none = () => { }, todo;
          string folder = "", drive = "", file = "", ext = "";
          foreach (var ch in fName.Trim ().ToUpper () + '~') {
             (s, todo) = (s, ch) switch {
@@ -46,7 +45,7 @@ namespace Training {
                (E, '\\') => (F, () => folder += ch),
                (F or G, >= 'A' and <= 'Z') => (G, () => folder += ch),
                (G, '\\') => (F, () => folder += ch),
-               (G, '.') => (H, () => file += folder[(folder.LastIndexOf ('\\') + 1)..]),
+               (G, '.') => (H, none),
                (H or I, >= 'A' and <= 'Z') => (I, () => ext += ch),
                (I, '~') => (J, none),
                _ => (Z, none),
@@ -54,8 +53,10 @@ namespace Training {
             todo ();
          }
          if (s == J) {
-            folder = folder.Remove (folder.LastIndexOf ('\\'));
-            return (drive, folder, file + '.' + ext, ext);
+            var tmp = folder.Split ('\\');
+            file = tmp[^1];
+            folder = string.Join ("\\", tmp[..^1]);
+            return (drive, folder, file, ext);
          }
          return ("", "", "", "");
       }
