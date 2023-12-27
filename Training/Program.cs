@@ -42,9 +42,9 @@ namespace Training {
                (B, ':') => (C, none),
                (C, '\\') => (D, none),
                (D or E, >= 'A' and <= 'Z') => (E, () => folder += ch),
-               (E, '\\') => (F, () => folder += ch),
-               (F or G, >= 'A' and <= 'Z') => (G, () => folder += ch),
-               (G, '\\') => (F, () => folder += ch),
+               (E, '\\') => (F, none),
+               (F or G, >= 'A' and <= 'Z') => (G, () => file += ch),
+               (G, '\\') => (F, () => { folder += '\\' + file; file = string.Empty; }),
                (G, '.') => (H, none),
                (H or I, >= 'A' and <= 'Z') => (I, () => ext += ch),
                (I, '~') => (J, none),
@@ -52,13 +52,7 @@ namespace Training {
             };
             todo ();
          }
-         if (s == J) {
-            var tmp = folder.Split ('\\');
-            file = tmp[^1];
-            folder = string.Join ("\\", tmp[..^1]);
-            return (drive, folder, file, ext);
-         }
-         return ("", "", "", "");
+         return (s == J) ? (drive, folder, file, ext) : ("", "", "", "");
       }
       #endregion
       public enum State { A, B, C, D, E, F, G, H, I, J, Z };
