@@ -1,12 +1,18 @@
 ﻿namespace Eval;
-
+#region Class evaluator and exception -------------------------------------------------------------
+/// <summary>Throws Exception with the given message</summary>
 class EvalException : Exception {
    public EvalException (string message) : base (message) { }
 }
-
-class Evaluator {
+/// <summary>This class contains methods to Evaluate the given expression</summary>
+public class Evaluator {
+   /// <summary>Evaluates the individual tokens and returns the result</summary>
+   /// <param name="input">Given input string</param>
+   /// <returns>Result of the expression</returns>
    public double Evaluate (string text) {
       List<Token> tokens = new ();
+      mOperators.Clear ();
+      mOperands.Clear ();
       var tokenizer = new Tokenizer (this, text);
       for (; ; ) {
          var token = tokenizer.Next ();
@@ -14,7 +20,6 @@ class Evaluator {
          if (token is TError err) throw new EvalException (err.Message);
          tokens.Add (token);
       }
-
       // Check if this is a variable assignment
       TVariable? tVariable = null;
       if (tokens.Count > 2 && tokens[0] is TVariable tvar && tokens[1] is TOpArithmetic { Op: '=' }) {
@@ -28,26 +33,33 @@ class Evaluator {
       return f; 
    }
 
-   public int BasePriority { get; private set; }
+   /// <summary>Priority given for the operators inside brackets</summary>
+   public int BasePriority { get; set; }
 
+   /// <summary>Try and get the value of the variable assigned by the user</summary>
+   /// <param name="name">Variable name</param>
+   /// <returns>Value of the variable</returns>
    public double GetVariable (string name) {
       if (mVars.TryGetValue (name, out double f)) return f;
       throw new EvalException ($"Unknown variable: {name}");
    }
    readonly Dictionary<string, double> mVars = new ();
 
+   /// <summary>Processes the tokens and pushes it to the proper stack</summary>
+   /// <param name="token">Contains the information of individual token</param>
+   /// <exception cref="NotImplementedException">Throws the not implemented exception when token is invalid</exception>
    void Process (Token token) {
       switch (token) {
          case TNumber num: 
             mOperands.Push (num.Value); 
             break;
          case TOperator op:
-            while (mOperators.Count > 0 && mOperators.Peek ().Priority > op.Priority)
+            if (op is TOpUnary) {mOperators.Push (op); break;}
+            while (mOperators.Count > 0 && mOperators.Peek ().Priority >= op.Priority)
                ApplyOperator ();
             mOperators.Push (op);
             break;
-         case TPunctuation p:
-            BasePriority += p.Punct == '(' ? 10 : -10;
+         case TPunctuation:
             break;
          default:
             throw new EvalException ($"Unknown token: {token}");
@@ -56,13 +68,20 @@ class Evaluator {
    readonly Stack<double> mOperands = new ();
    readonly Stack<TOperator> mOperators = new ();
 
+   /// <summary>Applies the operator from the stack to the operand or operands</summary>
    void ApplyOperator () {
       var op = mOperators.Pop ();
       var f1 = mOperands.Pop ();
-      if (op is TOpFunction func) mOperands.Push (func.Evaluate (f1));
-      else if (op is TOpArithmetic arith) {
-         var f2 = mOperands.Pop ();
-         mOperands.Push (arith.Evaluate (f2, f1));
+      switch (op) {
+         case TOpFunction func: 
+            mOperands.Push (func.Evaluate (f1));break;
+         case TOpArithmetic arith:
+            var f2 = mOperands.Pop ();
+            mOperands.Push (arith.Evaluate (f2, f1));
+            break;
+         case TOpUnary unary:
+            mOperands.Push (unary.Apply (f1)); break;
       }
    }
 }
+#endregion

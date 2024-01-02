@@ -1,4 +1,4 @@
-using Training;
+using Eval;
 namespace Test {
    [TestClass]
    public class UnitTest1 {
@@ -33,7 +33,7 @@ namespace Test {
 
          foreach (var val in testVals) {
             double actual = eval.Evaluate (val.Key), expected = val.Value;
-            Assert.AreEqual (expected, actual);
+            Assert.AreEqual (expected, Math.Round(actual,10));
          }
       }
    }

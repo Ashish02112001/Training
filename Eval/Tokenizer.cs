@@ -1,5 +1,7 @@
 ﻿namespace Eval;
 
+#region Class tokenizer ---------------------------------------------------------------------------
+/// <summary>Splits the expression into individual tokens</summary>
 class Tokenizer {
    public Tokenizer (Evaluator eval, string text) {
       mText = text; mN = 0; mEval = eval;
@@ -8,14 +10,22 @@ class Tokenizer {
    readonly string mText;     // The input text we're parsing through
    int mN;                    // Position within the text
 
+   #region Methods --------------------------------------------------
+   /// <summary>Gets the token one by one from the expression</summary>
+   /// <returns>Individual token</returns>
    public Token Next () {
       while (mN < mText.Length) {
          char ch = char.ToLower (mText[mN++]);
          switch (ch) {
             case ' ' or '\t': continue;
             case (>= '0' and <= '9') or '.': return GetNumber ();
-            case '(' or ')': return new TPunctuation (ch);
-            case '+' or '-' or '*' or '/' or '^' or '=': return new TOpArithmetic (mEval, ch);
+            case '(' or ')':
+               mEval.BasePriority += ch == '(' ? 10 : -10;
+               return new TPunctuation (ch);
+            case '+' or '-' or '*' or '/' or '^' or '=':
+               if (ch is '-' or '+' && (mN - 1 == 0 || mText[mN - 2] is '+' or '-' or '*' or '/' or '^' or '(' || mFuncs.Contains (mText[0..(mN - 1)]))) return new TOpUnary (mEval, ch);
+               if (mN > 4 && mFuncs.Contains (mText[(mN - 5)..(mN - 1)])) return new TOpUnary (mEval,ch);
+               return new TOpArithmetic (mEval, ch);
             case >= 'a' and <= 'z': return GetIdentifier ();
             default: return new TError ($"Unknown symbol: {ch}");
          }
@@ -23,6 +33,8 @@ class Tokenizer {
       return new TEnd ();
    }
 
+   /// <summary>Gets the variable or function name and returns the particular token</summary>
+   /// <returns>Function or Variable token</returns>
    Token GetIdentifier () {
       int start = mN - 1;
       while (mN < mText.Length) {
@@ -36,6 +48,8 @@ class Tokenizer {
    }
    readonly string[] mFuncs = { "sin", "cos", "tan", "sqrt", "log", "exp", "asin", "acos", "atan" };
 
+   /// <summary>Gets literal and returns parsed value to literal token</summary>
+   /// <returns>New Literal token</returns>
    Token GetNumber () {
       int start = mN - 1;
       while (mN < mText.Length) {
@@ -48,4 +62,6 @@ class Tokenizer {
       if (double.TryParse (sub, out double f)) return new TLiteral (f);
       return new TError ($"Invalid number: {sub}");
    }
+   #endregion
 }
+#endregion
