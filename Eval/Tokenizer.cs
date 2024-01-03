@@ -13,19 +13,20 @@ class Tokenizer {
    #region Methods --------------------------------------------------
    /// <summary>Gets the token one by one from the expression</summary>
    /// <returns>Individual token</returns>
-   public Token Next () {
+   public Token Next (List<Token> tokens) {
       while (mN < mText.Length) {
          char ch = char.ToLower (mText[mN++]);
          switch (ch) {
             case ' ' or '\t': continue;
+            case '+' or '-':
+               if (ch is '+' or '-' && tokens.Count == 0 || tokens[^1] is TOperator or TPunctuation { Punct: '(' } or TOpUnary) return new TOpUnary (mEval, ch);
+               return new TOpArithmetic (mEval, ch);
+            case '*' or '/' or '^' or '=':
+               return new TOpArithmetic (mEval, ch);
             case (>= '0' and <= '9') or '.': return GetNumber ();
             case '(' or ')':
                mEval.BasePriority += ch == '(' ? 10 : -10;
                return new TPunctuation (ch);
-            case '+' or '-' or '*' or '/' or '^' or '=':
-               if (ch is '-' or '+' && (mN - 1 == 0 || mText[mN - 2] is '+' or '-' or '*' or '/' or '^' or '(' || mFuncs.Contains (mText[0..(mN - 1)]))) return new TOpUnary (mEval, ch);
-               if (mN > 4 && mFuncs.Contains (mText[(mN - 5)..(mN - 1)])) return new TOpUnary (mEval,ch);
-               return new TOpArithmetic (mEval, ch);
             case >= 'a' and <= 'z': return GetIdentifier ();
             default: return new TError ($"Unknown symbol: {ch}");
          }
