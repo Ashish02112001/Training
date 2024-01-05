@@ -13,13 +13,13 @@ class Tokenizer {
    #region Methods --------------------------------------------------
    /// <summary>Gets the token one by one from the expression</summary>
    /// <returns>Individual token</returns>
-   public Token Next (List<Token> tokens) {
+   public Token Next () {
       while (mN < mText.Length) {
          char ch = char.ToLower (mText[mN++]);
          switch (ch) {
             case ' ' or '\t': continue;
             case '+' or '-':
-               if (ch is '+' or '-' && tokens.Count == 0 || tokens[^1] is TOperator or TPunctuation { Punct: '(' } or TOpUnary) return new TOpUnary (mEval, ch);
+               if (mPrev is null || mPrev is TOperator or TPunctuation { Punct: '(' } or TOpUnary) return new TOpUnary (mEval, ch);
                return new TOpArithmetic (mEval, ch);
             case '*' or '/' or '^' or '=':
                return new TOpArithmetic (mEval, ch);
@@ -33,7 +33,7 @@ class Tokenizer {
       }
       return new TEnd ();
    }
-
+   public Token mPrev;
    /// <summary>Gets the variable or function name and returns the particular token</summary>
    /// <returns>Function or Variable token</returns>
    Token GetIdentifier () {

@@ -90,9 +90,7 @@ class TOpUnary : TOperator {
    public override string ToString () => $"Unary: {Unary}";
    public override int Priority => mPriority;
    int mPriority;
-   public double Evaluate (double n) {
-      return Unary == '+' ? n : -n;
-   }
+   public double Evaluate (double n) => Unary == '+' ? n : -n;
 }
 class TPunctuation : Token {
    public TPunctuation (char ch) => Punct = ch;
