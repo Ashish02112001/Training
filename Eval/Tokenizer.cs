@@ -20,12 +20,12 @@ class Tokenizer {
          switch (ch) {
             case ' ' or '\t': continue;
             case '+' or '-':
-               if (mPrev is null || mPrev is TOperator or TPunctuation { Punct: '(' } or TOpUnary) {token = new TOpUnary (mEval, ch); break;}
+               if (mPrev is null || mPrev is TOperator or TPunctuation { Punct: '(' } or TOpUnary) { token = new TOpUnary (mEval, ch); break; }
                token = new TOpArithmetic (mEval, ch); break;
             case '*' or '/' or '^' or '=':
                token = new TOpArithmetic (mEval, ch); break;
-            case (>= '0' and <= '9') or '.': 
-               token =  GetNumber (); break;
+            case (>= '0' and <= '9') or '.':
+               token = GetNumber (); break;
             case '(' or ')':
                mEval.BasePriority += ch == '(' ? 10 : -10;
                token = new TPunctuation (ch); break;
@@ -38,6 +38,7 @@ class Tokenizer {
       return new TEnd ();
    }
    private Token mPrev;
+
    /// <summary>Gets the variable or function name and returns the particular token</summary>
    /// <returns>Function or Variable token</returns>
    Token GetIdentifier () {
