@@ -15,7 +15,7 @@ public class Evaluator {
       mOperands.Clear ();
       var tokenizer = new Tokenizer (this, text);
       for (; ; ) {
-         var token = tokenizer.mPrev = tokenizer.Next ();
+         var token = tokenizer.Next ();
          if (token is TEnd) break;
          if (token is TError err) throw new EvalException (err.Message);
          tokens.Add (token);

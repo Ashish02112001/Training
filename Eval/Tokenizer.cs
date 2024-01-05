@@ -16,24 +16,28 @@ class Tokenizer {
    public Token Next () {
       while (mN < mText.Length) {
          char ch = char.ToLower (mText[mN++]);
+         Token token = null!;
          switch (ch) {
             case ' ' or '\t': continue;
             case '+' or '-':
-               if (mPrev is null || mPrev is TOperator or TPunctuation { Punct: '(' } or TOpUnary) return new TOpUnary (mEval, ch);
-               return new TOpArithmetic (mEval, ch);
+               if (mPrev is null || mPrev is TOperator or TPunctuation { Punct: '(' } or TOpUnary) {token = new TOpUnary (mEval, ch); break;}
+               token = new TOpArithmetic (mEval, ch); break;
             case '*' or '/' or '^' or '=':
-               return new TOpArithmetic (mEval, ch);
-            case (>= '0' and <= '9') or '.': return GetNumber ();
+               token = new TOpArithmetic (mEval, ch); break;
+            case (>= '0' and <= '9') or '.': 
+               token =  GetNumber (); break;
             case '(' or ')':
                mEval.BasePriority += ch == '(' ? 10 : -10;
-               return new TPunctuation (ch);
-            case >= 'a' and <= 'z': return GetIdentifier ();
-            default: return new TError ($"Unknown symbol: {ch}");
+               token = new TPunctuation (ch); break;
+            case >= 'a' and <= 'z': token = GetIdentifier (); break;
+            default: token = new TError ($"Unknown symbol: {ch}"); break;
          }
+         mPrev = token;
+         return token;
       }
       return new TEnd ();
    }
-   public Token mPrev;
+   private Token mPrev;
    /// <summary>Gets the variable or function name and returns the particular token</summary>
    /// <returns>Function or Variable token</returns>
    Token GetIdentifier () {
