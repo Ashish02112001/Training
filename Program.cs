@@ -61,11 +61,12 @@ namespace Training {
                   boardCol++;
                } else if (currentKey.Key is ConsoleKey.Enter) {
                   for (int k = 0; k < mGuessedWord?.Length; k++) {
-                     if (mCharColor.TryGetValue (mGuessedWord[k], out ConsoleColor color)) {
-                        Console.ForegroundColor = color;
-                        Console.Write ((mGuessedWord[k] + "  ").ToUpper ());
+                     char chr = mGuessedWord[k];
+                     if (mCharColor.TryGetValue (chr, out ConsoleColor color)) {
+                        Console.ForegroundColor = (mGuessedWord.Count (x => x == chr) > 1 && num == k) ? ConsoleColor.DarkGray : color;
+                        Console.Write ((chr + "  ").ToUpper ());
                         if (mAllColor.ContainsKey (mGuessedWord[k])) mAllColor.Remove (mGuessedWord[k]);
-                        mAllColor.Add (mGuessedWord[k], color);
+                        mAllColor.Add (chr, color);
                         Console.ResetColor ();
                      }
                   }
@@ -146,11 +147,12 @@ namespace Training {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine ($"You found the word in {mTurns} tries");
             Console.ResetColor ();
-         } else
+         } else {
             Console.SetCursorPosition (15, 20);
-         Console.ForegroundColor = ConsoleColor.Yellow;
-         Console.WriteLine ($"Sorry - the word was {mRandomWord}");
-         Console.ResetColor ();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine ($"Sorry - the word was {mRandomWord}");
+            Console.ResetColor ();
+         }
       }
 
       /// <summary>Updates the game status based on the key pressed</summary>
@@ -163,10 +165,13 @@ namespace Training {
             mGuessedWord = mGuessedWord?.ToUpper ();
             if (dictWords.Contains (mGuessedWord)) {
                mIsDictContains = true;
-               foreach (char ch in mGuessedWord!) {
-                  if (mRandomWord?.IndexOf (ch) == mGuessedWord.IndexOf (ch)) color = UpdateColorState (State.CORRECT);
-                  else if (mRandomWord!.Contains (ch)) color = UpdateColorState (State.PRESENT);
-                  else color = UpdateColorState (State.ABSENT);
+               for (int pos = 0; pos < mGuessedWord?.Length; pos++) {
+                  char ch = mGuessedWord[pos];
+                  if (mRandomWord?[pos] == mGuessedWord[pos]) {
+                     color = UpdateColorState (State.CORRECT);
+                  } else if (mRandomWord!.Contains (ch)) {
+                     if (mGuessedWord.Count (x => x == ch) > 1) { num = pos; continue; } else color = UpdateColorState (State.PRESENT);
+                  } else color = UpdateColorState (State.ABSENT);
                   if (!mCharColor.ContainsKey (ch)) mCharColor.Add (ch, color);
                }
             } else mIsDictContains = false;
@@ -189,6 +194,7 @@ namespace Training {
       static Dictionary<char, ConsoleColor> mCharColor = new ();
       static Dictionary<char, ConsoleColor> mAllColor = new ();
       static bool GameOver;
+      static int num;
       static ConsoleKeyInfo currentKey;
       #endregion
    }
