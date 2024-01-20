@@ -19,7 +19,7 @@ namespace Training {
       #endregion
    }
    #endregion
-
+   // Try for ENTER. RW:BREAD
    #region class Wordle ---------------------------------------------------------------------------
    /// <summary>Wordle Implementation</summary>
    public class Wordle {
@@ -65,7 +65,7 @@ namespace Training {
                   for (int k = 0; k < mGuessedWord?.Length; k++) {
                      char chr = mGuessedWord[k];
                      if (mCharColor.TryGetValue (chr, out ConsoleColor color)) {
-                        Console.ForegroundColor = (mGuessedWord.Count (x => x == chr) > 1 && num == k) ? ConsoleColor.DarkGray : color;
+                        Console.ForegroundColor = (mGuessedWord.Count (x => x == chr) > 1 && (num-1) == k) ? ConsoleColor.DarkGray : color;
                         Console.Write ((chr + "  ").ToUpper ());
                         if (mAllColor.ContainsKey (mGuessedWord[k])) mAllColor.Remove (mGuessedWord[k]);
                         mAllColor.Add (chr, color);
@@ -172,7 +172,7 @@ namespace Training {
                   if (mRandomWord?[pos] == mGuessedWord[pos]) {
                      color = UpdateColorState (State.CORRECT);
                   } else if (mRandomWord!.Contains (ch)) {
-                     if (mGuessedWord.Count (x => x == ch) > 1) { num = pos; continue; } else color = UpdateColorState (State.PRESENT);
+                     if (mGuessedWord.Count (x => x == ch) > 1 && num == 0) { num = pos+1; continue; } else color = UpdateColorState (State.PRESENT);
                   } else color = UpdateColorState (State.ABSENT);
                   if (!mCharColor.ContainsKey (ch)) mCharColor.Add (ch, color);
                }
