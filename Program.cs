@@ -14,7 +14,16 @@ namespace Training {
       /// <summary>This Method prints "Hello, World!"</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         Console.WriteLine ("Hello, World!");
+         string[] inputs = File.ReadAllLines ("input.txt");
+         int red = 0, green = 0, blue = 0;
+         foreach (string nIDp in inputs){
+            string[] tries = nIDp.Split (';');
+            foreach (string el in tries) {
+               if (el is "red") red += el.IndexOf(el) - 
+               if (el is "green") green +=
+               if (el is "blue") blue +=
+            }
+         }
       }
       #endregion
    }
