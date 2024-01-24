@@ -16,23 +16,40 @@ namespace Training {
       /// <summary>This Method prints "Hello, World!"</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
+         DisplayBoard ();
+         while (inputs != 9) {
+            GameUpdate ();
+            DisplayBoard ();
+         }
       }
       static void DisplayBoard () {
          Console.OutputEncoding = Encoding.UTF8;
-         Console.WriteLine ("\t│\t│\n \t│\t│");
-         Console.WriteLine ("────────────────────────");
-         Console.WriteLine ("\t│\t│\n \t│\t│");
-         Console.WriteLine ("────────────────────────");
-         Console.WriteLine ("\t│\t│\n \t│\t│");
+         for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+               pos
+               if (pos != null && pos.Length - pos[row+col] == pos.Length - (row+col)) 
+                  Console.Write ($"{pos[row+col]} |");
+               else Console.Write ("  │");
+            }
+            Console.WriteLine ();
+            Console.WriteLine ("──────────");
+
+         }
       }
-      static void Game () {
-         for (int row = 0; row )
-         //while (inputs != 9) {
-         //   ConsoleKey key = Console.ReadKey (true).Key;
-            
-         //}
+      static void GameUpdate () {
+            for (; ; ) {
+               char input = (char)Console.ReadKey (true).Key;
+               if (char.IsDigit (input)) {
+                  ++inputs;
+                  key = input - 48;
+                  pos[key] = 'p';
+                  break;
+               }
+            }
       }
+      static int key;
       static int inputs { get; set; }
+      static char[] pos = new char[9];
       #endregion
    }
    #endregion
