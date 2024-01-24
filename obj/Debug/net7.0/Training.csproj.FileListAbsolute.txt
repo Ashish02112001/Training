@@ -1,0 +1,89 @@
+W:\Training\bin\Debug\net7.0\Training.exe
+W:\Training\bin\Debug\net7.0\Training.deps.json
+W:\Training\bin\Debug\net7.0\Training.runtimeconfig.json
+W:\Training\bin\Debug\net7.0\Training.dll
+W:\Training\bin\Debug\net7.0\Training.pdb
+W:\Training\obj\Debug\net7.0\Training.csproj.AssemblyReference.cache
+W:\Training\obj\Debug\net7.0\Training.GeneratedMSBuildEditorConfig.editorconfig
+W:\Training\obj\Debug\net7.0\Training.AssemblyInfoInputs.cache
+W:\Training\obj\Debug\net7.0\Training.AssemblyInfo.cs
+W:\Training\obj\Debug\net7.0\Training.csproj.CoreCompileInputs.cache
+W:\Training\obj\Debug\net7.0\Training.dll
+W:\Training\obj\Debug\net7.0\refint\Training.dll
+W:\Training\obj\Debug\net7.0\Training.pdb
+W:\Training\obj\Debug\net7.0\Training.genruntimeconfig.cache
+W:\Training\obj\Debug\net7.0\ref\Training.dll
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\bin\Debug\net7.0\Training.exe
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\bin\Debug\net7.0\Training.deps.json
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\bin\Debug\net7.0\Training.runtimeconfig.json
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\bin\Debug\net7.0\Training.dll
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\bin\Debug\net7.0\Training.pdb
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\Training.csproj.AssemblyReference.cache
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\Training.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\Training.AssemblyInfoInputs.cache
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\Training.AssemblyInfo.cs
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\Training.csproj.CoreCompileInputs.cache
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\Training.dll
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\refint\Training.dll
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\Training.pdb
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\Training.genruntimeconfig.cache
+C:\Users\baalamuruganas\OneDrive - Trumpf Metamation Pvt Ltd\Work\Work\Training\obj\Debug\net7.0\ref\Training.dll
+H:\Work\Training\bin\Debug\net7.0\Training.exe
+H:\Work\Training\bin\Debug\net7.0\Training.deps.json
+H:\Work\Training\bin\Debug\net7.0\Training.runtimeconfig.json
+H:\Work\Training\bin\Debug\net7.0\Training.dll
+H:\Work\Training\bin\Debug\net7.0\Training.pdb
+H:\Work\Training\obj\Debug\net7.0\Training.csproj.AssemblyReference.cache
+H:\Work\Training\obj\Debug\net7.0\Training.GeneratedMSBuildEditorConfig.editorconfig
+H:\Work\Training\obj\Debug\net7.0\Training.AssemblyInfoInputs.cache
+H:\Work\Training\obj\Debug\net7.0\Training.AssemblyInfo.cs
+H:\Work\Training\obj\Debug\net7.0\Training.csproj.CoreCompileInputs.cache
+H:\Work\Training\obj\Debug\net7.0\Training.dll
+H:\Work\Training\obj\Debug\net7.0\refint\Training.dll
+H:\Work\Training\obj\Debug\net7.0\Training.pdb
+H:\Work\Training\obj\Debug\net7.0\Training.genruntimeconfig.cache
+H:\Work\Training\obj\Debug\net7.0\ref\Training.dll
+C:\Training\bin\Debug\net7.0\Training.exe
+C:\Training\bin\Debug\net7.0\Training.deps.json
+C:\Training\bin\Debug\net7.0\Training.runtimeconfig.json
+C:\Training\bin\Debug\net7.0\Training.dll
+C:\Training\bin\Debug\net7.0\Training.pdb
+C:\Training\obj\Debug\net7.0\Training.csproj.AssemblyReference.cache
+C:\Training\obj\Debug\net7.0\Training.GeneratedMSBuildEditorConfig.editorconfig
+C:\Training\obj\Debug\net7.0\Training.AssemblyInfoInputs.cache
+C:\Training\obj\Debug\net7.0\Training.AssemblyInfo.cs
+C:\Training\obj\Debug\net7.0\Training.csproj.CoreCompileInputs.cache
+C:\Training\obj\Debug\net7.0\Training.dll
+C:\Training\obj\Debug\net7.0\refint\Training.dll
+C:\Training\obj\Debug\net7.0\Training.pdb
+C:\Training\obj\Debug\net7.0\Training.genruntimeconfig.cache
+C:\Training\obj\Debug\net7.0\ref\Training.dll
+C:\WorkGIT\Training\bin\Debug\net7.0\Training.exe
+C:\WorkGIT\Training\bin\Debug\net7.0\Training.deps.json
+C:\WorkGIT\Training\bin\Debug\net7.0\Training.runtimeconfig.json
+C:\WorkGIT\Training\bin\Debug\net7.0\Training.dll
+C:\WorkGIT\Training\bin\Debug\net7.0\Training.pdb
+C:\WorkGIT\Training\obj\Debug\net7.0\Training.csproj.AssemblyReference.cache
+C:\WorkGIT\Training\obj\Debug\net7.0\Training.GeneratedMSBuildEditorConfig.editorconfig
+C:\WorkGIT\Training\obj\Debug\net7.0\Training.AssemblyInfoInputs.cache
+C:\WorkGIT\Training\obj\Debug\net7.0\Training.AssemblyInfo.cs
+C:\WorkGIT\Training\obj\Debug\net7.0\Training.csproj.CoreCompileInputs.cache
+C:\WorkGIT\Training\obj\Debug\net7.0\Training.dll
+C:\WorkGIT\Training\obj\Debug\net7.0\refint\Training.dll
+C:\WorkGIT\Training\obj\Debug\net7.0\Training.pdb
+C:\WorkGIT\Training\obj\Debug\net7.0\Training.genruntimeconfig.cache
+C:\WorkGIT\Training\obj\Debug\net7.0\ref\Training.dll
+W:\bin\Debug\net7.0\Training.exe
+W:\bin\Debug\net7.0\Training.deps.json
+W:\bin\Debug\net7.0\Training.runtimeconfig.json
+W:\bin\Debug\net7.0\Training.dll
+W:\bin\Debug\net7.0\Training.pdb
+W:\obj\Debug\net7.0\Training.GeneratedMSBuildEditorConfig.editorconfig
+W:\obj\Debug\net7.0\Training.AssemblyInfoInputs.cache
+W:\obj\Debug\net7.0\Training.AssemblyInfo.cs
+W:\obj\Debug\net7.0\Training.csproj.CoreCompileInputs.cache
+W:\obj\Debug\net7.0\Training.dll
+W:\obj\Debug\net7.0\refint\Training.dll
+W:\obj\Debug\net7.0\Training.pdb
+W:\obj\Debug\net7.0\Training.genruntimeconfig.cache
+W:\obj\Debug\net7.0\ref\Training.dll
