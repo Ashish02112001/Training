@@ -2,31 +2,36 @@
 // Training ~ A training program for new joinees at Metamation, Batch - July 2023.
 // Copyright (c) Metamation India.
 // ------------------------------------------------------------------------
-// Program.cs
-// Simple Program to Print the text 'Hello, World!' in Console
+// A14.1
+// Find all the anagrams and sort them based on the anagrams count from the words in the
+// word list
 // --------------------------------------------------------------------------------------------
 
 namespace Training {
    #region Program ------------------------------------------------------------------------------
-   /// <summary>Sample program</summary>
+   /// <summary>Anagrams</summary>
    internal class Program {
       #region Methods ---------------------------------------------
-      /// <summary>This Method prints "Hello, World!"</summary>
+      /// <summary>Lists anagrams of the word in the word list</summary>
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
-         string[] words = File.ReadAllLines ("Dict.txt");
+         string[] words = File.ReadAllLines ("words.txt");
          Func<string, string> sortedWord = word => new string (word.ToCharArray ().OrderBy (x => x).ToArray ());
          Dictionary<string, List<string>> anagrams = new ();
-         List<string> anagramChecked = new ();
          foreach (string word in words) {
-            //if (anagramChecked.Contains ()) { }
-            List<string> list = words.Where (x => x != word && sortedWord (x) == sortedWord (word)).ToList ();
-            anagramChecked.Add (word);
-            if (list.Count > 0) anagrams.Add (word, list);
+            string sWord = sortedWord (word);
+            if (anagrams.TryGetValue (sWord, out List<string>? anagramWord)) anagramWord.Add (word);
+            else anagrams[sWord] = new List<string> { word };
          }
-         foreach (var anagram in anagrams.OrderByDescending (x => x.Value.Count)) {
-            Console.WriteLine ($"{anagram.Value.Count + 1} {anagram.Key} : {string.Join (",", anagram.Value)}");
+         using (StreamWriter sw = new StreamWriter ("Anagrams.txt")) {
+            foreach (var anagram in anagrams.OrderByDescending (x => x.Value.Count)) {
+               if (anagram.Value.Count > 1) {
+                  string printLine = $"{anagram.Value.Count} {string.Join (",", anagram.Value)}";
+                  sw.WriteLine (printLine);
+               }
+            }
          }
+         Console.WriteLine (@"Anagrams are stored in \bin\Debug\net7.0\Anagrams.txt");
       }
    }
    #endregion
