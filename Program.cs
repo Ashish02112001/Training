@@ -26,7 +26,7 @@ namespace Training {
       static string? GuessedWord { get; set; }
       static int Row { get; set; }
       static int Col { get; set; }
-      static bool IsDictContains { get; set; }
+      static bool IsValidWord { get; set; }
       static int Turns { get; set; }
       #endregion
 
@@ -61,14 +61,14 @@ namespace Training {
                   for (int k = 0; k < GuessedWord?.Length; k++) {
                      char chr = GuessedWord[k];
                      if (mCharColor.TryGetValue (chr, out ConsoleColor color)) {
-                        Console.ForegroundColor = (GuessedWord.Count (x => x == chr) > 1 && (num-1) == k) ? ConsoleColor.DarkGray : color;
+                        Console.ForegroundColor = (GuessedWord.Count (x => x == chr) > 1 && (num - 1) == k) ? ConsoleColor.DarkGray : color;
                         Console.Write ((chr + "  ").ToUpper ());
                         if (mAllColor.ContainsKey (GuessedWord[k])) mAllColor.Remove (GuessedWord[k]);
                         mAllColor.Add (chr, color);
                         Console.ResetColor ();
                      }
                   }
-                  if (IsDictContains) {
+                  if (IsValidWord) {
                      Turns++;
                      if (Turns == 6 || GuessedWord == RandomWord) GameOver = true;
                      else GuessedWord = GuessedWord?.Remove (0);
@@ -157,23 +157,22 @@ namespace Training {
       /// <param name="keyPressed">Key pressed by the user</param>
       public static void UpdateGameState (ConsoleKey keyPressed) {
          ConsoleColor color;
-         string[] dictWords = File.ReadAllLines ("Dict.txt");
          char currentKey = char.ToUpper ((char)keyPressed);
          if (currentKey is >= 'A' and <= 'Z') GuessedWord += currentKey;
          if (GuessedWord?.Length % 5 == 0 && keyPressed is ConsoleKey.Enter) {
             GuessedWord = GuessedWord?.ToUpper ();
             if (dictWords.Contains (GuessedWord)) {
-               IsDictContains = true;
+               IsValidWord = true;
                for (int pos = 0; pos < GuessedWord?.Length; pos++) {
                   char ch = GuessedWord[pos];
-                  if (RandomWord?[pos] == GuessedWord[pos]) { 
+                  if (RandomWord?[pos] == GuessedWord[pos]) {
                      color = UpdateColorState (State.CORRECT);
                   } else if (RandomWord!.Contains (ch)) {
-                     if (GuessedWord.Count (x => x == ch) > 1 && num == 0) { num = pos+1; continue; } else color = UpdateColorState (State.PRESENT);
+                     if (GuessedWord.Count (x => x == ch) > 1 && num == 0) { num = pos + 1; continue; } else color = UpdateColorState (State.PRESENT);
                   } else color = UpdateColorState (State.ABSENT);
                   if (!mCharColor.ContainsKey (ch)) mCharColor.Add (ch, color);
                }
-            } else IsDictContains = false;
+            } else IsValidWord = false;
          }
       }
 
@@ -190,6 +189,7 @@ namespace Training {
       public enum State { PRESENT, ABSENT, CORRECT }
       #endregion
       #region fields ------------------------------------------------
+      static readonly string[] dictWords = File.ReadAllLines ("Dict.txt");
       static Dictionary<char, ConsoleColor> mCharColor = new (), mAllColor = new ();
       static bool GameOver;
       static int num;
