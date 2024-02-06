@@ -6,6 +6,7 @@
 // --------------------------------------------------------------------------------------------
 
 using System.Text;
+
 namespace Training {
    #region Program --------------------------------------------------------------------------------
    /// <summary>Wordle Game</summary>
@@ -18,12 +19,13 @@ namespace Training {
       #endregion
    }
    #endregion
+
    #region class Wordle ---------------------------------------------------------------------------
    /// <summary>Wordle Implementation</summary>
    public class Wordle {
       #region Properties --------------------------------------------
       static string? RandomWord { get; set; }
-      static string? GuessedWord { get; set; }
+      static string? Guess { get; set; }
       static int Row { get; set; }
       static int Col { get; set; }
       static bool IsValidWord { get; set; }
@@ -32,74 +34,74 @@ namespace Training {
 
       #region Methods -----------------------------------------------
       /// <summary>Used to set the cursor position and to clear console screen</summary>
-      void ClearScreen () {
-         Console.SetWindowSize (Console.WindowWidth / 2, Console.WindowHeight);
-         Console.Clear ();
-      }
+      void ClearScreen () => Console.Clear ();
 
       /// <summary>Displays the game layout and progression</summary>
       public static void DisplayBoard () {
          Console.CursorVisible = false;
          Console.OutputEncoding = Encoding.UTF8;
+
          for (int r = Row; r < 6; r++) {
-            Console.SetCursorPosition (21, 7 + r);
+            Console.SetCursorPosition (mX, mY + r);
             for (int c = Col; c < 5; c++) {
-               if (currentKey != default && currentKey is not ConsoleKey.Enter) {
-                  if (GuessedWord?.Length >= 0) {
-                     for (int k = 0; k < GuessedWord.Length; k++) {
-                        Console.Write (($"{GuessedWord[k]}  ").ToUpper ());
+               if (sCurrentKey != default && sCurrentKey is not ConsoleKey.Enter) {
+                  if (Guess?.Length >= 0) {
+                     for (int k = 0; k < Guess.Length; k++) {
+                        Console.Write (($"{Guess[k]}  ").ToUpper ());
                      }
-                     if (GuessedWord.Length != 0) c = GuessedWord.Length - 1;
+                     if (Guess.Length != 0) c = Guess.Length - 1;
                   }
                   Row = r;
                   Col = c;
-                  if (c == 4 && currentKey is ConsoleKey.Backspace) Console.Write ("◌  ");
+                  if (c == 4 && sCurrentKey is ConsoleKey.Backspace) Console.Write ("◌  ");
                   if (c < 4) Console.Write ("◌  ");
-                  currentKey = default;
+                  sCurrentKey = default;
                   c++;
-               } else if (currentKey is ConsoleKey.Enter) {
-                  for (int k = 0; k < GuessedWord?.Length; k++) {
-                     char chr = GuessedWord[k];
-                     if (mCharColor.TryGetValue (chr, out ConsoleColor color)) {
-                        Console.ForegroundColor = (GuessedWord.Count (x => x == chr) > 1 && (num - 1) == k) ? ConsoleColor.DarkGray : color;
+               } else if (sCurrentKey is ConsoleKey.Enter) {
+                  for (int k = 0; k < Guess?.Length; k++) {
+                     char chr = Guess[k];
+                     if (sCharColor.TryGetValue (chr, out ConsoleColor color)) {
+                        Console.ForegroundColor = (Guess.Count (x => x == chr) > 1 && (sNum - 1) == k) ? ConsoleColor.DarkGray : color;
                         Console.Write ((chr + "  ").ToUpper ());
-                        if (mAllColor.ContainsKey (GuessedWord[k])) mAllColor.Remove (GuessedWord[k]);
-                        mAllColor.Add (chr, color);
+                        if (sAllColor.TryGetValue (Guess[k], out ConsoleColor _)) sAllColor.Remove (Guess[k]);
+                        sAllColor.Add (chr, color);
                         Console.ResetColor ();
                      }
                   }
                   if (IsValidWord) {
                      Turns++;
-                     if (Turns == 6 || GuessedWord == RandomWord) GameOver = true;
-                     else GuessedWord = GuessedWord?.Remove (0);
-                     Console.SetCursorPosition (21, 7 + ++r);
+                     if (Turns == 6 || Guess == RandomWord) sGameOver = true;
+                     else Guess = Guess?.Remove (0);
+                     Console.SetCursorPosition (mX, mY + ++r);
                      Row = r;
                      if (Row < 6) Console.Write ("◌  ");
                      Col = 0;
                   } else {
-                     Console.SetCursorPosition (17, 20);
-                     Console.WriteLine ($"{GuessedWord} is not a word");
+                     Console.SetCursorPosition (mX - 4, sResultRow);
+                     Console.WriteLine ($"{Guess} is not a word");
                   }
-                  currentKey = default;
+                  sCurrentKey = default;
                } else if (r == 0 && c == 0) Console.Write ("◌  ");
                else Console.Write ("·  ");
             }
          }
-         Console.SetCursorPosition (15, 13);
-         Console.WriteLine ("_________________________");
-         Console.SetCursorPosition (18, 15);
-         int winHeight = 15;
+
+         Console.SetCursorPosition (mX - 6, mY + sHeight);
+         Console.WriteLine (new string ('_',25));
+         Console.SetCursorPosition (mX - 3, mY + sHeight + 2);
+         int winHeight = mY + sHeight + 2;
          int alpCnt = 0;
          for (char alp = 'A'; alp <= 'Z'; alp++) {
-            if (mAllColor.TryGetValue (alp, out ConsoleColor color)) {
+            if (sAllColor.TryGetValue (alp, out ConsoleColor color)) {
                Console.ForegroundColor = color;
                Console.Write (alp + "  ");
                Console.ResetColor ();
             } else Console.Write (alp + "  ");
             alpCnt++;
-            if (alpCnt % 7 == 0) Console.SetCursorPosition (18, ++winHeight);
+            if (alpCnt % 7 == 0) Console.SetCursorPosition (mX - 3, ++winHeight);
          }
-         mCharColor.Clear ();
+         sResultRow = winHeight + 2;
+         sCharColor.Clear ();
       }
 
       /// <summary>This method contains the method sequence of the game flow</summary>
@@ -107,20 +109,16 @@ namespace Training {
          ClearScreen ();
          SelectWord ();
          DisplayBoard ();
-         while (!GameOver) {
-            currentKey = ReadKey ();
-            UpdateGameState (currentKey);
+         while (!sGameOver) {
+            sCurrentKey = ReadKey ();
+            UpdateGameState (sCurrentKey);
             DisplayBoard ();
          }
          PrintResult ();
       }
 
       /// <summary>Selects a random 5 letter word from the Puzzle.txt</summary>
-      void SelectWord () {
-         string[] puzzle = File.ReadAllLines ("Puzzle.txt");
-         Random random = new ();
-         RandomWord = puzzle[random.Next (0, puzzle.Length)];
-      }
+      string SelectWord () => RandomWord = sPuzzle[new Random ().Next (sPuzzle.Length)];
 
       /// <summary>Reads the input key from the user</summary>
       /// <returns>Key pressed by the user</returns>
@@ -128,10 +126,10 @@ namespace Training {
          for (; ; ) {
             var letter = Console.ReadKey (true);
             if (char.IsAsciiLetter (letter.KeyChar) && Col < 4) return letter.Key;
-            if (letter.Key is ConsoleKey.Backspace && GuessedWord?.Length > 0 && GuessedWord != null) {
-               Console.SetCursorPosition (17, 20);
+            if (letter.Key is ConsoleKey.Backspace && Guess?.Length > 0) {
+               Console.SetCursorPosition (mX - 4, sResultRow);
                Console.WriteLine ("                          ");
-               GuessedWord = GuessedWord.Remove (GuessedWord.Length - 1, 1);
+               Guess = Guess.Remove (Guess.Length - 1, 1);
                return letter.Key;
             }
             if (Col == 4 && letter.Key is ConsoleKey.Enter) return letter.Key;
@@ -140,17 +138,10 @@ namespace Training {
 
       /// <summary>Prints the final game result</summary>
       static void PrintResult () {
-         if (GuessedWord == RandomWord) {
-            Console.SetCursorPosition (15, 20);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine ($"You found the word in {Turns} tries");
-            Console.ResetColor ();
-         } else {
-            Console.SetCursorPosition (15, 20);
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine ($"Sorry - the word was {RandomWord}");
-            Console.ResetColor ();
-         }
+         Console.SetCursorPosition (mX - 6, sResultRow);
+         Console.ForegroundColor = Guess == RandomWord ? ConsoleColor.Green : ConsoleColor.Yellow;
+         Console.WriteLine (Guess == RandomWord ? $"You found the word in {Turns} tries" : $"Sorry - the word was {RandomWord}");
+         Console.ResetColor ();
       }
 
       /// <summary>Updates the game status based on the key pressed</summary>
@@ -158,19 +149,18 @@ namespace Training {
       public static void UpdateGameState (ConsoleKey keyPressed) {
          ConsoleColor color;
          char currentKey = char.ToUpper ((char)keyPressed);
-         if (currentKey is >= 'A' and <= 'Z') GuessedWord += currentKey;
-         if (GuessedWord?.Length % 5 == 0 && keyPressed is ConsoleKey.Enter) {
-            GuessedWord = GuessedWord?.ToUpper ();
-            if (dictWords.Contains (GuessedWord)) {
+         if (currentKey is >= 'A' and <= 'Z') Guess += currentKey;
+         if (Guess?.Length % 5 == 0 && keyPressed is ConsoleKey.Enter) {
+            Guess = Guess?.ToUpper ();
+            if (sDictWords.Contains (Guess)) {
                IsValidWord = true;
-               for (int pos = 0; pos < GuessedWord?.Length; pos++) {
-                  char ch = GuessedWord[pos];
-                  if (RandomWord?[pos] == GuessedWord[pos]) {
-                     color = UpdateColorState (State.CORRECT);
-                  } else if (RandomWord!.Contains (ch)) {
-                     if (GuessedWord.Count (x => x == ch) > 1 && num == 0) { num = pos + 1; continue; } else color = UpdateColorState (State.PRESENT);
-                  } else color = UpdateColorState (State.ABSENT);
-                  if (!mCharColor.ContainsKey (ch)) mCharColor.Add (ch, color);
+               for (int pos = 0; pos < Guess?.Length; pos++) {
+                  char ch = Guess[pos];
+                  if (RandomWord?[pos] == Guess[pos]) color = UpdateColorState (State.Correct);
+                  else if (RandomWord!.Contains (ch)) {
+                     if (Guess.Count (x => x == ch) > 1 && sNum == 0) { sNum = pos + 1; continue; } else color = UpdateColorState (State.Present);
+                  } else color = UpdateColorState (State.Absent);
+                  if (!sCharColor.ContainsKey (ch)) sCharColor.Add (ch, color);
                }
             } else IsValidWord = false;
          }
@@ -180,20 +170,22 @@ namespace Training {
       /// <param name="updateColor">State of the character</param>
       /// <returns>Console color for the given state</returns>
       static ConsoleColor UpdateColorState (State updateColor) => updateColor switch {
-         State.PRESENT => ConsoleColor.Blue,
-         State.ABSENT => ConsoleColor.DarkGray,
-         State.CORRECT => ConsoleColor.Green,
+         State.Present => ConsoleColor.Blue,
+         State.Absent => ConsoleColor.DarkGray,
+         State.Correct => ConsoleColor.Green,
          _ => Console.ForegroundColor
       };
 
-      public enum State { PRESENT, ABSENT, CORRECT }
+      public enum State { Present, Absent, Correct }
       #endregion
+
       #region fields ------------------------------------------------
-      static readonly string[] dictWords = File.ReadAllLines ("Dict.txt");
-      static Dictionary<char, ConsoleColor> mCharColor = new (), mAllColor = new ();
-      static bool GameOver;
-      static int num;
-      static ConsoleKey currentKey;
+      static string[] sPuzzle = File.ReadAllLines ("Puzzle.txt");
+      static readonly string[] sDictWords = File.ReadAllLines ("Dict.txt");
+      static Dictionary<char, ConsoleColor> sCharColor = new (), sAllColor = new ();
+      static int sHeight = 6, sWidth = 7, mX = (Console.WindowWidth / 2) - sWidth, mY = (Console.WindowHeight / 2) - sHeight, sNum, sResultRow;
+      static bool sGameOver;
+      static ConsoleKey sCurrentKey;
       #endregion
    }
    #endregion
