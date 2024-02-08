@@ -16,22 +16,18 @@ namespace Training {
       /// <param name="args">arguments</param>
       static void Main (string[] args) {
          string[] words = File.ReadAllLines ("words.txt");
-         Func<string, string> sortedWord = word => new string (word.ToCharArray ().OrderBy (x => x).ToArray ());
+         Func<string, string> sortedWord = word => new string (word.Order ().ToArray ());
          Dictionary<string, List<string>> anagrams = new ();
          foreach (string word in words) {
             string sWord = sortedWord (word);
-            if (anagrams.TryGetValue (sWord, out List<string>? anagramWord)) anagramWord.Add (word);
+            if (anagrams.TryGetValue (sWord, out var list)) list.Add (word);
             else anagrams[sWord] = new List<string> { word };
          }
-         using (StreamWriter sw = new StreamWriter ("Anagrams.txt")) {
+         using (StreamWriter sw = new ("Anagrams.txt")) {
             foreach (var anagram in anagrams.OrderByDescending (x => x.Value.Count)) {
-               if (anagram.Value.Count > 1) {
-                  string printLine = $"{anagram.Value.Count} {string.Join (",", anagram.Value)}";
-                  sw.WriteLine (printLine);
-               }
+               if (anagram.Value.Count > 1) Console.WriteLine ($"{anagram.Value.Count} {string.Join (",", anagram.Value)}");
             }
          }
-         Console.WriteLine (@"Anagrams are stored in \bin\Debug\net7.0\Anagrams.txt");
       }
    }
    #endregion
