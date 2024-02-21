@@ -16,9 +16,9 @@ namespace Training {
 
       public void Run () {
          if (mList is null) {
-         ClearScreen ();
-         SelectWord ();
-         DisplayBoard ();
+            ClearScreen ();
+            SelectWord ();
+            DisplayBoard ();
             while (!GameOver) {
                ConsoleKeyInfo key = ReadKey (true);
                UpdateGameState (key.Key);
@@ -27,7 +27,7 @@ namespace Training {
             PrintResult ();
          } else {
             int ind = 0;
-            File.WriteAllText (path, string.Empty);
+            File.WriteAllText (mPath, string.Empty);
             foreach (string word in mList) {
                foreach (char ch in word) {
                   UpdateGameState ((ConsoleKey)ch);
@@ -47,6 +47,7 @@ namespace Training {
       // Implementation ----------------------------
       // Set up suitable colors and clear the screen
       void ClearScreen () {
+         mDict = LoadStrings ("dict-5.txt");
          BackgroundColor = Black;
          Clear ();
          GRIDX = WindowWidth / 2 - 7;
@@ -146,7 +147,7 @@ namespace Training {
 
       // Print the final result
       void PrintResult () {
-            Put (KBDX, RESULTY, Gray, new string ('_', 31));
+         Put (KBDX, RESULTY, Gray, new string ('_', 31));
          if (mList is null) {
             if (mSucceeded)
                Put (WindowWidth / 2 - 15, RESULTY + 2, Green, $"You found the word in {mY} tries");
@@ -155,7 +156,7 @@ namespace Training {
             Put (WindowWidth / 2 - 11, RESULTY + 4, White, "Press any key to quit");
             ReadKey ();
             WriteLine ();
-         }
+         } 
          else {
             if (mSucceeded)
                Put (15, RESULTY + 2, Green, $"You found the word in {mY} tries");
@@ -173,7 +174,7 @@ namespace Training {
          }
 
          // Writes to Test_file.txt:
-         using (StreamWriter sw = new (path, true)) {
+         using (StreamWriter sw = new (mPath, true)) {
             string? ch = data.ToString ();
             switch (color) {
                case Green: SwWrite ("{" + ch + "}"); break;
@@ -213,10 +214,10 @@ namespace Training {
       int mX = 0;       // The letter within that word we're typing in
       string mBadWord;  // This is set if the user types in a word not in the dictionary
       string mFileName;
-      string path = $"/Training/data/Test_file.txt";
+      string mPath = $"../../../../Training/data/Test_file.txt";
    }
 
    class Program {
-      static void Main () => new Wordle (new Tuple<string, List<string>> ("LEMON", new List<string> { "RIVER", "LAKES", "LAYER", "LADEN","LATER","LEVEL" })).Run ();
+      static void Main () => new Wordle (new Tuple<string, List<string>> ("LEMON", new List<string> { "RIVER", "LAKES", "LEVEL", "LEMON" })).Run ();
    }
 }
