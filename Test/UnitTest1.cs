@@ -26,14 +26,14 @@ namespace Test {
 
       [TestMethod]
       public void TestEnqueue () {
-         PriorityQueue<int> queue = new ();
-         List<int> list = new ();
+         PriorityQueue<char> queue = new ();
+         List<char> list = new ();
          Random random = new ();
-         // Enqueue 20 random numbers between 1 to 50
-         for (int i = 0; i < 20; i++) {
-            var num = random.Next (0, 51);
-            queue.Enqueue (num);
-            list.Add (num);
+         // Enqueue 10 random characters between A to Z
+         for (int i = 0; i < 10; i++) {
+            var ch = (char)random.Next ('A', 'Z');
+            queue.Enqueue (ch);
+            list.Add (ch);
             list.Sort ();
             Assert.AreEqual (list[0], queue.Dequeue ());
             list.RemoveAt (0);

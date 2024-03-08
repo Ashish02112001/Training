@@ -60,11 +60,11 @@ namespace Training {
       /// <summary>Arranges the added element into the queue</summary>
       /// <param name="idx">Index of the added element</param>
       void SiftUp (int idx) {
-         int iIdx = (idx - 1) / 2;
+         int pIdx = (idx - 1) / 2;
          T value = mList[idx];
-         if (mList.Count > 1 && value.CompareTo (mList[iIdx]) < 0) {
-            Swap (iIdx, idx);
-            SiftUp (iIdx);
+         if (mList.Count > 1 && value.CompareTo (mList[pIdx]) < 0) {
+            Swap (pIdx, idx);
+            SiftUp (pIdx);
          }
       }
 
